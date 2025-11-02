@@ -1,0 +1,1 @@
+export const SUSPENDED_ACCOUNT_REPOSITORY = 'ISuspendedAccountRepository';

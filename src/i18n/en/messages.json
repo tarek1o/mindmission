@@ -1,0 +1,14 @@
+{
+  "ALREADY_EMAIL_VERIFICATION_LINK_SEND": "We already sent a verification link to your email address. Please check your inbox and follow the link to verify your email.",
+  "EMAIL_VERIFICATION_LINK_SEND": "A verification link has been sent to your email address. Please check your inbox and follow the link to verify your email.",
+  "EMAIL_VERIFICATION": "Your email has been verified successfully",
+  "EMAIL_ALREADY_VERIFIED": "Your email has already been verified.",
+  "FORGET_PASSWORD": "If your email is exist, you will receive an email contains reset password code to reset your password",
+  "SET_PASSWORD_VERIFICATION": "Your set password token is verified",
+  "RESET_PASSWORD_VERIFICATION": "Your reset password token is verified",
+  "SET_PASSWORD": "Your first password has been set successfully",
+  "RESET_PASSWORD": "Your password has been reset successfully",
+  "PASSWORD_CHANGED": "Your password has been changed successfully",
+  "USER_BLOCKED": "The user is blocked from accessing the website successfully",
+  "USER_UNBLOCKED": "The user is unblocked successfully, now he can access the website"
+}

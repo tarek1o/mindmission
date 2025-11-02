@@ -1,0 +1,1 @@
+export const ACTION_TOKEN_REPOSITORY = 'IActionTokenRepository';

@@ -1,0 +1,169 @@
+{
+  "global": {
+    "base": {
+      "id": {
+        "invalid": "id must be a positive integer greater than or equal to 1"
+      }
+    },
+    "translations": {
+      "language": {
+        "invalid": "Invalid language value, must be one these values: {languages}"
+      },
+      "name": {
+        "too_short_too_long": "Name must be between {min} and {max} characters."
+      },
+      "description": {
+        "too_long": "Description must be less than {max} characters."
+      }
+    },
+    "price": {
+      "value": {
+        "invalid": "price value must be positive number more than or equal to 0"
+      }
+    },
+    "duration": {
+      "value": {
+        "invalid": "duration value must be positive number more than or equal to 1"
+      }
+    },
+    "unit_of_work": {
+      "transaction_failed": "Something went wrong during execute you request, please try again"
+    },
+    "rate_limiter": {
+      "too_many_requests": "Too many requests, please try again after {ttl} seconds."
+    }
+  },
+
+  "permission": {
+    "not_found": "The permission with id: {id} not found",
+    "translations": {
+      "missing": "Permissions must include English and Arabic translations",
+      "name": {
+        "duplicate": "Their is already a permission with the same name",
+        "single_duplicate": "The permission name: {duplicate} already exists",
+        "multi_duplicate": "The permission names: {duplicate} already exist"
+      },
+      "permission_id": {
+        "invalid": "permission id must be positive number more than or equal to 1"
+      }
+    },
+    "actions": {
+      "empty": "Any permission must have at least one action",
+      "invalid": "Invalid actions value for {resource} resource, must contain in these values: {actions}",
+      "missing_dependencies": "The '{action}' action requires the following actions to also be included: {missing}"
+    },
+    "resource_actions": {
+      "duplicate": "Their is already a permission with the same resource and actions",
+      "not_editable": "You can't update the resource or the actions of this permission"
+    },
+    "not_deletable": "The permission with id: {id} is undeletable",
+    "role_has_only_this_permission": "The permission with id: {id} is used in a role and this role has this permission only"
+  },
+
+  "role": {
+    "not_found": "The role with id: {id} not found",
+    "translations": {
+      "missing": "Roles must include English and Arabic translations",
+      "name": {
+        "duplicate": "Their is already a role with the same name",
+        "single_duplicate": "The role name: {duplicate} already exists",
+        "multi_duplicate": "The role names: {duplicate} already exist",
+        "not_editable": "The role {language} name is not editable"
+      },
+      "role_id": {
+        "invalid": "role id must be positive number more than or equal to 1"
+      }
+    },
+    "permissions": {
+      "empty": "Any role must have at least one permission",
+      "not_found": "Permissions with ids: {ids} not found",
+      "duplicate": "Their is already a role with the same permissions",
+      "not_editable": "You can't update the permissions of this role"
+    },
+    "not_deletable": "The role with id: {id} is not deletable",
+    "user_has_only_this_role": "The role with id: {id} is used in a user and this user has this role only"
+  },
+
+  "user": {
+    "not_found": "No user with id: {id} found",
+    "first_name": {
+      "too_short_too_long": "First name must be between {min} and {max} characters."
+    },
+    "last_name": {
+      "too_short_too_long": "Last name must be between {min} and {max} characters."
+    },
+    "email": {
+      "too_short_too_long": "Email must be between {min} and {max} characters.",
+      "invalid": "Email must be a valid email address",
+      "duplicate": "This email already exists",
+      "change": {
+        "incorrect_password": "Your password is incorrect"
+      },
+      "already_verified": "Your email is already verified"
+    },
+    "password": {
+      "too_short_too_long": "Password must be between {min} and {max} characters.",
+      "change": {
+        "incorrect_password": "The current password is incorrect"
+      }
+    },
+    "types": {
+      "empty": "Any user must have at least one type",
+      "admin_only": "You can't create a user with multiple types including admin"
+    },
+    "roles": {
+      "empty": "Any user must have at least one role",
+      "partial_missing": "Some roles not found"
+    },
+    "protected": "The user with id: {id} is protected",
+    "set_first_password": "Password already set"
+  },
+
+  "user_profile_change": {
+    "new_value": {
+      "invalid": "Old value and new value must be different"
+    },
+    "not_found": "No profile change request",
+    "duplicate": "Their is already a pending profile change request to change this field"
+  },
+
+  "action_token": {
+    "expired": "The action token is expired",
+    "invalid": "The request is invalid or expired"
+  },
+  
+  "auth": {
+    "unauthorized": "Unauthorized",
+    "signup": {
+      "invalid_or_expired_email_verification_token": "The email verification token is invalid or expired"
+    },
+    "login": {
+      "invalid_credentials": "Your email or password is incorrect",
+      "email_not_verified": "Your email is not verified yet, please check your email inbox for verification"
+    },
+    "set_first_password": {
+      "invalid_token": "The set password token is invalid or expired",
+      "user_already_set_password": "You already set your first password"
+    },
+    "reset_password": {
+      "invalid_token": "This link may be used before"
+    }
+  },
+
+  "notification_settings": {
+    "not_found": "The notification settings with id: {id} not found",
+    "notification_event": {
+      "duplicate": "Their is already a notification settings with the same notification event"
+    }
+  },
+
+  "providers": {
+    "s3": {
+      "error": {
+        "downloading-file": "There are an error happened during downloading file",
+        "uploading-file": "There are an error happened during uploading file",
+        "deleting-file": "There are an error happened during deleting file"
+      }
+    }
+  }
+}

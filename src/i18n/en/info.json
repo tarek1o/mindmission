@@ -1,0 +1,13 @@
+{
+  "notification": {
+    "subject": {
+      "change_email": "Change Email Request",
+      "email_verification": "Email Verification",
+      "reset_password": "Reset Password Request",
+      "password_changed": "Password Changed",
+      "password_reset": "Password Reset",
+      "set_first_password": "Set Your First Password",
+      "welcome": "Welcome to our platform"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "notification": {
+    "subject": {
+      "change_email": "تغيير بريد الإلكتروني",
+      "email_verification": "تحقق من بريد الإلكتروني",
+      "reset_password_request": "طلب اعادة تعيين كلمة المرور",
+      "password_changed": "تم تغيير كلمة المرور",
+      "password_reset": "اعادة تعيين كلمة المرور",
+      "set_first_password": "تعيين كلمة المرور الأولى",
+      "welcome": "مرحبا بك في منصتنا"
+    }
+  }
+}

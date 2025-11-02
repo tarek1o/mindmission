@@ -1,0 +1,15 @@
+extends layout/main
+
+block content
+  h2 Email Verification Required
+  p Hello #{name},
+  p Welcome to MindMission! To complete your registration and activate your account, please verify your email address by clicking the button below:
+  p
+    .button-container
+      a.button(href=url) Verify Email Address
+
+  .highlight
+    p 
+      strong Important: 
+      | This link will expire in #{remainingTime} days for your security. 
+      | If you did not request this change, please ignore this email.
