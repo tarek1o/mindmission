@@ -13,6 +13,10 @@ export const validationSchema = Joi.object({
   [EnvironmentVariableNames.PORT]: Joi.number().port().required(),
   [EnvironmentVariableNames.APP_NAME]: Joi.string().required(),
 
+  [EnvironmentVariableNames.GRAPHQL_PATH]: Joi.string().required(),
+  [EnvironmentVariableNames.GRAPHQL_SORT_SCHEMA]: Joi.boolean().required(),
+  [EnvironmentVariableNames.GRAPHQL_INTROSPECTION]: Joi.boolean().required(),
+
   [EnvironmentVariableNames.NOTIFICATIONS_DEFAULT_CHANNEL]: Joi.string()
     .required()
     .valid(...Object.values(NotificationChannelEnum)),
@@ -66,26 +70,15 @@ export const validationSchema = Joi.object({
   [EnvironmentVariableNames.EMAIL_PROVIDER_PASSWORD]: Joi.string().required(),
 
   [EnvironmentVariableNames.DASHBOARD_ORIGIN]: Joi.string().uri().required(),
-  [EnvironmentVariableNames.DASHBOARD_RESET_PASSWORD_ROUTE]: Joi.string()
-    .uri()
-    .required(),
-  [EnvironmentVariableNames.DASHBOARD_SET_PASSWORD_ROUTE]: Joi.string()
-    .uri()
-    .required(),
-  [EnvironmentVariableNames.DASHBOARD_CHANGE_EMAIL_ROUTE]: Joi.string()
-    .uri()
-    .required(),
+  [EnvironmentVariableNames.DASHBOARD_RESET_PASSWORD_ROUTE]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.DASHBOARD_SET_PASSWORD_ROUTE]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.DASHBOARD_CHANGE_EMAIL_ROUTE]: Joi.string().uri().required(),
 
   [EnvironmentVariableNames.MAIN_APP_ORIGIN]: Joi.string().uri().required(),
-  [EnvironmentVariableNames.MAIN_APP_RESET_PASSWORD_ROUTE]: Joi.string()
-    .uri()
-    .required(),
-  [EnvironmentVariableNames.MAIN_APP_EMAIL_VERIFICATION_ROUTE]: Joi.string()
-    .uri()
-    .required(),
-  [EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE]: Joi.string()
-    .uri()
-    .required(),
+  [EnvironmentVariableNames.MAIN_APP_RESET_PASSWORD_ROUTE]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.MAIN_APP_EMAIL_VERIFICATION_ROUTE]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.MAIN_APP_OAUTH_CALLBACK_URL]: Joi.string().uri().required(),
 
   [EnvironmentVariableNames.BULLMQ_RESET_PASSWORD_QUEUE]: Joi.string().required(),
   [EnvironmentVariableNames.BULLMQ_EMAIL_VERIFICATION_QUEUE]: Joi.string().required(),
@@ -101,4 +94,9 @@ export const validationSchema = Joi.object({
 
   [EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_DIR]: Joi.string().required(),
   [EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_MAX_SIZE]: Joi.number().required(),
+
+  [EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_ID]: Joi.string().required(),
+  [EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_SECRET]: Joi.string().required(),
+  [EnvironmentVariableNames.GOOGLE_OAUTH_CALLBACK_URL]: Joi.string().uri().required(),
+  [EnvironmentVariableNames.GOOGLE_OAUTH_SCOPE]: Joi.string().required(),
 });

@@ -9,6 +9,7 @@ import { RateLimiterConfiguration } from './sub-interfaces/rate-limiter-configur
 import { SettingsConfiguration } from './sub-interfaces/settings.configuration.interface';
 import { BullMQConfigurations } from './sub-interfaces/bull-mq-configurations.interface';
 import { StorageConfiguration } from './sub-interfaces/storage-configuration.interface';
+import { OAuthConfiguration } from './sub-interfaces/oauth-configuration.interface';
 
 export interface IEnvironmentConfiguration {
   appConfig: AppConfigInterface;
@@ -22,4 +23,5 @@ export interface IEnvironmentConfiguration {
   rateLimiter: RateLimiterConfiguration;
   bullMQ: BullMQConfigurations;
   storage: StorageConfiguration;
+  oauth: OAuthConfiguration;
 }

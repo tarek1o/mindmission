@@ -1,0 +1,114 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Allowed columns for ordering roles"""
+enum AllowedRoleOrderColumnsEnum {
+  CREATED_AT
+  ID
+  NAME
+  UPDATED_AT
+}
+
+input CreateRoleInput {
+  permissionIds: [Int!]!
+  translations: [RoleTranslationInputType!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GetAllRolesQueryInput {
+  name: String
+}
+
+"""Supported languages"""
+enum LanguageEnum {
+  ARABIC
+  ENGLISH
+}
+
+type Mutation {
+  createRole(input: CreateRoleInput!): RoleDetailsType!
+  deleteRole(id: Int!): Boolean!
+  updateRole(id: Int!, input: UpdateRoleInput!): RoleDetailsType!
+}
+
+"""Order direction (ASC or DESC)"""
+enum OrderDirectionEnum {
+  ASC
+  DESC
+}
+
+input PaginationInput {
+  skip: Int = 0
+  take: Int = 10
+}
+
+type PaginationType {
+  page: Int!
+  pages: Int!
+  skip: Int!
+  take: Int!
+  totalCount: Int!
+}
+
+type Query {
+  getAllRoles(order: RoleOrderInput, pagination: PaginationInput, query: GetAllRolesQueryInput): RolesResponseType!
+  getRoleById(id: Int!): RoleDetailsType!
+  getRolesByLanguage: [RoleListType!]!
+}
+
+type RoleDetailsType {
+  arePermissionsEditable: Boolean!
+  createdAt: DateTime!
+  id: Int!
+  isDeletable: Boolean!
+  permissions: [Int!]!
+  translations: [RoleTranslationType!]!
+  updateAt: DateTime!
+}
+
+type RoleListType {
+  id: Int!
+  name: String!
+}
+
+input RoleOrderInput {
+  orderBy: AllowedRoleOrderColumnsEnum = CREATED_AT
+  orderDirection: OrderDirectionEnum = DESC
+}
+
+input RoleTranslationInputType {
+  description: String
+  language: LanguageEnum!
+  name: String!
+}
+
+type RoleTranslationType {
+  description: String
+  language: String!
+  name: String!
+}
+
+type RoleType {
+  createdAt: DateTime!
+  description: String
+  id: Float!
+  isDeletable: Boolean!
+  name: String!
+  updateAt: DateTime!
+}
+
+type RolesResponseType {
+  count: Int!
+  data: [RoleType!]!
+  pagination: PaginationType
+}
+
+input UpdateRoleInput {
+  permissionIds: [Int!]
+  translations: [RoleTranslationInputType!]
+}

@@ -1,3 +1,4 @@
+import { IBaseRepository } from 'src/modules/shared/application/interfaces/base-repository.interface';
 import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';
 import { GetAllPermissionQueryInput } from '../inputs/get-all-permission-query.input';
 import { IOrder } from 'src/modules/shared/application/interfaces/order.interface';
@@ -8,12 +9,11 @@ import { ActionEnum } from '../../domain/enums/action.enum';
 import { GetAllPermissionsByLanguageViewModel } from '../view-models/get-all-permissions-by-language.view.model';
 import { PermissionWithTranslationsViewModel } from '../view-models/permission-with-translations.view-model';
 
-export interface IPermissionRepository {
+export interface IPermissionRepository extends IBaseRepository<PermissionModel> {
   getAllPaginatedAndTotalCount(query: GetAllPermissionQueryInput, order: IOrder<AllowedPermissionOrderColumnEnum>, pagination: Pagination): Promise<{ models: GetAllPermissionsByLanguageViewModel[], count: number }>;
   getById(id: number): Promise<PermissionModel | null>;
   getWithTranslationsById(id: number): Promise<PermissionWithTranslationsViewModel | null>;
   getByIds(ids: number[]): Promise<PermissionModel[]>;
   getCountByResourceAndActions(resource: ResourceEnum, actions: ActionEnum[], permissionId?: number): Promise<number>;
   countRolesWithOnlyPermission(permissionId: number): Promise<number>
-  save(permissionModel: PermissionModel, manager?: unknown): Promise<PermissionModel>;
 }

@@ -4,4 +4,9 @@ export interface AppConfigInterface {
   port: number;
   mode: EnvironmentEnum;
   name: string;
+  graphql: {
+    path: string;
+    sortSchema: boolean;
+    introspection: boolean;
+  };
 }

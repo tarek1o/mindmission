@@ -1,3 +1,4 @@
+import { IBaseRepository } from 'src/modules/shared/application/interfaces/base-repository.interface';
 import { GetAllRolesByLanguageViewModel } from '../view-models/get-all-roles-by-language.view-model';
 import { GetAllRoleQueryInput } from '../inputs/get-all-role-query.input';
 import { IOrder } from 'src/modules/shared/application/interfaces/order.interface';
@@ -6,7 +7,7 @@ import { Pagination } from 'src/modules/shared/application/interfaces/pagination
 import { RoleModel } from '../../domain/models/role.model';
 import { RoleWithTranslationsViewModel } from '../view-models/role-with-translations.view-model';
 
-export interface IRoleRepository {
+export interface IRoleRepository extends IBaseRepository<RoleModel> {
   getAllPaginatedAndTotalCount(query: GetAllRoleQueryInput, order: IOrder<AllowedRoleOrderColumnsEnum>, pagination: Pagination): Promise<{ models: GetAllRolesByLanguageViewModel[], count: number }>;
   getById(id: number): Promise<RoleModel | null>;
   getByIds(ids: number[]): Promise<RoleModel[]>;
@@ -14,5 +15,4 @@ export interface IRoleRepository {
   isSystemRoleExist(id: number): Promise<boolean>;
   countRolesWithPermissionsExcludingRoleId(permissionIds: number[], roleId?: number): Promise<number>;
   countUsersWithOnlyRole(roleId: number): Promise<number>
-  save(permissionModel: RoleModel, manager?: unknown): Promise<RoleModel>;
 }

@@ -1,5 +1,7 @@
 version: "3.9"
 
+name: backend
+
 services:
   app:
     build:

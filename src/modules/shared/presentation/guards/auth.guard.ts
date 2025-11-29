@@ -7,6 +7,7 @@ import { RequestWithUser } from '../interfaces/request-with-user.interface';
 import { UserTypeEnum } from 'src/modules/user/domain/enums/user-type.enum';
 import { UserSession } from '../interfaces/user-session.interface';
 import { PermissionCacheViewModel } from 'src/modules/permission/application/view-models/permission-cache.view-model';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,8 +17,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
+    const gqlCtx = GqlExecutionContext.create(context);
+    const request: RequestWithUser = gqlCtx.getContext().req;
     const { allowedUserTypes, privileges } = this.reflector.get<IAccessPolicy>(Privilege_Decorator_Key, context.getHandler());
-    const request = context.switchToHttp().getRequest<RequestWithUser>();
     const isAuthorized = this.isUserHasRequiredUserTypes(request.user, allowedUserTypes) && this.isUserHasRequiredPrivileges(request.user, privileges);
     if(!isAuthorized) {
       this.logger.error(`User ${request.user.id} is not authorized to access this endpoint`, AuthGuard.name);

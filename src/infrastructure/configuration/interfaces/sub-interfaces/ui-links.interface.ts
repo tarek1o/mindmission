@@ -18,6 +18,7 @@ interface MainAppLinks extends UIHost, ResetPasswordURL {
   resetPasswordURL: string;
   emailVerificationURL: string;
   changeEmailURL: string;
+  oauthCallbackURL: string;
 }
 
 export interface UILinks {

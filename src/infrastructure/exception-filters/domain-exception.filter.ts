@@ -2,61 +2,30 @@ import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
-  HttpStatus,
-  Inject,
 } from '@nestjs/common';
-import { Response } from 'express';
-import { BaseExceptionFilter } from './base/base-exception.filter';
-import { TRANSLATION_SERVICE } from 'src/modules/shared/application/constant/translation-service.constant';
-import { ITranslationService } from 'src/modules/shared/application/interfaces/translation-service.interface';
+import { ModuleRef } from '@nestjs/core';
+import { GqlContextType } from '@nestjs/graphql';
 import { BaseDomainError } from 'src/modules/shared/domain/errors/base/base-domain.error';
-import { InvalidInputError } from 'src/modules/shared/domain/errors/invalid-input.error';
-import { ProtectedResourceError } from 'src/modules/shared/domain/errors/protected-resource.error';
-import { ConflictError } from 'src/modules/shared/domain/errors/conflict.error';
-import { BusinessRuleViolationError } from 'src/modules/shared/domain/errors/business-rule-violation.error';
-import { ResourceNotFoundError } from 'src/modules/shared/domain/errors/resource-not-found.error';
-import { UnexpectedBehaviorError } from 'src/modules/shared/domain/errors/unexpected-behavior.error';
+import { DomainGraphqlExceptionFilter } from './graphql/domain-graphql-exception.filter';
+import { DomainRestfulExceptionFilter } from './rest/domain-restful-exception.filter';
 
 @Catch(BaseDomainError)
-export class DomainExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
-  private readonly errorInfoMap: Record<string, { name: string, statusCode: HttpStatus }> = {
-    [InvalidInputError.name]: {
-      name: 'Bad Request',
-      statusCode: HttpStatus.BAD_REQUEST,
-    },
-    [BusinessRuleViolationError.name]: {
-      name: 'Unprocessable Entity',
-      statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-    },
-    [ProtectedResourceError.name]: {
-      name: 'Forbidden',
-      statusCode: HttpStatus.FORBIDDEN,
-    },
-    [ConflictError.name]: {
-      name: 'Conflict',
-      statusCode: HttpStatus.CONFLICT
-    },
-    [ResourceNotFoundError.name]: {
-      name: 'Not Found',
-      statusCode: HttpStatus.NOT_FOUND,
-    },
-    [UnexpectedBehaviorError.name]: {
-      name: 'Internal Server Error',
-      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-    },
-  }
-
-  constructor(
-    @Inject(TRANSLATION_SERVICE) private readonly translationService: ITranslationService,
-  ) {
-    super()
-  }
+export class DomainExceptionFilter implements ExceptionFilter {
+  private readonly exceptionHandlerMap: Record<GqlContextType, string> = {
+    graphql: DomainGraphqlExceptionFilter.name,
+    http: DomainRestfulExceptionFilter.name,
+    ws: undefined,
+    rpc: undefined,
+  };
+  
+  constructor(private readonly moduleRef: ModuleRef) {}
 
   catch(exception: BaseDomainError, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse<Response>();
-    const { statusCode, name } = this.errorInfoMap[exception.constructor.name] ?? { name: 'Internal Service Error', statusCode: HttpStatus.INTERNAL_SERVER_ERROR };
-    const translatedErrorMessage = this.translationService.translate(`errors.${exception.message}`, exception.args);
-    const error = this.buildErrorResponse(statusCode, name, translatedErrorMessage);
-    return response.status(error.status).json(error);
+    const type: GqlContextType = host.getType();
+    const exceptionHandlerName = this.exceptionHandlerMap[type];
+    if (exceptionHandlerName) {
+      const exceptionHandler = this.moduleRef.get<ExceptionFilter>(exceptionHandlerName, { strict: false });
+      return exceptionHandler.catch(exception, host);
+    }
   }
 }

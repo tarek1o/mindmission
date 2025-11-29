@@ -16,6 +16,7 @@ import { UNIT_OF_WORK } from "src/modules/shared/application/constant/unit-of-wo
 import { IUnitOfWork } from "src/modules/shared/application/interfaces/unit-of-work.interface";
 import { ActionTokenModel } from "src/modules/action-token/domain/models/action-token.model";
 import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Injectable()
 export class CreateAdminUseCase {
@@ -43,17 +44,17 @@ export class CreateAdminUseCase {
     });
   }
 
-  private async createEmailVerificationToken(user: UserModel, manager?: unknown): Promise<ActionTokenModel> {
+  private async createSetPasswordToken(user: UserModel, manager?: unknown): Promise<ActionTokenModel> {
     const payload = {
       userId: user.id,
     }
-    return this.actionTokenService.generate(ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN, payload, user.id, manager);
+    return this.actionTokenService.generate(ActionTokenTypeEnum.SET_FIRST_PASSWORD_TOKEN, payload, user.id, manager);
   }
 
-  private async saveUserAndGenerateEmailVerificationToken(user: UserModel): Promise<{ user: UserModel, actionToken: ActionTokenModel }> {
+  private async saveUserAndGenerateSetPasswordToken(user: UserModel): Promise<{ user: UserModel, actionToken: ActionTokenModel }> {
     return this.unitOfWork.transaction(async (manager) => {
       const savedUser = await this.userRepository.save(user, manager);
-      const actionToken = await this.createEmailVerificationToken(savedUser, manager);
+      const actionToken = await this.createSetPasswordToken(savedUser, manager);
       return { 
         user: savedUser, 
         actionToken,
@@ -73,10 +74,10 @@ export class CreateAdminUseCase {
   }
 
   async execute(createUserDto: CreateUserInput): Promise<UserModel> {
-    await this.userValidatorService.checkEmailDuplicate(createUserDto.email);
+    await this.userValidatorService.checkEmailDuplicate(createUserDto.email, AppUiEnum.DASHBOARD);
     const roles = await this.userValidatorService.validateRoles(createUserDto.rolesIds); // TODO: use role validator service in role module
     const userModel = await this.createUserModel(createUserDto, roles);
-    const { user, actionToken } = await this.saveUserAndGenerateEmailVerificationToken(userModel);
+    const { user, actionToken } = await this.saveUserAndGenerateSetPasswordToken(userModel);
     await this.sendSetFirstPasswordNotification(user, actionToken);
     return user;
   }

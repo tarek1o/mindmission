@@ -57,7 +57,7 @@ export class CompleteChangeEmailUseCase {
     const actionToken = await this.verifyChangeEmailToken(token);
     const userProfileChange = await this.getEmailChangeRequest(actionToken.payload.userProfileChangeId);
     const user = await this.userFinderService.getById(actionToken.userId);
-    await this.userValidatorService.checkEmailDuplicate(userProfileChange.newValue);
+    await this.userValidatorService.checkEmailDuplicate(userProfileChange.newValue, user.appUi);
     user.changeEmail(userProfileChange.newValue);
     userProfileChange.markAsConfirmed();
     await this.applyEmailChange(actionToken, user, userProfileChange);

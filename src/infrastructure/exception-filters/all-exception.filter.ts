@@ -1,17 +1,31 @@
-import { ArgumentsHost, ExceptionFilter, HttpStatus, Inject, LoggerService } from "@nestjs/common";
-import { Response } from "express";
-import { BaseExceptionFilter } from "./base/base-exception.filter";
+import { ArgumentsHost, ExceptionFilter, Inject, LoggerService } from "@nestjs/common";
+import { ModuleRef } from "@nestjs/core";
+import { GqlContextType } from "@nestjs/graphql";
 import { LOGGER_SERVICE } from "src/modules/shared/application/constant/logger-service.constant";
+import { AllRestfulExceptionFilter } from "./rest/all-restful-exception.filter";
+import { AllGraphqlExceptionFilter } from "./graphql/all-graphql-exception.filter";
 
-export class AllExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
-  constructor(@Inject(LOGGER_SERVICE) private readonly logger: LoggerService) {
-    super();
-  }
+export class AllExceptionFilter implements ExceptionFilter {
+  private readonly exceptionHandlerMap: Record<GqlContextType, string> = {
+    graphql: AllGraphqlExceptionFilter.name,
+    http: AllRestfulExceptionFilter.name,
+    ws: undefined,
+    rpc: undefined,
+  };
+  
+  constructor(
+    private readonly moduleRef: ModuleRef,
+    @Inject(LOGGER_SERVICE) private readonly logger: LoggerService
+  ) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse<Response>();
+    console.error(exception);
     this.logger.error(`An unexpected error occurred: ${exception}`, AllExceptionFilter.name);
-    const error = this.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, 'Internal Server Error', 'An unexpected error occurred');
-    response.status(error.status).json(error);
+    const type: GqlContextType = host.getType();  
+    const exceptionHandlerName = this.exceptionHandlerMap[type];
+    if (exceptionHandlerName) {
+      const exceptionHandler = this.moduleRef.get<ExceptionFilter>(exceptionHandlerName, { strict: false });
+      return exceptionHandler.catch(exception, host);
+    }
   }
 } 

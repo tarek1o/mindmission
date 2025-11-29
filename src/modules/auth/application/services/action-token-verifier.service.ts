@@ -20,7 +20,7 @@ export class ActionTokenVerifierService {
 
   async verifySetPasswordToken(token: string): Promise<ActionTokenModel> {
     try {
-      return await this.actionTokenService.verify(ActionTokenTypeEnum.SET_PASSWORD_TOKEN, token)
+      return await this.actionTokenService.verify(ActionTokenTypeEnum.SET_FIRST_PASSWORD_TOKEN, token)
     } catch(error) {
       throw new BusinessRuleViolationError('auth.set_first_password.invalid_token');
     }

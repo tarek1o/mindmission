@@ -6,6 +6,7 @@ import { PasswordHashingHelper } from "src/modules/shared/application/helpers/pa
 import { UserModel } from "src/modules/user/domain/models/user.model";
 import { AuthTokenService } from "../../services/auth-token.service";
 import { BusinessRuleViolationError } from "src/modules/shared/domain/errors/business-rule-violation.error";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Injectable()
 export class LoginUseCase {
@@ -27,8 +28,8 @@ export class LoginUseCase {
     }
   }
 
-  async execute(loginInput: LoginInput): Promise<{ accessToken: string, refreshToken: string }> {
-    const user = await this.userRepository.getByEmail(loginInput.email);
+  async execute(appUi: AppUiEnum, loginInput: LoginInput): Promise<{ accessToken: string, refreshToken: string }> {
+    const user = await this.userRepository.getByEmail(loginInput.email, appUi);
     await this.validatePassword(user, loginInput.password);
     this.checkIfEmailIsVerified(user);
     const accessTokenModel = await this.authTokenService.generateAccessToken(user);

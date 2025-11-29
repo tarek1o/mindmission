@@ -81,7 +81,7 @@ export class ChangeEmailUseCase {
   async execute(id: number, changeEmailInput: ChangeEmailInput): Promise<void> {
     const user = await this.userFinderService.getById(id);
     await this.validatePassword(user, changeEmailInput.password);
-    await this.userValidatorService.checkEmailDuplicate(changeEmailInput.newEmail, user.id);
+    await this.userValidatorService.checkEmailDuplicate(changeEmailInput.newEmail, user.appUi, user.id);
     const userProfileChange = await this.createEmailChangeRequest(user, changeEmailInput.newEmail);
     const actionToken = await this.saveUserProfileChangeAndGenerateChangeEmailToken(userProfileChange);
     await this.sendChangeEmailVerification(user, actionToken);

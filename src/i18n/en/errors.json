@@ -147,6 +147,11 @@
     },
     "reset_password": {
       "invalid_token": "This link may be used before"
+    },
+    "oauth": {
+      "flow": {
+        "not_found": "The {flow} flow is not found"
+      }
     }
   },
 
@@ -164,6 +169,13 @@
         "uploading-file": "There are an error happened during uploading file",
         "deleting-file": "There are an error happened during deleting file"
       }
+    }
+  },
+
+  "category": {
+    "parent_id": {
+      "not_allowed": "The category type: {type} does not allow a parent id",
+      "required": "The category type: {type} requires a parent id of type: {parent}"
     }
   }
 }

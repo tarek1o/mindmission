@@ -14,7 +14,7 @@ import { PasswordHashingHelper } from "src/modules/shared/application/helpers/pa
 import { EmailVerificationNotificationMessage } from "src/modules/auth/application/notification/messages/email-verification-notification.message.";
 import { ActionTokenModel } from "src/modules/action-token/domain/models/action-token.model";
 import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
-
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Injectable()
 export class SignupUseCase {
@@ -70,7 +70,7 @@ export class SignupUseCase {
   }
 
   async execute(signUpDto: SignupInput): Promise<void> {
-    await this.userValidator.checkEmailDuplicate(signUpDto.email);
+    await this.userValidator.checkEmailDuplicate(signUpDto.email, AppUiEnum.MAIN_APP);
     const userModel = await this.createUserModel(signUpDto);
     const { user, actionToken } = await this.saveUserAndGenerateEmailVerificationToken(userModel);
     await this.sendEmailVerificationNotification(user, actionToken);

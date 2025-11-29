@@ -1,27 +1,27 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
-import { I18nValidationError, I18nValidationException, I18nValidationExceptionFilter as BaseFilter } from "nestjs-i18n";
-import { BaseExceptionFilter } from "./base/base-exception.filter";
+import { ModuleRef } from "@nestjs/core";
+import { GqlContextType } from "@nestjs/graphql";
+import { I18nValidationException } from "nestjs-i18n";
+import { I18nValidationRestfulExceptionFilter } from "./rest/i18n-validation-restful-exception.filter";
+import { I18nValidationGraphqlExceptionFilter } from "./graphql/i18n-validation-graphql-exception.filter";
 
 @Catch(I18nValidationException)
-export class I18nValidationExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
-  private readonly baseFilter = new BaseFilter({
-    responseBodyFormatter: (host, exception) => this.responseBodyFormatter(host, exception)
-  })
+export class I18nValidationExceptionFilter implements ExceptionFilter {
+  private readonly exceptionHandlerMap: Record<GqlContextType, string> = {
+    graphql: I18nValidationGraphqlExceptionFilter.name,
+    http: I18nValidationRestfulExceptionFilter.name,
+    ws: undefined,
+    rpc: undefined,
+  };
+  
+  constructor(private readonly moduleRef: ModuleRef) {}
 
   catch(exception: I18nValidationException, host: ArgumentsHost) {
-    this.baseFilter.catch(exception, host);
-  }
-
-  private responseBodyFormatter(_host: ArgumentsHost, exception: I18nValidationException) {
-    const messages = this.extractValidationErrors(exception.errors)
-    return this.buildErrorResponse(exception.getStatus(), exception.getResponse().toString(), messages);
-  }
-
-  private extractValidationErrors(errors: I18nValidationError[]): string[] {
-    return errors.map(error => {
-      const parentErrors = Object.values(error.constraints);
-      const childrenErrors = this.extractValidationErrors(error.children);
-      return [...parentErrors, ...childrenErrors];
-    }).flat()
+    const type: GqlContextType = host.getType();
+    const exceptionHandlerName = this.exceptionHandlerMap[type];
+    if (exceptionHandlerName) {
+      const exceptionHandler = this.moduleRef.get<ExceptionFilter>(exceptionHandlerName, { strict: false });
+      return exceptionHandler.catch(exception, host);
+    }
   }
 }

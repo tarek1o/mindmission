@@ -32,6 +32,7 @@ export abstract class UserMapper {
       id: model.id,
       firstName: model.firstName,
       lastName: model.lastName,
+      appUi: model.appUi,
       email: model.email,
       isEmailVerified: model.isEmailVerified,
       password: model.password,

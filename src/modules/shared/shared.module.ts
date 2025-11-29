@@ -13,6 +13,7 @@ import { PermissionModule } from "../permission/permission.module";
 import { ActionTokenModule } from "../action-token/action-token.module";
 import { QUEUE_PUBLISHER_SERVICE } from "./application/constant/queue-publisher-service.constant";
 import { QueuePublisherService } from "./infrastructure/services/queue-publisher.service";
+import { RedisConnectorService } from "./infrastructure/cache/services/redis-connector.service";
 
 @Global()
 @Module({
@@ -45,6 +46,7 @@ import { QueuePublisherService } from "./infrastructure/services/queue-publisher
     Logger,
     WinstonLoggerService,
     DatabaseLoggerService,
+    RedisConnectorService,
     {
       provide: QUEUE_PUBLISHER_SERVICE,
       useClass: QueuePublisherService
@@ -73,6 +75,7 @@ import { QueuePublisherService } from "./infrastructure/services/queue-publisher
     ActionTokenModule,
     RoleModule,
     PermissionModule,
+    RedisConnectorService,
   ],
 })
 export class SharedModule {}

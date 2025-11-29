@@ -11,6 +11,8 @@ import { VerifyResetPasswordTokenDto } from "../dto/request/verify-reset-passwor
 import { ResetPasswordUseCase } from "../../application/use-cases/forget-password/reset-password.use-case";
 import { ResetPasswordDto } from "../dto/request/reset-password.dto";
 import { configService } from "src/infrastructure/configuration/services/config-instance.service";
+import { AppUi } from "src/modules/shared/presentation/decorators/app-ui.decorator";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Controller({ path: "auth/password", version: "1" })
 export class PasswordController {
@@ -35,8 +37,11 @@ export class PasswordController {
 
   @Post("forget")
   @Throttle({ default: { limit: configService.getNumber('FORGET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('FORGET_PASSWORD_RATE_LIMITER_DEFAULT_TTL') } })
-  forgetPassword(@Body() forgetPasswordDto: ForgetPasswordDto): Promise<void> {
-    return this.forgetPasswordUseCase.execute(forgetPasswordDto.email);
+  forgetPassword(
+    @AppUi() appUi: AppUiEnum,
+    @Body() forgetPasswordDto: ForgetPasswordDto,
+  ): Promise<void> {
+    return this.forgetPasswordUseCase.execute(appUi, forgetPasswordDto.email);
   }
   
   @Post("verify")

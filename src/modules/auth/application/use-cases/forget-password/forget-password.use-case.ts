@@ -16,6 +16,7 @@ import { ActionTokenModel } from "src/modules/action-token/domain/models/action-
 import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
 import { SuspendedAccountModel } from "src/modules/suspended-account/domain/models/suspended-account.model";
 import { NotificationEventEnum } from "src/modules/notification/domain/enums/notification-event.enum";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Injectable()
 export class ForgetPasswordUseCase {
@@ -72,9 +73,9 @@ export class ForgetPasswordUseCase {
     await this.notificationService.send(message);
   }
 
-  async execute(email: string): Promise<void> {
+  async execute(appUi: AppUiEnum, email: string): Promise<void> {
     const isEmailSuspended = await this.isEmailSuspended(email);
-    const user = !isEmailSuspended ? await this.userRepository.getByEmail(email) : null;
+    const user = !isEmailSuspended ? await this.userRepository.getByEmail(email, appUi) : null;
     if (user?.isEmailVerified) {
       const actionToken = await this.suspendUserAccountAndGenerateResetPasswordToken(user);
       await this.sendResetPasswordNotification(user, actionToken);

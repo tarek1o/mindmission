@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RoleController } from './presentation/controllers/role.controller';
+import { RoleController } from './presentation/rest/controllers/role.controller';
+import { RoleResolver } from './presentation/graphql/resolvers/role.resolver';
 import { RoleEntity } from './infrastructure/database/entities/role.entity';
 import { RoleTranslationEntity } from './infrastructure/database/entities/role-translation.entity';
 import { GetAllRolesPaginatedWithCountUseCase } from './application/use-cases/get-all-roles-paginated-with-count.use-case';
@@ -49,6 +50,7 @@ import { AuthMiddleware } from '../shared/presentation/middlewares/auth.middlewa
     CreateRoleUseCase,
     UpdateRoleUseCase,
     DeleteRoleUseCase,
+    RoleResolver,
   ],
   exports: [
     ROLE_REPOSITORY,

@@ -13,8 +13,10 @@ import { UserMapper } from "../mappers/user.mapper";
 import { GetAllUsersPaginatedViewModel } from "src/modules/user/application/view-models/get-all-users-paginated.view-model";
 import { UserProfileInfoViewModel } from "src/modules/user/application/view-models/user-profile-info.view.model";
 import { UserTypeEnum } from "src/modules/user/domain/enums/user-type.enum";
+import { USER_INDEXES_CONSTANTS } from "../constants/user-indexes.constant";
 import { ConflictError } from "src/modules/shared/domain/errors/conflict.error";
 import { ErrorMappingResult } from "src/modules/shared/infrastructure/database/types/error-mapping-result.type";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 export class UserRepository implements IUserRepository {
   constructor(
@@ -100,9 +102,9 @@ export class UserRepository implements IUserRepository {
     return entity ? UserMapper.toModel(entity) : null;
   }
 
-  async getByEmail(email: string): Promise<UserModel | null> {
+  async getByEmail(email: string, appUi: AppUiEnum): Promise<UserModel | null> {
     const entity = await this.userRepository.findOne({
-      where: { email },
+      where: { email, appUi },
       relations: [
         'roles',
         'roles.permissions',
@@ -177,11 +179,12 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  async getByEmailExceptId(email: string, id?: number): Promise<{id: number, email: string} | null> {
+  async getByEmailExceptId(email: string, appUi: AppUiEnum, id?: number): Promise<{id: number, email: string} | null> {
     const entity = await this.userRepository.findOne({
       where: { 
         id: id ? Not(id) : undefined,
         email, 
+        appUi,
       },
       select: {
         id: true,
@@ -205,7 +208,7 @@ export class UserRepository implements IUserRepository {
   private errorHandler(error: unknown) {
     const errorMappingResult: ErrorMappingResult[] = [
       {
-        constraint: 'users_email_partial_unique_index',
+        constraint: USER_INDEXES_CONSTANTS.USERS_APP_UI_EMAIL_PARTIAL_UNIQUE_INDEX,
         error: new ConflictError('user.email.duplicate'),
       }
     ];

@@ -11,6 +11,8 @@ import { LogoutDto } from "../dto/request/logout.dto";
 import { RefreshTokenUseCase } from "../../application/use-cases/refresh-token/refresh-token.use-case";
 import { RefreshTokenDto } from "../dto/request/refresh-token.dto";
 import { configService } from "src/infrastructure/configuration/services/config-instance.service";
+import { AppUi } from "src/modules/shared/presentation/decorators/app-ui.decorator";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 @Controller({ path: "auth", version: "1" })
 export class AuthController {
@@ -34,8 +36,11 @@ export class AuthController {
 
   @Post("login")
   @Throttle({ default: { limit: configService.getNumber('LOGIN_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('LOGIN_RATE_LIMITER_DEFAULT_TTL') } })
-  login(@Body() loginDto: LoginDto): Promise<{ accessToken: string, refreshToken: string }> {
-    return this.loginUseCase.execute(loginDto);
+  login(
+    @AppUi() appUi: AppUiEnum,
+    @Body() loginDto: LoginDto,
+  ): Promise<{ accessToken: string, refreshToken: string }> {
+    return this.loginUseCase.execute(appUi, loginDto);
   }
   
   @Post("logout")

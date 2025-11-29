@@ -14,6 +14,7 @@ import { IRedisConfiguration } from './configuration/interfaces/sub-interfaces/r
 import { TRANSLATION_SERVICE } from 'src/modules/shared/application/constant/translation-service.constant';
 import { ITranslationService } from 'src/modules/shared/application/interfaces/translation-service.interface';
 import { RateLimiterConfiguration } from './configuration/interfaces/sub-interfaces/rate-limiter-configuration.interface';
+import { RedisConnectorService } from 'src/modules/shared/infrastructure/cache/services/redis-connector.service';
 
 @Module({
   imports: [
@@ -26,30 +27,33 @@ import { RateLimiterConfiguration } from './configuration/interfaces/sub-interfa
         const options = configService.get<IRedisConfiguration>('redis');
         return {
           type: 'single',
-          options,
+          options: {
+            ...options,
+            maxRetriesPerRequest: null,
+          },
         }
       }
     }),
-    ThrottlerModule.forRootAsync({
-      inject: [ConfigService, TRANSLATION_SERVICE],
-      useFactory(configService: ConfigService<IEnvironmentConfiguration, true>, translationService: ITranslationService) {
-        const { limit, ttl } = configService.get<RateLimiterConfiguration>('rateLimiter').default;
-        return {
-          throttlers: [
-            {
-              limit,
-              ttl,
-            },
-          ],
-          // storage: new ThrottlerStorageRedisService(), // TODO: Handle redis connection
-          errorMessage(_context, throttlerLimitDetail) {
-            return translationService.translate('errors.global.rate_limiter.too_many_requests', {
-              ttl: throttlerLimitDetail.ttl / 1000,
-            });
-          },
-        };
-      },
-    }),
+    // ThrottlerModule.forRootAsync({
+    //   inject: [ConfigService, RedisConnectorService, TRANSLATION_SERVICE],
+    //   useFactory(configService: ConfigService<IEnvironmentConfiguration, true>, redisConnectorService: RedisConnectorService, translationService: ITranslationService) {
+    //     const { limit, ttl } = configService.get<RateLimiterConfiguration>('rateLimiter').default;
+    //     return {
+    //       throttlers: [
+    //         {
+    //           limit,
+    //           ttl,
+    //         },
+    //       ],
+    //       storage: new ThrottlerStorageRedisService(redisConnectorService.connection),
+    //       errorMessage(_context, throttlerLimitDetail) {
+    //         return translationService.translate('errors.global.rate_limiter.too_many_requests', {
+    //           ttl: throttlerLimitDetail.ttl / 1000,
+    //         });
+    //       },
+    //     };
+    //   },
+    // }),
     ConfigurationModule,
     DatabaseModule,
     MailModule,

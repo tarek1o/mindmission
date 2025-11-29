@@ -11,7 +11,7 @@ export class TokenStrategyFactory {
     [ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN]: TokenStrategyType.STATEFUL,
     [ActionTokenTypeEnum.REFRESH_TOKEN]: TokenStrategyType.STATEFUL,
     [ActionTokenTypeEnum.RESET_PASSWORD_TOKEN]: TokenStrategyType.STATEFUL,
-    [ActionTokenTypeEnum.SET_PASSWORD_TOKEN]: TokenStrategyType.STATEFUL,
+    [ActionTokenTypeEnum.SET_FIRST_PASSWORD_TOKEN]: TokenStrategyType.STATEFUL,
     [ActionTokenTypeEnum.CHANGE_EMAIL]: TokenStrategyType.STATEFUL,
   }
 

@@ -52,7 +52,7 @@ export class CreateRoleUseCase {
   }
 
   async execute(input: RoleInput): Promise<RoleWithTranslationsViewModel> {
-    // await this.roleValidationService.validate(input);
+    await this.roleValidationService.validate(input);
     const permissions = await this.roleValidationService.getPermissionsByIds(input.permissionIds);
     const roleWithTranslationsViewModel = await this.create(input.translations, permissions);
     await this.cacheCreatedPermission(roleWithTranslationsViewModel.role);

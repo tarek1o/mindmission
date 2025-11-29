@@ -24,6 +24,11 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
       name: process.env[EnvironmentVariableNames.APP_NAME],
       port: parseInt(process.env[EnvironmentVariableNames.PORT], 10),
       mode: process.env[EnvironmentVariableNames.NODE_ENV] as EnvironmentEnum,
+      graphql: {
+        path: process.env[EnvironmentVariableNames.GRAPHQL_PATH].trim(),
+        sortSchema: process.env[EnvironmentVariableNames.GRAPHQL_SORT_SCHEMA].trim().toLowerCase() === 'true',
+        introspection: process.env[EnvironmentVariableNames.GRAPHQL_INTROSPECTION].trim().toLowerCase() === 'true',
+      },
     },
     bullMQ: {
       queues: {
@@ -111,7 +116,8 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
         origin: process.env[EnvironmentVariableNames.MAIN_APP_ORIGIN],
         resetPasswordURL: process.env[EnvironmentVariableNames.MAIN_APP_RESET_PASSWORD_ROUTE],
         emailVerificationURL: process.env[EnvironmentVariableNames.MAIN_APP_EMAIL_VERIFICATION_ROUTE],
-        changeEmailURL: process.env[EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE]
+        changeEmailURL: process.env[EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE],
+        oauthCallbackURL: process.env[EnvironmentVariableNames.MAIN_APP_OAUTH_CALLBACK_URL],
       },
     },
     awsS3Config: {
@@ -128,6 +134,14 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
           dir: process.env[EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_DIR],
           maxSize: parseInt(process.env[EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_MAX_SIZE], 10),
         },
+      },
+    },
+    oauth: {
+      google: {
+        clientID: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_ID],
+        clientSecret: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_SECRET],
+        callbackURL: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CALLBACK_URL],
+        scope: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_SCOPE].split(','),
       },
     },
   };

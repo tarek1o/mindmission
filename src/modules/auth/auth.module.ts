@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { OAuthProviderEntity } from './infrastructure/database/entities/oauth-provider.entity';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './presentation/controllers/auth.controller';
 import { PasswordController } from './presentation/controllers/password.controller';
@@ -20,9 +22,19 @@ import { NotificationModule } from '../notification/notification.module';
 import { ResetPasswordNotificationProcessor } from './infrastructure/bull-mq/processors/reset-password-notification.processor';
 import { WelcomeNotificationProcessor } from './infrastructure/bull-mq/processors/welcome-notification.processor';
 import { EmailVerificationNotificationProcessor } from './infrastructure/bull-mq/processors/email-verification-notification.processor';
+import { OAuthController } from './presentation/controllers/oauth.controller';
+import { GoogleStrategy } from './presentation/oauth-strategies/google/google.strategy';
+import { OAuthUseCase } from './application/use-cases/oauth/oauth.use-case';
+import { OAuthProviderRepository } from './infrastructure/database/repositories/oauth-provider.repository';
+import { OAUTH_PROVIDER_REPOSITORY } from './application/constants/oauth-provider-repository.constant';
+import { OAuthLoginFlowStrategy } from './application/use-cases/oauth/strategies/oauth-login-flow-strategy';
+import { OAuthFlowEnum } from './application/enums/oauth-flow.enum';
+import { OAuthSignupFlowStrategy } from './application/use-cases/oauth/strategies/oauth-signup-flow.strategy';
+import { OAuthFlowStrategyResolverService } from './application/services/oauth-flow-strategy-resolver.service';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([OAuthProviderEntity]),
     UserModule,
     ActionTokenModule,
     SuspendedAccountModule,
@@ -31,8 +43,21 @@ import { EmailVerificationNotificationProcessor } from './infrastructure/bull-mq
   controllers: [
     AuthController,
     PasswordController,
+    OAuthController,
   ],
   providers: [
+    {
+      provide: OAUTH_PROVIDER_REPOSITORY,
+      useClass: OAuthProviderRepository,
+    },
+    {
+      provide: OAuthFlowEnum.LOGIN,
+      useClass: OAuthLoginFlowStrategy,
+    },
+    {
+      provide: OAuthFlowEnum.SIGNUP,
+      useClass: OAuthSignupFlowStrategy,
+    },
     ActionTokenVerifierService,
     AuthTokenService,
     VerifySetFirstPasswordTokenUseCase,
@@ -48,6 +73,9 @@ import { EmailVerificationNotificationProcessor } from './infrastructure/bull-mq
     ResetPasswordNotificationProcessor,
     WelcomeNotificationProcessor,
     EmailVerificationNotificationProcessor,
+    OAuthFlowStrategyResolverService,
+    OAuthUseCase,
+    GoogleStrategy,
   ],
 })
 export class AuthModule {}

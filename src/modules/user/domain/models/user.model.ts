@@ -6,6 +6,7 @@ import { CreateUserProps } from "../interfaces/create-user.props.interface";
 import { UpdateUserProps } from "../interfaces/update-user-props.interface";
 import { ProtectedResourceError } from "src/modules/shared/domain/errors/protected-resource.error";
 import { ConflictError } from "src/modules/shared/domain/errors/conflict.error";
+import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
 
 export class UserModel extends BaseModel {
   private _firstName: string;
@@ -144,6 +145,10 @@ export class UserModel extends BaseModel {
   
   get types(): UserTypeEnum[] {
     return this._types;
+  }
+
+  get appUi(): AppUiEnum {
+    return this.isUserIsSystemAdmin() ? AppUiEnum.DASHBOARD : AppUiEnum.MAIN_APP;
   }
 
   isUserIsSystemAdmin(): boolean {

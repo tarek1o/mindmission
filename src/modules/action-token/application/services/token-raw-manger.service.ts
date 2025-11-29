@@ -11,7 +11,7 @@ export class TokenRawStrategyManager {
     [ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN]: TokenRawTypeEnum.RANDOM_STRING,
     [ActionTokenTypeEnum.REFRESH_TOKEN]: TokenRawTypeEnum.RANDOM_STRING,
     [ActionTokenTypeEnum.RESET_PASSWORD_TOKEN]: TokenRawTypeEnum.RANDOM_STRING,
-    [ActionTokenTypeEnum.SET_PASSWORD_TOKEN]: TokenRawTypeEnum.RANDOM_STRING,
+    [ActionTokenTypeEnum.SET_FIRST_PASSWORD_TOKEN]: TokenRawTypeEnum.RANDOM_STRING,
     [ActionTokenTypeEnum.CHANGE_EMAIL]: TokenRawTypeEnum.RANDOM_STRING,
   }
 
