@@ -7,7 +7,7 @@ import { CreateRoleUseCase } from '../../../application/use-cases/create-role.us
 import { UpdateRoleUseCase } from '../../../application/use-cases/update-role.use-case';
 import { DeleteRoleUseCase } from '../../../application/use-cases/delete-role.use-case';
 import { LanguageEnum } from '../../../../shared/domain/enums/language.enum';
-import { AuthGuard } from 'src/modules/shared/presentation/guards/auth.guard';
+import { AuthorizationGuard } from 'src/modules/shared/presentation/guards/authorization.guard';
 import { AcceptedCriteria } from 'src/modules/shared/presentation/decorators/privileges.decorator';
 import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
 import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
@@ -26,8 +26,10 @@ import { PaginationInput } from '../inputs/pagination.input';
 import { AcceptLanguage } from 'src/infrastructure/localization/decorator/accept-language.decorator';
 import { PaginationPipe } from 'src/modules/shared/presentation/pipes/pagination.pipe';
 import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';
+import { AuthenticationGuard } from 'src/modules/shared/presentation/guards/authentication.guard';
 
 @Resolver(() => RoleType)
+@UseGuards(AuthenticationGuard)
 export class RoleResolver {
   constructor(
     private readonly getAllRolesUseCase: GetAllRolesPaginatedWithCountUseCase,
@@ -39,7 +41,7 @@ export class RoleResolver {
   ) {}
 
   @Query(() => RolesResponseType, { name: 'getAllRoles' })
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH] }] })
   async getAllRoles(
     @AcceptLanguage() language: LanguageEnum,

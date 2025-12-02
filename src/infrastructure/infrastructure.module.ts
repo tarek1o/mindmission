@@ -15,6 +15,14 @@ import { TRANSLATION_SERVICE } from 'src/modules/shared/application/constant/tra
 import { ITranslationService } from 'src/modules/shared/application/interfaces/translation-service.interface';
 import { RateLimiterConfiguration } from './configuration/interfaces/sub-interfaces/rate-limiter-configuration.interface';
 import { RedisConnectorService } from 'src/modules/shared/infrastructure/cache/services/redis-connector.service';
+import { GraphqlExceptionFilter } from './exception-filters/graphql/graphql-exception.filter';
+import { AllRestfulExceptionFilter } from './exception-filters/rest/all-restful-exception.filter';
+import { AllGraphqlExceptionFilter } from './exception-filters/graphql/all-graphql-exception.filter';
+import { DomainRestfulExceptionFilter } from './exception-filters/rest/domain-restful-exception.filter';
+import { DomainGraphqlExceptionFilter } from './exception-filters/graphql/domain-graphql-exception.filter';
+import { RestfulExceptionFilter } from './exception-filters/rest/restful-exception.filter';
+import { I18nValidationRestfulExceptionFilter } from './exception-filters/rest/i18n-validation-restful-exception.filter';
+import { I18nValidationGraphqlExceptionFilter } from './exception-filters/graphql/i18n-validation-graphql-exception.filter';
 
 @Module({
   imports: [
@@ -60,5 +68,39 @@ import { RedisConnectorService } from 'src/modules/shared/infrastructure/cache/s
     LocalizationModule,
     LoggerModule,
   ],
+  providers: [
+    {
+      provide: AllRestfulExceptionFilter.name,
+      useClass: AllRestfulExceptionFilter,
+    },
+    {
+      provide: AllGraphqlExceptionFilter.name,
+      useClass: AllGraphqlExceptionFilter,
+    },
+    {
+      provide: DomainRestfulExceptionFilter.name,
+      useClass: DomainRestfulExceptionFilter,
+    },
+    {
+      provide: DomainGraphqlExceptionFilter.name,
+      useClass: DomainGraphqlExceptionFilter,
+    },
+    {
+      provide: RestfulExceptionFilter.name,
+      useClass: RestfulExceptionFilter,
+    },
+    {
+      provide: GraphqlExceptionFilter.name,
+      useClass: GraphqlExceptionFilter,
+    },
+    {
+      provide: I18nValidationRestfulExceptionFilter.name,
+      useClass: I18nValidationRestfulExceptionFilter,
+    },
+    {
+      provide: I18nValidationGraphqlExceptionFilter.name,
+      useClass: I18nValidationGraphqlExceptionFilter,
+    },
+  ]
 })
 export class InfrastructureModule {}

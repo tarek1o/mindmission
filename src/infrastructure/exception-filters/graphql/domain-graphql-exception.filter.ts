@@ -60,7 +60,6 @@ export class DomainGraphqlExceptionFilter extends BaseExceptionFilter implements
       error.error,
       {
         extensions: error,
-
       }
     );
   }

@@ -27,7 +27,7 @@ import { UpdateRoleDto } from '../dto/request/update-role.dto';
 import { RoleDetailsResponseDto } from '../dto/response/role-details.response.dto';
 import { RoleListResponseDto } from '../dto/response/role-list.response';
 import { RoleResponseDto } from '../dto/response/role.response.dto';
-import { AuthGuard } from 'src/modules/shared/presentation/guards/auth.guard';
+import { AuthorizationGuard } from 'src/modules/shared/presentation/guards/authorization.guard';
 import { AcceptedCriteria } from 'src/modules/shared/presentation/decorators/privileges.decorator';
 import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
 import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
@@ -44,7 +44,7 @@ export class RoleController {
   ) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
   async getAllRoles(
     @AcceptLanguage() language: LanguageEnum,

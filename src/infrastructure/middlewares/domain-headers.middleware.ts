@@ -25,7 +25,7 @@ export class DomainHeadersMiddleware implements NestMiddleware {
     request.headers['x-application-ui'] = this.originApplicationUIMap[request.hostname] ?? request.headers['x-application-ui'];
     this.loggerService.log(`Request Info: ${JSON.stringify(new HeadersModel(request.headers))}`);
     if (!request.headers['x-application-ui']) {
-      throw new BadRequestException('X-Application-UI header is required');
+      // throw new BadRequestException('X-Application-UI header is required');
     }
     next();
   }

@@ -10,7 +10,7 @@ import { PermissionCacheViewModel } from 'src/modules/permission/application/vie
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthorizationGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     @Inject(LOGGER_SERVICE) private readonly logger: LoggerService,
@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     const { allowedUserTypes, privileges } = this.reflector.get<IAccessPolicy>(Privilege_Decorator_Key, context.getHandler());
     const isAuthorized = this.isUserHasRequiredUserTypes(request.user, allowedUserTypes) && this.isUserHasRequiredPrivileges(request.user, privileges);
     if(!isAuthorized) {
-      this.logger.error(`User ${request.user.id} is not authorized to access this endpoint`, AuthGuard.name);
+      this.logger.error(`User ${request.user.id} is not authorized to access this endpoint`, AuthorizationGuard.name);
       throw new NotFoundException(`Cannot ${request.method} ${request.url}`);
     }
     return isAuthorized;

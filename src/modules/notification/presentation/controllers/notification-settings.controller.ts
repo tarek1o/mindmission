@@ -9,7 +9,7 @@ import { Pagination } from "src/modules/shared/application/interfaces/pagination
 import { GetAllNotificationSettingsUseCase } from "../../application/use-cases/get-all-notification-settings.use-case";
 import { UpdateNotificationSettingsUseCase } from "../../application/use-cases/update-notification-settings.use-case";
 import { UpdateNotificationSettingsDto } from "../dto/request/update-notification-settings.dto";
-import { AuthGuard } from "src/modules/shared/presentation/guards/auth.guard";
+import { AuthorizationGuard } from "src/modules/shared/presentation/guards/authorization.guard";
 import { AcceptedCriteria } from "src/modules/shared/presentation/decorators/privileges.decorator";
 import { ResourceEnum } from "src/modules/permission/domain/enums/resource.enum";
 import { ActionEnum } from "src/modules/permission/domain/enums/action.enum";
@@ -24,7 +24,7 @@ export class NotificationSettingsController {
   ) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.NOTIFICATION_SETTINGS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
   async getAll(
     @Query() query: GetAllNotificationSettingsQueryInput,
@@ -39,7 +39,7 @@ export class NotificationSettingsController {
   }
   
   @Get(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.NOTIFICATION_SETTINGS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
   async getById(@Param('id', ParseIntPipe) id: number): Promise<NotificationSettingsResponseDto> {
     const notificationSettings = await this.getNotificationSettingsByIdUseCase.execute(id);
@@ -47,7 +47,7 @@ export class NotificationSettingsController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.NOTIFICATION_SETTINGS, actions: [ActionEnum.ADD]} ] })
   async create(@Body() createNotificationSettingsDto: CreateNotificationSettingsDto): Promise<NotificationSettingsResponseDto> {
     const createdNotificationSettings = await this.createNotificationSettingsUseCase.execute(createNotificationSettingsDto);
@@ -55,7 +55,7 @@ export class NotificationSettingsController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.NOTIFICATION_SETTINGS, actions: [ActionEnum.EDIT]} ] })
   async update(
     @Param('id', ParseIntPipe) id: number,

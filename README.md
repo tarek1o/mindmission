@@ -348,7 +348,7 @@ npm run test:cov
 ## 📚 Project Structure
 
 ```
-Backend/V2/
+MindMission/
 ├── src/
 │   ├── infrastructure/     # Cross-cutting infrastructure concerns
 │   ├── modules/            # Feature modules (Clean Architecture)
