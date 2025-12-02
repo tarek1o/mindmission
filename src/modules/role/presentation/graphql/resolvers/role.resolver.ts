@@ -11,9 +11,6 @@ import { AuthorizationGuard } from 'src/modules/shared/presentation/guards/autho
 import { AcceptedCriteria } from 'src/modules/shared/presentation/decorators/privileges.decorator';
 import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
 import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
-import '../enums/language.enum';
-import '../enums/allowed-role-order-columns.enum';
-import '../enums/order-direction.enum';
 import { RoleType } from '../types/role.type';
 import { RoleDetailsType } from '../types/role-details.type';
 import { RoleListType } from '../types/role-list.type';
@@ -29,7 +26,7 @@ import { Pagination } from 'src/modules/shared/application/interfaces/pagination
 import { AuthenticationGuard } from 'src/modules/shared/presentation/guards/authentication.guard';
 
 @Resolver(() => RoleType)
-@UseGuards(AuthenticationGuard)
+@UseGuards(AuthenticationGuard, AuthorizationGuard)
 export class RoleResolver {
   constructor(
     private readonly getAllRolesUseCase: GetAllRolesPaginatedWithCountUseCase,
@@ -41,7 +38,6 @@ export class RoleResolver {
   ) {}
 
   @Query(() => RolesResponseType, { name: 'getAllRoles' })
-  @UseGuards(AuthorizationGuard)
   @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH] }] })
   async getAllRoles(
     @AcceptLanguage() language: LanguageEnum,
