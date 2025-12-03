@@ -17,13 +17,13 @@ export class CategoryModel extends BaseModel {
   isRoot(): boolean {
     return this.type === CategoryTypeEnum.CATEGORY;
   }
-
+  
   set parentId(value: number | null) {
-    if (this.isRoot() && value) {
-      throw new InvalidInputError('category.parent_id.not_allowed', { type: this.type });
-    }
-    if (!this.isRoot() && !value) {
+    if (!value && !this.isRoot()) {
       throw new InvalidInputError('category.parent_id.required', { type: this.type, parent: CATEGORY_PARENT_MAP[this.type] });
+    }
+    if (value && this.isRoot()) {
+      throw new InvalidInputError('category.parent_id.not_allowed', { type: this.type });
     }
     this._parentId = value;
   }

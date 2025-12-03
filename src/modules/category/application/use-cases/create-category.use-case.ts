@@ -9,10 +9,13 @@ import { CategoryInput } from "../inputs/category.input";
 import { CategoryModel } from "../../domain/models/category.model";
 import { CategoryTranslationInput } from "../inputs/category-translation.input";
 import { CategoryTranslationModel } from "../../domain/models/category-translation.model";
+import { CategoryValidatorService } from "../services/category-validator.service";
+import { CategoryWithTranslationsViewModel } from "../view-models/category-with-translations.view-model";
 
 @Injectable()
 export class CreateCategoryUseCase {
   constructor(
+    private readonly categoryValidatorService: CategoryValidatorService,
     @Inject(CATEGORY_REPOSITORY) private readonly categoryRepository: ICategoryRepository,
     @Inject(CATEGORY_TRANSLATION_REPOSITORY) private readonly categoryTranslationRepository: ICategoryTranslationRepository,
     @Inject(UNIT_OF_WORK) private readonly unitOfWork: IUnitOfWork,
@@ -36,7 +39,7 @@ export class CreateCategoryUseCase {
     return this.categoryTranslationRepository.saveMany(categoryTranslation, manager);
   }
 
-  private async create(input: CategoryInput): Promise<{category: CategoryModel, translations: CategoryTranslationModel[]}> {
+  private async create(input: CategoryInput): Promise<CategoryWithTranslationsViewModel> {
     return this.unitOfWork.transaction(async (manager) => {
       const category = await this.createCategory(input, manager);
       const categoryTranslation = await this.createCategoryTranslation(input.translations, category, manager);
@@ -47,8 +50,9 @@ export class CreateCategoryUseCase {
     });
   }
 
-  async execute(input: CategoryInput): Promise<CategoryModel> {
-    await this.create(input);
-    return 
+  async execute(input: CategoryInput): Promise<CategoryWithTranslationsViewModel> {
+    await this.categoryValidatorService.validate(input);
+    // TODO: Analyze if we need to cache the category and translations
+    return this.create(input);
   }
 } 

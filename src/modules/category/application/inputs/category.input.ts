@@ -3,6 +3,6 @@ import { CategoryTypeEnum } from "../../domain/enums/category-type.enum";
 
 export interface CategoryInput {
   type: CategoryTypeEnum;
-  parentId: number | null;
+  parentId?: number | null;
   translations: CategoryTranslationInput[];
 }

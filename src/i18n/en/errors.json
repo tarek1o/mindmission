@@ -39,7 +39,6 @@
     "translations": {
       "missing": "Permissions must include English and Arabic translations",
       "name": {
-        "duplicate": "Their is already a permission with the same name",
         "single_duplicate": "The permission name: {duplicate} already exists",
         "multi_duplicate": "The permission names: {duplicate} already exist"
       },
@@ -65,7 +64,6 @@
     "translations": {
       "missing": "Roles must include English and Arabic translations",
       "name": {
-        "duplicate": "Their is already a role with the same name",
         "single_duplicate": "The role name: {duplicate} already exists",
         "multi_duplicate": "The role names: {duplicate} already exist",
         "not_editable": "The role {language} name is not editable"
@@ -176,6 +174,12 @@
     "parent_id": {
       "not_allowed": "The category type: {type} does not allow a parent id",
       "required": "The category type: {type} requires a parent id of type: {parent}"
+    },
+    "translations": {
+      "name": {
+        "single_duplicate": "The category name: {duplicate} already exists",
+        "multi_duplicate": "The category names: {duplicate} already exist"
+      }
     }
   }
 }

@@ -39,7 +39,6 @@
     "translations": {
       "missing": "يجب أن تحتوي الاذونات على ترجمات باللغتين الإنجليزية والعربية",
       "name": {
-        "duplicate": "يوجد بالفعل اذن بنفس الاسم",
         "single_duplicate": "اسم الاذن: {duplicate} موجود بالفعل",
         "multi_duplicate": "الأسماء التالية مكررة: {duplicates}"
       },
@@ -65,7 +64,6 @@
     "translations": {
       "missing": "يجب أن تحتوي الادوار على ترجمات باللغتين الإنجليزية والعربية",
       "name": {
-        "duplicate": "يوجد بالفعل دور بنفس الاسم",
         "single_duplicate": "اسم الاذن: {duplicate} موجود بالفعل",
         "multi_duplicate": "الأسماء التالية مكررة: {duplicates}",
         "not_editable": "لا يمكن تعديل اسم الدور باللغة {language}"
@@ -176,6 +174,12 @@
     "parent_id": {
       "not_allowed": "النوع المنتج: {type} لا يسمح بوجود معرف والد",
       "required": "النوع المنتج: {type} يتطلب معرف والد من النوع: {parent}"
+    },
+    "translations": {
+      "name": {
+        "single_duplicate": "اسم المنتج: {duplicate} موجود بالفعل",
+        "multi_duplicate": "الأسماء التالية مكررة: {duplicates}"
+      }
     }
   }
 }
