@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import * as moment from 'moment';
 import { JwtService, JwtSignOptions } from "@nestjs/jwt";
+import { StringValue } from "ms";
 import { ITokenStrategy } from "../../application/interfaces/action-token-strategy.interface";
 import { ActionTokenModel } from "../../domain/models/action-token.model";
 import { ActionTokenTypeEnum } from "../../domain/enums/action-token-type.enum";
@@ -33,7 +34,7 @@ export class StatelessTokenStrategy implements ITokenStrategy {
     const { secret, expiresIn } = this.getStatelessTokenConfig(type);
     const options: JwtSignOptions = { secret };
     if(expiresIn) {
-      options.expiresIn = `${expiresIn.value}${expiresIn.unit}`;
+      options.expiresIn = `${expiresIn.value}${expiresIn.unit}` as StringValue;
     }
     return options;
   }

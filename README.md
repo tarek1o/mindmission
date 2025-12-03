@@ -66,63 +66,6 @@ Each feature module follows this structure:
 - **Infrastructure**: Data persistence, external services, caching
 - **Presentation**: API endpoints, DTOs, and request/response handling
 
-## 🚀 Technology Stack
-
-### Core Framework
-- **[NestJS](https://nestjs.com/)** (v11.1.6) - Progressive Node.js framework
-- **[TypeScript](https://www.typescriptlang.org/)** (v5.9.2) - Type-safe JavaScript
-- **[Node.js](https://nodejs.org/)** (v22.18) - Runtime environment
-
-### API & Communication
-- **[GraphQL](https://graphql.org/)** (v16.12.0) - Query language with Apollo Server
-- **REST API** - Traditional RESTful endpoints
-- **[Apollo Server](https://www.apollographql.com/)** (v5.2.0) - GraphQL server implementation
-
-### Database & ORM
-- **[PostgreSQL](https://www.postgresql.org/)** (v16) - Primary relational database
-- **[TypeORM](https://typeorm.io/)** (v0.3.26) - Object-Relational Mapping
-- **[pg](https://node-postgres.com/)** (v8.16.3) - PostgreSQL client
-
-### Caching & Queue Management
-- **[Redis](https://redis.io/)** (v7) - In-memory data store
-- **[ioredis](https://github.com/redis/ioredis)** (v5.8.1) - Redis client
-- **[BullMQ](https://bullmq.io/)** (v5.61.2) - Job queue management
-- **[@nestjs/bullmq](https://docs.nestjs.com/techniques/queues)** (v11.0.4) - NestJS BullMQ integration
-
-### Authentication & Security
-- **[Passport.js](http://www.passportjs.org/)** - Authentication middleware
-- **[JWT](https://jwt.io/)** - JSON Web Tokens for authentication
-- **[bcrypt](https://github.com/kelektiv/node.bcrypt.js)** (v6.0.0) - Password hashing
-- **[OAuth 2.0](https://oauth.net/2/)** - Google OAuth integration
-- **[@nestjs/throttler](https://docs.nestjs.com/security/rate-limiting)** (v6.4.0) - Rate limiting
-
-### Validation & Transformation
-- **[class-validator](https://github.com/typestack/class-validator)** (v0.14.2) - Decorator-based validation
-- **[class-transformer](https://github.com/typestack/class-transformer)** (v0.5.1) - Object transformation
-- **[Joi](https://joi.dev/)** (v18.0.1) - Schema validation
-
-### Internationalization
-- **[nestjs-i18n](https://github.com/toonvanstrijp/nestjs-i18n)** (v10.5.1) - Multi-language support
-- Supports: English, Arabic
-
-### Storage & File Management
-- **[AWS S3](https://aws.amazon.com/s3/)** - Cloud object storage
-- **[@aws-sdk/client-s3](https://docs.aws.amazon.com/sdk-for-javascript/)** (v3.922.0) - AWS SDK
-
-### Email Services
-- **[Nodemailer](https://nodemailer.com/)** (v7.0.5) - Email sending
-- **[@nestjs-modules/mailer](https://github.com/nestjs-modules/mailer)** (v2.0.2) - NestJS mailer module
-
-### Logging
-- **[Winston](https://github.com/winstonjs/winston)** (v3.17.0) - Logging library
-- **[nest-winston](https://github.com/gremo/nest-winston)** (v1.10.2) - NestJS Winston integration
-- Database logging for audit trails
-
-### Development Tools
-- **[ESLint](https://eslint.org/)** (v9.34.0) - Code linting
-- **[Prettier](https://prettier.io/)** (v3.6.2) - Code formatting
-- **[Jest](https://jestjs.io/)** (v30.0.5) - Testing framework
-- **[Docker](https://www.docker.com/)** - Containerization
 
 ## 📦 Features
 
@@ -194,7 +137,7 @@ Each feature module follows this structure:
 
 ### Prerequisites
 
-- Node.js (v22.18 or higher)
+- Node.js (v24.11 or higher)
 - PostgreSQL (v16 or higher)
 - Redis (v7 or higher)
 - Docker & Docker Compose (optional)
