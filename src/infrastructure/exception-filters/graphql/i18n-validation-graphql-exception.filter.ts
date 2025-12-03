@@ -12,6 +12,7 @@ export class I18nValidationGraphqlExceptionFilter extends BaseExceptionFilter im
   })
 
   catch(exception: I18nValidationException, host: ArgumentsHost) {
+    console.log(exception);
     const response = this.baseFilter.catch(exception, host);
     return new GraphQLError(
       response.errors.join(', '),

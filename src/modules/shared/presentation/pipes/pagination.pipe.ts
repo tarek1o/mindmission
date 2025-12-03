@@ -25,11 +25,11 @@ export class PaginationPipe implements PipeTransform<any, Pagination> {
   };
 
   private getTake(query: any) {
-    return parseInt(query.take, 10) || this.take;
+    return parseInt(query?.take, 10) || this.take;
   };
 
   private getPage(query: any) {
-    const pageNo = parseInt(query.page, 10);
+    const pageNo = parseInt(query?.page, 10);
     return pageNo && pageNo > 0 ? pageNo : 1;
   };
 }

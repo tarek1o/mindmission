@@ -2,12 +2,37 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Supported actions"""
+enum ActionEnum {
+  ADD
+  DELETE
+  EDIT
+  LIST
+  SEARCH
+}
+
+"""Allowed columns for ordering permissions"""
+enum AllowedPermissionOrderColumnEnum {
+  CREATED_AT
+  ID
+  LEVEL
+  NAME
+  RESOURCE
+  UPDATED_AT
+}
+
 """Allowed columns for ordering roles"""
 enum AllowedRoleOrderColumnsEnum {
   CREATED_AT
   ID
   NAME
   UPDATED_AT
+}
+
+input CreatePermissionInput {
+  actions: [ActionEnum!]!
+  resource: ResourceEnum!
+  translations: [PermissionTranslationInputType!]!
 }
 
 input CreateRoleInput {
@@ -20,6 +45,11 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input GetAllPermissionQueryInput {
+  name: String
+  resource: ResourceEnum
+}
+
 input GetAllRolesQueryInput {
   name: String
 }
@@ -31,8 +61,11 @@ enum LanguageEnum {
 }
 
 type Mutation {
+  createPermission(input: CreatePermissionInput!): PermissionDetailsType!
   createRole(input: CreateRoleInput!): RoleDetailsType!
+  deletePermission(id: Int!): Boolean!
   deleteRole(id: Int!): Boolean!
+  updatePermission(id: Int!, input: UpdatePermissionInput!): PermissionDetailsType!
   updateRole(id: Int!, input: UpdateRoleInput!): RoleDetailsType!
 }
 
@@ -55,10 +88,76 @@ type PaginationType {
   totalCount: Int!
 }
 
+type PermissionDetailsType {
+  actions: [ActionEnum!]!
+  createdAt: DateTime!
+  id: Int!
+  isDeletable: Boolean!
+  isResourceAndActionsEditable: Boolean!
+  level: Int!
+  resource: ResourceEnum!
+  translations: [PermissionTranslationType!]!
+  updateAt: DateTime!
+}
+
+type PermissionListType {
+  name: String!
+  permissionId: Int!
+}
+
+input PermissionOrderInput {
+  orderBy: AllowedPermissionOrderColumnEnum = CREATED_AT
+  orderDirection: OrderDirectionEnum = DESC
+}
+
+input PermissionTranslationInputType {
+  description: String
+  language: LanguageEnum!
+  name: String!
+}
+
+type PermissionTranslationType {
+  description: String
+  language: LanguageEnum!
+  name: String!
+}
+
+type PermissionType {
+  actions: [ActionEnum!]!
+  createdAt: DateTime!
+  description: String
+  id: Float!
+  isDeletable: Boolean!
+  level: Int!
+  name: String!
+  resource: ResourceEnum!
+  updateAt: DateTime!
+}
+
+type PermissionsResponseType {
+  count: Int
+  data: [PermissionType!]!
+  pagination: PaginationType!
+}
+
 type Query {
+  getAllPermissions(order: PermissionOrderInput, pagination: PaginationInput, query: GetAllPermissionQueryInput): PermissionsResponseType!
   getAllRoles(order: RoleOrderInput, pagination: PaginationInput, query: GetAllRolesQueryInput): RolesResponseType!
+  getPermissionById(id: Int!): PermissionDetailsType!
+  getPermissionsByLanguage: [PermissionListType!]!
   getRoleById(id: Int!): RoleDetailsType!
   getRolesByLanguage: [RoleListType!]!
+}
+
+"""Supported resources"""
+enum ResourceEnum {
+  BLOCK_USERS
+  NOTIFICATION_SETTINGS
+  PERMISSIONS
+  ROLES
+  SUSPENDED_ACCOUNTS
+  USERS
+  USER_ROLES
 }
 
 type RoleDetailsType {
@@ -105,7 +204,13 @@ type RoleType {
 type RolesResponseType {
   count: Int!
   data: [RoleType!]!
-  pagination: PaginationType
+  pagination: PaginationType!
+}
+
+input UpdatePermissionInput {
+  actions: [ActionEnum!]
+  resource: ResourceEnum
+  translations: [PermissionTranslationInputType!]
 }
 
 input UpdateRoleInput {

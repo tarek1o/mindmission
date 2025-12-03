@@ -10,7 +10,7 @@ export class RolesResponseType {
   @Field(() => Int)
   count: number;
 
-  @Field(() => PaginationType, { nullable: true })
+  @Field(() => PaginationType)
   pagination?: PaginationType;
 }
 

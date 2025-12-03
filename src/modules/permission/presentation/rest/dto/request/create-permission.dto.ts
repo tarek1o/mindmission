@@ -11,9 +11,9 @@ import { PermissionInput } from 'src/modules/permission/application/inputs/permi
 import { PermissionTranslationDto } from './permission-translation.dto';
 import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
 import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
-import { ValidateArabicAndEnglishTranslationsExistValidator } from '../../../../shared/presentation/validators/validate-arabic-and-english-translations-exist.validator';
-import { ValidateActionsDependenciesValidator } from '../../validators/valid-actions-dependencies.validator';
-import { ValidActionsForResourceValidator } from '../../validators/valid-actions-for-resource.validator';
+import { ValidateArabicAndEnglishTranslationsExistValidator } from 'src/modules/shared/presentation/validators/validate-arabic-and-english-translations-exist.validator';
+import { ValidateActionsDependenciesValidator } from 'src/modules/permission/presentation/rest/validators/valid-actions-dependencies.validator';
+import { ValidActionsForResourceValidator } from 'src/modules/permission/presentation/rest/validators/valid-actions-for-resource.validator';
 
 export class CreatePermissionDto implements PermissionInput {
   @Validate(ValidateArabicAndEnglishTranslationsExistValidator)

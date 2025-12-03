@@ -9,13 +9,13 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { GetAllPermissionsPaginatedWithCountUseCase } from '../../application/use-cases/get-all-permissions-paginated-with-count.use-case';
-import { GetPermissionTranslationsByLanguageUseCase } from '../../application/use-cases/get-permission-translations-by-language.use-case';
-import { GetPermissionWithTranslationsByIdUseCase } from '../../application/use-cases/get-permission-with-translations-by-id.use-case';
-import { CreatePermissionUseCase } from '../../application/use-cases/create-permission.use-case';
-import { UpdatePermissionUseCase } from '../../application/use-cases/update-permission.use-case';
-import { DeletePermissionUseCase } from '../../application/use-cases/delete-permission.use-case';
-import { LanguageEnum } from '../../../shared/domain/enums/language.enum';
+import { GetAllPermissionsPaginatedWithCountUseCase } from 'src/modules/permission/application/use-cases/get-all-permissions-paginated-with-count.use-case';
+import { GetPermissionTranslationsByLanguageUseCase } from 'src/modules/permission/application/use-cases/get-permission-translations-by-language.use-case';
+import { GetPermissionWithTranslationsByIdUseCase } from 'src/modules/permission/application/use-cases/get-permission-with-translations-by-id.use-case';
+import { CreatePermissionUseCase } from 'src/modules/permission/application/use-cases/create-permission.use-case';
+import { UpdatePermissionUseCase } from 'src/modules/permission/application/use-cases/update-permission.use-case';
+import { DeletePermissionUseCase } from 'src/modules/permission/application/use-cases/delete-permission.use-case';
+import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 import { AcceptLanguage } from 'src/infrastructure/localization/decorator/accept-language.decorator';
 import { GetAllPermissionQueryDto } from '../dto/request/get-all-permission-query.dto';
 import { PermissionOrderDto } from '../dto/request/permission-order.dto';

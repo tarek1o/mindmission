@@ -25,7 +25,7 @@ import { PaginationPipe } from 'src/modules/shared/presentation/pipes/pagination
 import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';
 import { AuthenticationGuard } from 'src/modules/shared/presentation/guards/authentication.guard';
 
-@Resolver(() => RoleType)
+@Resolver()
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
 export class RoleResolver {
   constructor(
@@ -43,12 +43,12 @@ export class RoleResolver {
     @AcceptLanguage() language: LanguageEnum,
     @Args('query', { nullable: true }) queryInput: GetAllRolesQueryInput,
     @Args('order', { nullable: true }) orderInput: RoleOrderInput,
-    @Args('pagination', { nullable: true, type: () => PaginationInput }, PaginationPipe) paginationInput: Pagination,
+    @Args('pagination', { nullable: true, type: () => PaginationInput }, PaginationPipe) pagination: Pagination,
   ): Promise<RolesResponseType> {
     const { models, count } = await this.getAllRolesUseCase.execute(
       { ...queryInput, language },
       orderInput,
-      paginationInput,
+      pagination,
     );
     return {
       data: models.map(model => new RoleType(model)),

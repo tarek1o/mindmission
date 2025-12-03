@@ -4,8 +4,8 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { ActionEnum } from '../../domain/enums/action.enum';
-import { ActionDependencies } from '../../domain/constants/action-dependencies-map.constant';
+import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
+import { ActionDependencies } from 'src/modules/permission/domain/constants/action-dependencies-map.constant';
 
 @ValidatorConstraint()
 export class ValidateActionsDependenciesValidator implements ValidatorConstraintInterface {

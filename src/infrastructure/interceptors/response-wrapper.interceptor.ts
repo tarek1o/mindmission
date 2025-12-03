@@ -5,7 +5,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
+import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import { map, Observable } from 'rxjs';
 import { IResponseWrapper } from '../interfaces/response-wrapper.interface';
 import { PaginationPipe } from 'src/modules/shared/presentation/pipes/pagination.pipe';
@@ -16,6 +16,10 @@ export class ResponseWrapperInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const gqlCtx = GqlExecutionContext.create(context);
     const { query, statusCode: status } = gqlCtx.getContext().req;
+
+    if (gqlCtx.getType() === 'graphql') {
+      return next.handle();
+    }
 
     return next.handle().pipe(
       map((response: IResponseWrapper<any>) => this.wrapResponse<any>(status, query, response))

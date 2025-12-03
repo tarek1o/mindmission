@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PermissionController } from './presentation/controllers/permission.controller';
+import { PermissionController } from './presentation/rest/controllers/permission.controller';
 import { PermissionEntity } from './infrastructure/database/entities/permission.entity';
 import { PermissionTranslationEntity } from './infrastructure/database/entities/permission-translation.entity';
 import { GetAllPermissionsPaginatedWithCountUseCase } from './application/use-cases/get-all-permissions-paginated-with-count.use-case';
@@ -17,6 +17,7 @@ import { PermissionTranslationRepository } from './infrastructure/database/repos
 import { PERMISSION_CACHE } from './application/constants/permission-cache.constant';
 import { PermissionCacheService } from './infrastructure/cache/services/permission.cache.service';
 import { PermissionFinderService } from './application/services/permission-finder.service';
+import { PermissionResolver } from './presentation/graphql/resolvers/permission.resolver';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { PermissionFinderService } from './application/services/permission-finde
     PermissionValidationService,
     CreatePermissionUseCase,
     UpdatePermissionUseCase,
-    DeletePermissionUseCase
+    DeletePermissionUseCase,
+    PermissionResolver,
   ],
   exports: [
     PERMISSION_REPOSITORY,

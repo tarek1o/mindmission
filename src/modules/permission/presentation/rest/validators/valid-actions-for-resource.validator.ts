@@ -4,9 +4,9 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { ActionEnum } from '../../domain/enums/action.enum';
-import { ResourceActionsMap } from '../../domain/constants/resource-actions-map.constant';
-import { ResourceEnum } from '../../domain/enums/resource.enum';
+import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
+import { ResourceActionsMap } from 'src/modules/permission/domain/constants/resource-actions-map.constant';
+import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
 import { CreatePermissionDto } from '../dto/request/create-permission.dto';
 
 @ValidatorConstraint()
