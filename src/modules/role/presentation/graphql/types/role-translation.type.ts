@@ -4,7 +4,7 @@ import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 
 @ObjectType()
 export class RoleTranslationType {
-  @Field(() => String)
+  @Field(() => LanguageEnum)
   language: LanguageEnum;
 
   @Field(() => String)

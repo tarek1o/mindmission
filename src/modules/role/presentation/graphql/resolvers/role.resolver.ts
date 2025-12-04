@@ -52,7 +52,7 @@ export class RoleResolver {
     );
     return {
       data: models.map(model => new RoleType(model)),
-      count,
+      // TODO: Add pagination
     };
   }
 

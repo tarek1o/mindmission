@@ -4,13 +4,13 @@ import { GetPermissionTranslationByLanguageViewModel } from 'src/modules/permiss
 @ObjectType()
 export class PermissionListType {
   @Field(() => Int)
-  permissionId: number;
+  id: number;
 
   @Field(() => String)
   name: string;
 
   constructor(permissionTranslationViewModel: GetPermissionTranslationByLanguageViewModel) {
-    this.permissionId = permissionTranslationViewModel.permissionId;
+    this.id = permissionTranslationViewModel.permissionId;
     this.name = permissionTranslationViewModel.name;
   }
 }

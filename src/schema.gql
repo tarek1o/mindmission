@@ -101,8 +101,8 @@ type PermissionDetailsType {
 }
 
 type PermissionListType {
+  id: Int!
   name: String!
-  permissionId: Int!
 }
 
 input PermissionOrderInput {
@@ -135,7 +135,6 @@ type PermissionType {
 }
 
 type PermissionsResponseType {
-  count: Int
   data: [PermissionType!]!
   pagination: PaginationType!
 }
@@ -188,7 +187,7 @@ input RoleTranslationInputType {
 
 type RoleTranslationType {
   description: String
-  language: String!
+  language: LanguageEnum!
   name: String!
 }
 
@@ -202,7 +201,6 @@ type RoleType {
 }
 
 type RolesResponseType {
-  count: Int!
   data: [RoleType!]!
   pagination: PaginationType!
 }

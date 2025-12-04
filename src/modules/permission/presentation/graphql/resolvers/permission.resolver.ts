@@ -48,7 +48,7 @@ export class PermissionResolver {
     const { models, count } = await this.getAllPermissionsUseCase.execute({ ...queryInput, language }, orderInput, pagination);
     return {
       data: models.map(model => new PermissionType(model)),
-      count
+      // TODO: Add pagination
     };
   }
 
