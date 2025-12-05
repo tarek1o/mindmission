@@ -12,7 +12,7 @@ import { AuthorizationGuard } from "src/modules/shared/presentation/guards/autho
 import { PaginationPipe } from "src/modules/shared/presentation/pipes/pagination.pipe";
 import { GetAllPermissionQueryInput } from "../inputs/get-all-permission-query.input";
 import { PermissionsResponseType } from "../types/permission-response.type";
-import { PaginationInput } from "src/modules/role/presentation/graphql/inputs/pagination.input";
+import { PaginationInput } from "src/modules/shared/presentation/graphql/inputs/pagination.input";
 import { PermissionOrderInput } from "../inputs/permission-order.input";
 import { PermissionType } from "../types/permission.type";
 import { GetPermissionTranslationsByLanguageUseCase } from "src/modules/permission/application/use-cases/get-permission-translations-by-language.use-case";

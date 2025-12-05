@@ -19,7 +19,7 @@ import { CreateRoleInput } from '../inputs/create-role.input';
 import { UpdateRoleInput } from '../inputs/update-role.input';
 import { GetAllRolesQueryInput } from '../inputs/get-all-roles-query.input';
 import { RoleOrderInput } from '../inputs/role-order.input';
-import { PaginationInput } from '../inputs/pagination.input';
+import { PaginationInput } from '../../../../shared/presentation/graphql/inputs/pagination.input';
 import { AcceptLanguage } from 'src/infrastructure/localization/decorator/accept-language.decorator';
 import { PaginationPipe } from 'src/modules/shared/presentation/pipes/pagination.pipe';
 import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';

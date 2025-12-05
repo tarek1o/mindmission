@@ -15,7 +15,7 @@ import { ChangeEmailDto } from "../dto/request/change-email.dto";
 import { CompleteChangeEmailDto } from "../dto/request/complete-change-email.dto";
 import { ChangePasswordDto } from "../dto/request/change-password.dto";
 import { CustomParseFilePipe } from "src/modules/shared/presentation/pipes/custom-parse-file.pipe";
-import { ImageFileEnum } from "src/modules/shared/presentation/enums/image-file.enum";
+import { ImageFileEnum } from "src/modules/storage/application/enums/image-file.enum";
 import { NotEmptyArray } from "src/infrastructure/types/not-empty-array.type";
 import { configService } from "src/infrastructure/configuration/services/config-instance.service";
 

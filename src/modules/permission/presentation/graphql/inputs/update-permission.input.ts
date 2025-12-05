@@ -4,4 +4,3 @@ import { CreatePermissionInput } from './create-permission.input';
 
 @InputType()
 export class UpdatePermissionInput extends PartialType(CreatePermissionInput) implements Partial<PermissionInput> {}
-

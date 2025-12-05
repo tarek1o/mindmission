@@ -1,5 +1,6 @@
 import { Global, Logger, Module } from "@nestjs/common";
 import { BullModule } from "@nestjs/bullmq";
+import './presentation/graphql/index';
 import { configService } from "src/infrastructure/configuration/services/config-instance.service";
 import { WinstonLoggerService } from "./infrastructure/logger/console/winston.logger.service";
 import { LOGGER_SERVICE } from "./application/constant/logger-service.constant";

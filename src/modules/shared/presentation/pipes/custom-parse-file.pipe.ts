@@ -1,10 +1,10 @@
 import { FileTypeValidator, HttpStatus, Injectable, MaxFileSizeValidator, ParseFilePipe } from '@nestjs/common';
 import { FileSignatureValidator } from '../validators/file-signature.validator';
 import { NotEmptyArray } from 'src/infrastructure/types/not-empty-array.type';
-import { DocumentFileEnum } from '../enums/document-file.enum';
-import { ImageFileEnum } from '../enums/image-file.enum';
-import { VideoFileEnum } from '../enums/video-file.enum';
-import { AudioTypeEnum } from '../enums/audio-file.enum';
+import { DocumentFileEnum } from '../../../storage/application/enums/document-file.enum';
+import { ImageFileEnum } from '../../../storage/application/enums/image-file.enum';
+import { VideoFileEnum } from '../../../storage/application/enums/video-file.enum';
+import { AudioTypeEnum } from '../../../storage/application/enums/audio-file.enum';
 
 @Injectable()
 export class CustomParseFilePipe extends ParseFilePipe {

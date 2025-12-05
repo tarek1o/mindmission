@@ -1,5 +1,4 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { RoleTranslationModel } from 'src/modules/role/domain/models/role-translation.model';
 import { GetRoleTranslationByLanguageViewModel } from 'src/modules/role/application/view-models/get-role-translation-by-language.view-model';
 
 @ObjectType()

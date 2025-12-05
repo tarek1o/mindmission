@@ -2,8 +2,6 @@ import { Field, InputType } from "@nestjs/graphql";
 import { AllowedPermissionOrderColumnEnum } from "src/modules/permission/application/enums/allowed-permission-order-columns.enum";
 import { OrderDirectionEnum } from "src/modules/shared/application/enums/order-direction.enum";
 import { IOrder } from "src/modules/shared/application/interfaces/order.interface";
-import '../../../../role/presentation/graphql/enums/order-direction.enum';
-import '../enums/allowed-permission-order-column.enum';
 
 @InputType()
 export class PermissionOrderInput implements IOrder<AllowedPermissionOrderColumnEnum> {

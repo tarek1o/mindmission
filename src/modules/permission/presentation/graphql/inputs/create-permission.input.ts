@@ -15,8 +15,6 @@ import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum'
 import { ValidateArabicAndEnglishTranslationsExistValidator } from 'src/modules/shared/presentation/validators/validate-arabic-and-english-translations-exist.validator';
 import { ValidateActionsDependenciesValidator } from 'src/modules/permission/presentation/rest/validators/valid-actions-dependencies.validator';
 import { ValidActionsForResourceValidator } from 'src/modules/permission/presentation/rest/validators/valid-actions-for-resource.validator';
-import '../enums/resource.enum';
-import '../enums/action.enum';
 
 @InputType()
 export class CreatePermissionInput implements PermissionInput {

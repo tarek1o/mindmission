@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import './presentation/graphql/index';
 import { PermissionController } from './presentation/rest/controllers/permission.controller';
 import { PermissionEntity } from './infrastructure/database/entities/permission.entity';
 import { PermissionTranslationEntity } from './infrastructure/database/entities/permission-translation.entity';
