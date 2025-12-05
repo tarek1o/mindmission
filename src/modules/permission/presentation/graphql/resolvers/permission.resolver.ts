@@ -24,9 +24,10 @@ import { CreatePermissionInput } from "../inputs/create-permission.input";
 import { UpdatePermissionInput } from "../inputs/update-permission.input";
 import { PermissionListType } from "../types/permission-list.type";
 import { PermissionDetailsType } from "../types/permission-details.type";
+import { PaginationType } from "src/modules/shared/presentation/graphql/types/pagination.type";
 
 @Resolver()
-// @UseGuards(AuthenticationGuard, AuthorizationGuard)
+@UseGuards(AuthenticationGuard, AuthorizationGuard)
 export class PermissionResolver {
   constructor(
     private readonly getAllPermissionsUseCase: GetAllPermissionsPaginatedWithCountUseCase,
@@ -48,7 +49,7 @@ export class PermissionResolver {
     const { models, count } = await this.getAllPermissionsUseCase.execute({ ...queryInput, language }, orderInput, pagination);
     return {
       data: models.map(model => new PermissionType(model)),
-      // TODO: Add pagination
+      pagination: new PaginationType(pagination, count),
     };
   }
 

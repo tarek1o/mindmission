@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';
 
 @ObjectType()
 export class PaginationType {
@@ -16,5 +17,13 @@ export class PaginationType {
 
   @Field(() => Int)
   pages: number;
+
+  constructor(paginationInput: Pagination, totalCount: number) {
+    this.skip = paginationInput.skip;
+    this.take = paginationInput.take;
+    this.totalCount = totalCount;
+    this.page = paginationInput.currentPage;
+    this.pages = Math.ceil(totalCount / paginationInput.take);
+  }
 }
 

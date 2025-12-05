@@ -24,6 +24,7 @@ import { AcceptLanguage } from 'src/infrastructure/localization/decorator/accept
 import { PaginationPipe } from 'src/modules/shared/presentation/pipes/pagination.pipe';
 import { Pagination } from 'src/modules/shared/application/interfaces/pagination.interface';
 import { AuthenticationGuard } from 'src/modules/shared/presentation/guards/authentication.guard';
+import { PaginationType } from 'src/modules/shared/presentation/graphql/types/pagination.type';
 
 @Resolver()
 @UseGuards(AuthenticationGuard, AuthorizationGuard)
@@ -52,7 +53,7 @@ export class RoleResolver {
     );
     return {
       data: models.map(model => new RoleType(model)),
-      // TODO: Add pagination
+      pagination: new PaginationType(pagination, count),
     };
   }
 
