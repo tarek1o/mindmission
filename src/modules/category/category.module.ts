@@ -9,6 +9,7 @@ import { CreateCategoryUseCase } from './application/use-cases/create-category.u
 import { CATEGORY_TRANSLATION_REPOSITORY } from './application/constants/category-translation-repository.constant';
 import { CategoryTranslationRepository } from './infrastructure/database/repositories/category-translation.repository';
 import { CategoryController } from './presentation/rest/controllers/category.controller';
+import { GetAllCategoriesPaginatedWithCountUseCase } from './application/use-cases/get-all-categories-paginated-with-count.use-case';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryController } from './presentation/rest/controllers/category.con
       useClass: CategoryTranslationRepository,
     },
     CategoryValidatorService,
+    GetAllCategoriesPaginatedWithCountUseCase,
     CreateCategoryUseCase,
   ],
 })

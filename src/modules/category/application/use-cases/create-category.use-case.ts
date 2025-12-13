@@ -42,10 +42,10 @@ export class CreateCategoryUseCase {
   private async create(input: CategoryInput): Promise<CategoryWithTranslationsViewModel> {
     return this.unitOfWork.transaction(async (manager) => {
       const category = await this.createCategory(input, manager);
-      const categoryTranslation = await this.createCategoryTranslation(input.translations, category, manager);
+      const translations = await this.createCategoryTranslation(input.translations, category, manager);
       return {
         category,
-        translations: categoryTranslation,
+        translations,
       };
     });
   }

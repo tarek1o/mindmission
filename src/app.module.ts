@@ -27,6 +27,7 @@ import { AllExceptionFilter } from './infrastructure/exception-filters/all-excep
 import { DomainExceptionFilter } from './infrastructure/exception-filters/domain-exception.filter';
 import { MainExceptionFilter } from './infrastructure/exception-filters/main-exception.filter';
 import { I18nValidationExceptionFilter } from './infrastructure/exception-filters/i18n-validation-exception.filter';
+
 @Module({
   imports: [
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
