@@ -10,6 +10,11 @@ import { CATEGORY_TRANSLATION_REPOSITORY } from './application/constants/categor
 import { CategoryTranslationRepository } from './infrastructure/database/repositories/category-translation.repository';
 import { CategoryController } from './presentation/rest/controllers/category.controller';
 import { GetAllCategoriesPaginatedWithCountUseCase } from './application/use-cases/get-all-categories-paginated-with-count.use-case';
+import { CategoryFinderService } from './application/services/category-finder.service';
+import { GetCategoryWithTranslationsByIdUseCase } from './application/use-cases/get-category-with-translations-by-id.use-case';
+import { GetCategoryTranslationsByLanguageUseCase } from './application/use-cases/get-category-translations-by-language.use-case';
+import { UpdateCategoryUseCase } from './application/use-cases/update-category.use-case';
+import { DeleteCategoryUseCase } from './application/use-cases/delete-category.use-case';
 
 @Module({
   imports: [
@@ -26,8 +31,13 @@ import { GetAllCategoriesPaginatedWithCountUseCase } from './application/use-cas
       useClass: CategoryTranslationRepository,
     },
     CategoryValidatorService,
+    CategoryFinderService,
     GetAllCategoriesPaginatedWithCountUseCase,
     CreateCategoryUseCase,
+    GetCategoryWithTranslationsByIdUseCase,
+    GetCategoryTranslationsByLanguageUseCase,
+    UpdateCategoryUseCase,
+    DeleteCategoryUseCase,
   ],
 })
 export class CategoryModule {}

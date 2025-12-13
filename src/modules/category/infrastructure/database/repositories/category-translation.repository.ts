@@ -9,6 +9,7 @@ import { CategoryTranslationMapper } from "../mappers/category-translation.mappe
 import { SlugifyHelper } from "src/modules/shared/infrastructure/helpers/slugify.helper";
 import { GetCategoryTranslationByNameViewModel } from "src/modules/category/application/view-models/get-category-translation-by-name.view-model";
 import { CategoryTypeEnum } from "src/modules/category/domain/enums/category-type.enum";
+import { GetCategoryTranslationByLanguageViewModel } from "src/modules/category/application/view-models/get-category-translation-by-language.view-model";
 
 @Injectable()
 export class CategoryTranslationRepository implements ICategoryTranslationRepository {
@@ -16,9 +17,17 @@ export class CategoryTranslationRepository implements ICategoryTranslationReposi
     @InjectRepository(CategoryTranslationEntity) private readonly categoryTranslationRepository: Repository<CategoryTranslationEntity>,
   ) {}
 
-  async getByLanguage(language: LanguageEnum): Promise<CategoryTranslationModel[]> {
-    const entities = await this.categoryTranslationRepository.findBy({ language });
-    return entities.map(CategoryTranslationMapper.toModel);
+  async getByLanguage(language: LanguageEnum): Promise<GetCategoryTranslationByLanguageViewModel[]> {
+    const entities = await this.categoryTranslationRepository.find({
+      where: {
+        language,
+      },
+      select: {
+        name: true,
+        categoryId: true,
+      }
+    });
+    return entities.map(({ name, categoryId }) => ({ name, categoryId }));
   }
 
   async getByNameAndLanguageAndTypeExcludingCategoryId(type: CategoryTypeEnum, translations: {language: LanguageEnum, name: string}[], categoryId?: number): Promise<GetCategoryTranslationByNameViewModel[]> {

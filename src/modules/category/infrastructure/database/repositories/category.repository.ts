@@ -11,6 +11,8 @@ import { AllowedCategoryOrderColumnsEnum } from "src/modules/category/applicatio
 import { Pagination } from "src/modules/shared/application/interfaces/pagination.interface";
 import { SlugifyHelper } from "src/modules/shared/infrastructure/helpers/slugify.helper";
 import { GetAllCategoriesByLanguageViewModel } from "src/modules/category/application/view-models/get-all-categories-by-language.view-model";
+import { CategoryWithTranslationsViewModel } from "src/modules/category/application/view-models/category-with-translations.view-model";
+import { CategoryTranslationMapper } from "../mappers/category-translation.mapper";
 
 @Injectable()
 export class CategoryRepository implements ICategoryRepository {
@@ -86,6 +88,19 @@ export class CategoryRepository implements ICategoryRepository {
   async getById(id: number): Promise<CategoryModel | null> {
     const entity = await this.categoryRepository.findOneBy({ id });
     return entity ? CategoryMapper.toModel(entity) : null;
+  }
+
+  async getByIdWithTranslations(id: number): Promise<CategoryWithTranslationsViewModel | null> {
+    const categoryEntity = await this.categoryRepository.findOne({ 
+      where: { id },
+      relations: {
+        translations: true,
+      },
+    });
+    return categoryEntity ? {
+      category: CategoryMapper.toModel(categoryEntity),
+      translations: categoryEntity.translations.map(translation => CategoryTranslationMapper.toModel(translation)),
+    } : null;
   }
 
   async save(category: CategoryModel, manager?: EntityManager): Promise<CategoryModel> {
