@@ -5,6 +5,6 @@ export abstract class SlugifyHelper {
       .trim()
       .toLowerCase()
       .replace(/[^\p{L}\p{N}]+/gu, '-')
-      .replace(/^-+|-+$/g, '');;
+      .replace(/^-+|-+$/g, '');
   }
 }
