@@ -1,4 +1,4 @@
-import { UserTypeEnum } from "../../domain/enums/user-type.enum";
+import { UserTypeEnum } from '../../domain/enums/user-type.enum';
 
 export interface GetAllUsersQueryInput {
   firstName?: string;

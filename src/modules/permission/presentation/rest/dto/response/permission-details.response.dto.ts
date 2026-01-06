@@ -17,11 +17,14 @@ export class PermissionDetailsResponseDto {
   constructor(permissionModel: PermissionWithTranslationsViewModel) {
     const { permission, translations } = permissionModel;
     this.id = permission.id;
-    this.translations = translations.map(translation => new PermissionTranslationResponseDto(translation));
+    this.translations = translations.map(
+      (translation) => new PermissionTranslationResponseDto(translation),
+    );
     this.resource = permission.resource;
     this.actions = permission.actions;
-    this.level = permission.level,
-    this.isResourceAndActionsEditable = permission.isResourceAndActionsEditable;
+    ((this.level = permission.level),
+      (this.isResourceAndActionsEditable =
+        permission.isResourceAndActionsEditable));
     this.isDeletable = permission.isDeletable;
     this.createdAt = permission.createdAt;
     this.updateAt = permission.updatedAt;

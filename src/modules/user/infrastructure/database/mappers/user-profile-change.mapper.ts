@@ -1,5 +1,5 @@
-import { UserProfileChangeModel } from "src/modules/user/domain/models/user-profile-change.model";
-import { UserProfileChangeEntity } from "../entities/user-profile-change.entity";
+import { UserProfileChangeModel } from 'src/modules/user/domain/models/user-profile-change.model';
+import { UserProfileChangeEntity } from '../entities/user-profile-change.entity';
 
 export abstract class UserProfileChangeMapper {
   static toModel(entity: UserProfileChangeEntity): UserProfileChangeModel {
@@ -13,8 +13,8 @@ export abstract class UserProfileChangeMapper {
       statusChangedAt: entity.statusChangedAt,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,      
-    })
+      deletedAt: entity.deletedAt,
+    });
   }
 
   static toEntity(model: UserProfileChangeModel): UserProfileChangeEntity {
@@ -29,6 +29,6 @@ export abstract class UserProfileChangeMapper {
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
-    })
+    });
   }
 }

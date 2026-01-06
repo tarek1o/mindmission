@@ -1,9 +1,9 @@
-import { Inject, Injectable, LoggerService } from "@nestjs/common";
-import { UserModel } from "../../domain/models/user.model";
-import { USER_REPOSITORY } from "../constants/user-repository.constant";
-import { IUserRepository } from "../interfaces/user-repository.interface";
-import { LOGGER_SERVICE } from "src/modules/shared/application/constant/logger-service.constant";
-import { ResourceNotFoundError } from "src/modules/shared/domain/errors/resource-not-found.error";
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
+import { UserModel } from '../../domain/models/user.model';
+import { USER_REPOSITORY } from '../constants/user-repository.constant';
+import { IUserRepository } from '../interfaces/user-repository.interface';
+import { LOGGER_SERVICE } from 'src/modules/shared/application/constant/logger-service.constant';
+import { ResourceNotFoundError } from 'src/modules/shared/domain/errors/resource-not-found.error';
 
 @Injectable()
 export class UserFinderService {

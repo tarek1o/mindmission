@@ -1,7 +1,7 @@
-import { ActionEnum } from "src/modules/permission/domain/enums/action.enum";
-import { ResourceEnum } from "src/modules/permission/domain/enums/resource.enum";
-import { UserTypeEnum } from "src/modules/user/domain/enums/user-type.enum";
-import { UserModel } from "src/modules/user/domain/models/user.model";
+import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
+import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
+import { UserTypeEnum } from 'src/modules/user/domain/enums/user-type.enum';
+import { UserModel } from 'src/modules/user/domain/models/user.model';
 
 export class UserDetailsResponseDto {
   id: number;

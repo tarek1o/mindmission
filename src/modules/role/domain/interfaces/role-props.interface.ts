@@ -3,6 +3,6 @@ import { BaseModelProps } from 'src/modules/shared/domain/interfaces/base-model-
 
 export interface RoleProps extends BaseModelProps {
   permissions: PermissionModel[];
-  arePermissionsEditable?: boolean
+  arePermissionsEditable?: boolean;
   isDeletable?: boolean;
 }

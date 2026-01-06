@@ -14,12 +14,19 @@ import { PermissionTranslationEntity } from './permission-translation.entity';
 import { RoleEntity } from 'src/modules/role/infrastructure/database/entities/role.entity';
 
 @Entity({ name: 'permissions' })
-@Index('permissions_resource_actions_partial_unique_index', ['resource', 'actions'], {
-  unique: true,
-  where: '"deleted_at" IS NULL'
-})
+@Index(
+  'permissions_resource_actions_partial_unique_index',
+  ['resource', 'actions'],
+  {
+    unique: true,
+    where: '"deleted_at" IS NULL',
+  },
+)
 export class PermissionEntity extends BaseEntity {
-  @OneToMany(() => PermissionTranslationEntity, (translation) => translation.permission)
+  @OneToMany(
+    () => PermissionTranslationEntity,
+    (translation) => translation.permission,
+  )
   translations: PermissionTranslationEntity[];
 
   @Column({ name: 'resource', type: 'varchar', length: 255 })
@@ -31,13 +38,17 @@ export class PermissionEntity extends BaseEntity {
   @Column({ name: 'level', type: 'int' })
   level: number;
 
-  @Column({ name: 'is_resource_and_Actions_editable', type: 'boolean', default: true })
+  @Column({
+    name: 'is_resource_and_Actions_editable',
+    type: 'boolean',
+    default: true,
+  })
   isResourceAndActionsEditable: boolean;
 
   @Column({ name: 'is_deletable', type: 'boolean', default: true })
   isDeletable: boolean;
 
-  @ManyToMany(() => RoleEntity, role => role.permissions)
+  @ManyToMany(() => RoleEntity, (role) => role.permissions)
   @JoinTable({ name: 'roles_permissions' })
   roles: RoleEntity[];
 

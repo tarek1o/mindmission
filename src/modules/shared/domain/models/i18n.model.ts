@@ -1,5 +1,5 @@
-import { LanguageEnum } from "../enums/language.enum";
-import { I18nProps } from "../interfaces/i18n-props.interface";
+import { LanguageEnum } from '../enums/language.enum';
+import { I18nProps } from '../interfaces/i18n-props.interface';
 
 export class I18nModel {
   [LanguageEnum.ENGLISH]: string;

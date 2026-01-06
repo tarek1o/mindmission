@@ -17,21 +17,33 @@ export abstract class CorsConfiguration {
   }
 
   private static isAllowedOrigin(currentOrigin?: string): boolean {
-    const { mode } = CorsConfiguration.configService.get<AppConfigInterface>('appConfig');
+    const { mode } =
+      CorsConfiguration.configService.get<AppConfigInterface>('appConfig');
     const allowedOrigins = CorsConfiguration.getAllowedOrigins();
-    return mode === EnvironmentEnum.DEVELOPMENT || allowedOrigins.some(origin => currentOrigin?.startsWith(origin));
+    return (
+      mode === EnvironmentEnum.DEVELOPMENT ||
+      allowedOrigins.some((origin) => currentOrigin?.startsWith(origin))
+    );
   }
 
-  private static validateCurrentOrigin(currentOrigin: string, callback: Callback): void {
+  private static validateCurrentOrigin(
+    currentOrigin: string,
+    callback: Callback,
+  ): void {
     const isAllowed = CorsConfiguration.isAllowedOrigin(currentOrigin);
-    const error = isAllowed ? null : new ServiceUnavailableException('Not allowed by CORS');
+    const error = isAllowed
+      ? null
+      : new ServiceUnavailableException('Not allowed by CORS');
     return callback(error, isAllowed);
   }
 
-  static getCorsOptions(configService: ConfigService<IEnvironmentConfiguration>): CorsOptions {
+  static getCorsOptions(
+    configService: ConfigService<IEnvironmentConfiguration>,
+  ): CorsOptions {
     CorsConfiguration.configService = configService;
     return {
-      origin: (currentOrigin, callback) => CorsConfiguration.validateCurrentOrigin(currentOrigin, callback),
+      origin: (currentOrigin, callback) =>
+        CorsConfiguration.validateCurrentOrigin(currentOrigin, callback),
     };
   }
 }

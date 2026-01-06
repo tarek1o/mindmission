@@ -5,7 +5,7 @@ import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 @ObjectType()
 export class PermissionTranslationType {
   @Field(() => LanguageEnum)
-  language: LanguageEnum; 
+  language: LanguageEnum;
 
   @Field(() => String)
   name: string;
@@ -19,4 +19,3 @@ export class PermissionTranslationType {
     this.description = permissionTranslationModel.description;
   }
 }
-

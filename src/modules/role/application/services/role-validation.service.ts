@@ -19,51 +19,102 @@ import { ConflictError } from 'src/modules/shared/domain/errors/conflict.error';
 export class RoleValidationService {
   constructor(
     @Inject(ROLE_REPOSITORY) private readonly roleRepository: IRoleRepository,
-    @Inject(PERMISSION_REPOSITORY) private readonly permissionRepository: IPermissionRepository,
+    @Inject(PERMISSION_REPOSITORY)
+    private readonly permissionRepository: IPermissionRepository,
     @Inject(LOGGER_SERVICE) private readonly logger: LoggerService,
-    @Inject(ROLE_TRANSLATION_REPOSITORY) private readonly roleTranslationRepository: IRoleTranslationRepository,
+    @Inject(ROLE_TRANSLATION_REPOSITORY)
+    private readonly roleTranslationRepository: IRoleTranslationRepository,
   ) {}
 
-  private checkEnglishAndArabicTranslations(translations: RoleTranslationInput[]): void {
-    const translationMap = new Map(translations.map(translation => [translation.language, translation]));
-    if (!translationMap.has(LanguageEnum.ENGLISH) || !translationMap.has(LanguageEnum.ARABIC)) {
-      this.logger.error('Permission translations missing', PermissionValidationService.name);
+  private checkEnglishAndArabicTranslations(
+    translations: RoleTranslationInput[],
+  ): void {
+    const translationMap = new Map(
+      translations.map((translation) => [translation.language, translation]),
+    );
+    if (
+      !translationMap.has(LanguageEnum.ENGLISH) ||
+      !translationMap.has(LanguageEnum.ARABIC)
+    ) {
+      this.logger.error(
+        'Permission translations missing',
+        PermissionValidationService.name,
+      );
       throw new InvalidInputError('permission.translations.missing');
     }
   }
 
-  private checkMissingPermissions(permissions: PermissionModel[], permissionIds: number[]): void {
-    const missingIds = permissionIds.filter(id => !permissions.some(p => p.id === id));
+  private checkMissingPermissions(
+    permissions: PermissionModel[],
+    permissionIds: number[],
+  ): void {
+    const missingIds = permissionIds.filter(
+      (id) => !permissions.some((p) => p.id === id),
+    );
     if (missingIds.length > 0) {
-      this.logger.error(`Permissions not found: ${missingIds.join(', ')}`, RoleValidationService.name);
-      throw new ResourceNotFoundError('role.permissions.not_found', { ids: missingIds.join(', ') });
+      this.logger.error(
+        `Permissions not found: ${missingIds.join(', ')}`,
+        RoleValidationService.name,
+      );
+      throw new ResourceNotFoundError('role.permissions.not_found', {
+        ids: missingIds.join(', '),
+      });
     }
   }
 
-  async getPermissionsByIds(permissionIds: number[]): Promise<PermissionModel[]> {
+  async getPermissionsByIds(
+    permissionIds: number[],
+  ): Promise<PermissionModel[]> {
     const permissions = await this.permissionRepository.getByIds(permissionIds);
     this.checkMissingPermissions(permissions, permissionIds);
     return permissions;
   }
 
-  private checkDuplicateNames(duplicates: GetRoleTranslationByNameViewModel[]): void {
+  private checkDuplicateNames(
+    duplicates: GetRoleTranslationByNameViewModel[],
+  ): void {
     if (duplicates.length) {
-      const repeatedNames = Array.from(duplicates.map(({ name }) => `'${name}'`));
+      const repeatedNames = Array.from(
+        duplicates.map(({ name }) => `'${name}'`),
+      );
       const errorCode = `role.translations.name.${repeatedNames.length > 1 ? 'multi_duplicate' : 'single_duplicate'}`;
-      throw new ConflictError(errorCode, { duplicate: repeatedNames.join(', ') });
+      throw new ConflictError(errorCode, {
+        duplicate: repeatedNames.join(', '),
+      });
     }
   }
 
-  private async checkRoleNamesDuplicate(translations: RoleTranslationInput[], roleId?: number): Promise<void> {
-    const parameters = translations.map(({ language, name }) => ({ language, name }));
-    const roleTranslations = await this.roleTranslationRepository.getByNameAndLanguageExcludingRoleId(parameters, roleId);
+  private async checkRoleNamesDuplicate(
+    translations: RoleTranslationInput[],
+    roleId?: number,
+  ): Promise<void> {
+    const parameters = translations.map(({ language, name }) => ({
+      language,
+      name,
+    }));
+    const roleTranslations =
+      await this.roleTranslationRepository.getByNameAndLanguageExcludingRoleId(
+        parameters,
+        roleId,
+      );
     this.checkDuplicateNames(roleTranslations);
   }
 
-  private async checkRolePermissionsDuplicate(permissionIds: number[], roleId?: number): Promise<void> {
-    const duplicateCount = permissionIds.length ? await this.roleRepository.countRolesWithPermissionsExcludingRoleId(permissionIds, roleId) : 0;
-    if(duplicateCount) {
-      this.logger.error(`Role permissions duplicate: ${permissionIds.join(', ')}`, RoleValidationService.name);
+  private async checkRolePermissionsDuplicate(
+    permissionIds: number[],
+    roleId?: number,
+  ): Promise<void> {
+    const duplicateCount = permissionIds.length
+      ? await this.roleRepository.countRolesWithPermissionsExcludingRoleId(
+          permissionIds,
+          roleId,
+        )
+      : 0;
+    if (duplicateCount) {
+      this.logger.error(
+        `Role permissions duplicate: ${permissionIds.join(', ')}`,
+        RoleValidationService.name,
+      );
       throw new ConflictError('role.permissions.duplicate');
     }
   }

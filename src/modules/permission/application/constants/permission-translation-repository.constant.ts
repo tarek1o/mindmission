@@ -1,1 +1,2 @@
-export const PERMISSION_TRANSLATION_REPOSITORY = 'IPermissionTranslationRepository';
+export const PERMISSION_TRANSLATION_REPOSITORY =
+  'IPermissionTranslationRepository';

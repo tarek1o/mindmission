@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
-import { UserModel } from "src/modules/user/domain/models/user.model";
-import { OAuthFlowEnum } from "../enums/oauth-flow.enum";
-import { OAuthFlowStrategy } from "../use-cases/oauth/strategies/base/oauth-flow-strategy";
-import { UnexpectedBehaviorError } from "src/modules/shared/domain/errors/unexpected-behavior.error";
+import { Injectable } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
+import { UserModel } from 'src/modules/user/domain/models/user.model';
+import { OAuthFlowEnum } from '../enums/oauth-flow.enum';
+import { OAuthFlowStrategy } from '../use-cases/oauth/strategies/base/oauth-flow-strategy';
+import { UnexpectedBehaviorError } from 'src/modules/shared/domain/errors/unexpected-behavior.error';
 
 @Injectable()
 export class OAuthFlowStrategyResolverService {

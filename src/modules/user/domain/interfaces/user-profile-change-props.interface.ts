@@ -1,6 +1,6 @@
-import { BaseModelProps } from "src/modules/shared/domain/interfaces/base-model-props.interface";
-import { UserProfileFieldEnum } from "../enums/user-profile-field.enum";
-import { RequestStatusEnum } from "../enums/request-status.enum";
+import { BaseModelProps } from 'src/modules/shared/domain/interfaces/base-model-props.interface';
+import { UserProfileFieldEnum } from '../enums/user-profile-field.enum';
+import { RequestStatusEnum } from '../enums/request-status.enum';
 
 export interface UserProfileChangeProps extends BaseModelProps {
   userId: number;

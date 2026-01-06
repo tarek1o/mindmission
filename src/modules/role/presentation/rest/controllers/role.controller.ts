@@ -45,14 +45,25 @@ export class RoleController {
 
   @Get()
   @UseGuards(AuthorizationGuard)
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getAllRoles(
     @AcceptLanguage() language: LanguageEnum,
     @Query() searchQuery: GetAllPermissionQueryDto,
     @Query() order: PermissionOrderDto,
     @Query(PaginationPipe) pagination: Pagination,
   ): Promise<{ data: RoleResponseDto[]; count: number }> {
-    const { models, count } = await this.getAllRolesUseCase.execute({ ...searchQuery, language }, order, pagination);
+    const { models, count } = await this.getAllRolesUseCase.execute(
+      { ...searchQuery, language },
+      order,
+      pagination,
+    );
     return {
       data: models.map((role) => new RoleResponseDto(role)),
       count,
@@ -60,47 +71,70 @@ export class RoleController {
   }
 
   @Get('list')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USER_ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.USER_ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getByLanguage(
-    @AcceptLanguage() language: LanguageEnum
+    @AcceptLanguage() language: LanguageEnum,
   ): Promise<RoleListResponseDto[]> {
-    const roleTranslationModels = await this.getRoleTranslationsByLanguageUseCase.execute(language);
-    return roleTranslationModels.map((RoleTranslationModel) => new RoleListResponseDto(RoleTranslationModel));
+    const roleTranslationModels =
+      await this.getRoleTranslationsByLanguageUseCase.execute(language);
+    return roleTranslationModels.map(
+      (RoleTranslationModel) => new RoleListResponseDto(RoleTranslationModel),
+    );
   }
 
   @Get(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getRoleById(
-    @Param('id', ParseIntPipe) id: number
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<RoleDetailsResponseDto> {
     const role = await this.getRoleByIdUseCase.execute(id);
     return new RoleDetailsResponseDto(role);
   }
 
   @Post()
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.ADD]} ] })
+  @AcceptedCriteria({
+    privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.ADD] }],
+  })
   async createRole(
-    @Body() createRoleDto: CreateRoleDto
+    @Body() createRoleDto: CreateRoleDto,
   ): Promise<RoleDetailsResponseDto> {
     const createdRole = await this.createRoleUseCase.execute(createRoleDto);
     return new RoleDetailsResponseDto(createdRole);
   }
 
   @Patch(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.EDIT]} ] })
+  @AcceptedCriteria({
+    privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.EDIT] }],
+  })
   async updateRole(
-    @Param('id', ParseIntPipe) id: number, 
-    @Body() updateRoleDto: UpdateRoleDto
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<RoleDetailsResponseDto> {
     const updatedRole = await this.updateRoleUseCase.execute(id, updateRoleDto);
     return new RoleDetailsResponseDto(updatedRole);
   }
 
   @Delete(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.DELETE]} ] })
-  async deleteRole(
-    @Param('id', ParseIntPipe) id: number
-  ): Promise<void> {
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.ROLES, actions: [ActionEnum.DELETE] },
+    ],
+  })
+  async deleteRole(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.deleteRoleUseCase.execute(id);
   }
 }

@@ -1,5 +1,5 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { SignupInput } from "src/modules/auth/application/inputs/signup.input";
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { SignupInput } from 'src/modules/auth/application/inputs/signup.input';
 
 export class SignupDto implements SignupInput {
   @IsString()

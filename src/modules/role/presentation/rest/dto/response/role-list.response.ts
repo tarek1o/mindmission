@@ -1,4 +1,4 @@
-import { GetRoleTranslationByLanguageViewModel } from "src/modules/role/application/view-models/get-role-translation-by-language.view-model";
+import { GetRoleTranslationByLanguageViewModel } from 'src/modules/role/application/view-models/get-role-translation-by-language.view-model';
 
 export class RoleListResponseDto {
   id: number;
@@ -7,5 +7,5 @@ export class RoleListResponseDto {
   constructor(roleTranslationViewModel: GetRoleTranslationByLanguageViewModel) {
     this.id = roleTranslationViewModel.roleId;
     this.name = roleTranslationViewModel.name;
-  } 
+  }
 }

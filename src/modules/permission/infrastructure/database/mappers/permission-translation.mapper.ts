@@ -3,7 +3,9 @@ import { PermissionTranslationModel } from 'src/modules/permission/domain/models
 import { SlugifyHelper } from 'src/modules/shared/infrastructure/helpers/slugify.helper';
 
 export abstract class PermissionTranslationMapper {
-  static toModel(entity: PermissionTranslationEntity): PermissionTranslationModel {
+  static toModel(
+    entity: PermissionTranslationEntity,
+  ): PermissionTranslationModel {
     return new PermissionTranslationModel({
       id: entity.id,
       language: entity.language,
@@ -16,7 +18,9 @@ export abstract class PermissionTranslationMapper {
     });
   }
 
-  static toEntity(model: PermissionTranslationModel): PermissionTranslationEntity {
+  static toEntity(
+    model: PermissionTranslationModel,
+  ): PermissionTranslationEntity {
     return new PermissionTranslationEntity({
       id: model.id,
       language: model.language,

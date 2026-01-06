@@ -26,21 +26,19 @@ import { AuthMiddleware } from '../shared/presentation/middlewares/auth.middlewa
     TypeOrmModule.forFeature([RoleEntity, RoleTranslationEntity]),
     PermissionModule,
   ],
-  controllers: [
-    RoleController,
-  ],
+  controllers: [RoleController],
   providers: [
     {
       provide: ROLE_REPOSITORY,
-      useClass: RoleRepository
+      useClass: RoleRepository,
     },
     {
       provide: ROLE_TRANSLATION_REPOSITORY,
-      useClass: RoleTranslationRepository
+      useClass: RoleTranslationRepository,
     },
     {
       provide: ROLE_CACHE,
-      useClass: RoleCacheService
+      useClass: RoleCacheService,
     },
     RoleFinderService,
     GetAllRolesPaginatedWithCountUseCase,
@@ -52,10 +50,7 @@ import { AuthMiddleware } from '../shared/presentation/middlewares/auth.middlewa
     DeleteRoleUseCase,
     RoleResolver,
   ],
-  exports: [
-    ROLE_REPOSITORY,
-    ROLE_CACHE,
-  ]
+  exports: [ROLE_REPOSITORY, ROLE_CACHE],
 })
 export class RoleModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,7 +1,7 @@
-import { BaseModel } from "./base.model";
-import { LanguageEnum } from "../enums/language.enum";
-import { InvalidInputError } from "../errors/invalid-input.error";
-import { BaseTranslationProps } from "../interfaces/base-translation-props.interface";
+import { BaseModel } from './base.model';
+import { LanguageEnum } from '../enums/language.enum';
+import { InvalidInputError } from '../errors/invalid-input.error';
+import { BaseTranslationProps } from '../interfaces/base-translation-props.interface';
 
 export abstract class BaseTranslationModel extends BaseModel {
   private _language: LanguageEnum;
@@ -18,7 +18,9 @@ export abstract class BaseTranslationModel extends BaseModel {
   set language(value: LanguageEnum) {
     const languages = Object.values(LanguageEnum);
     if (!languages.includes(value)) {
-      throw new InvalidInputError('global.translations.language.invalid', { languages });
+      throw new InvalidInputError('global.translations.language.invalid', {
+        languages,
+      });
     }
     this._language = value;
   }
@@ -30,7 +32,10 @@ export abstract class BaseTranslationModel extends BaseModel {
   set name(value: string) {
     const nameLength = value?.trim().length;
     if (!nameLength || nameLength < 3 || nameLength > 60) {
-      throw new InvalidInputError('global.translations.name.too_short_too_long', { min: 3, max: 60 });
+      throw new InvalidInputError(
+        'global.translations.name.too_short_too_long',
+        { min: 3, max: 60 },
+      );
     }
     this._name = value.trim();
   }
@@ -41,7 +46,9 @@ export abstract class BaseTranslationModel extends BaseModel {
 
   set description(description: string | null) {
     if (description && description.length > 2000) {
-      throw new InvalidInputError('global.translations.description.too_long', { max: 2000 });
+      throw new InvalidInputError('global.translations.description.too_long', {
+        max: 2000,
+      });
     }
     this._description = description ?? null;
   }

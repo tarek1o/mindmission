@@ -10,4 +10,4 @@ export interface IEmailTemplateContext extends ITemplateContext {
   code?: string;
   resetPasswordTokenExpirationTime?: string;
   [key: string]: any;
-} 
+}

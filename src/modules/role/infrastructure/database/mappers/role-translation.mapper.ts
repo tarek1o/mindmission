@@ -1,6 +1,6 @@
-import { SlugifyHelper } from "src/modules/shared/infrastructure/helpers/slugify.helper";
-import { RoleTranslationModel } from "../../../domain/models/role-translation.model";
-import { RoleTranslationEntity } from "../entities/role-translation.entity";
+import { SlugifyHelper } from 'src/modules/shared/infrastructure/helpers/slugify.helper';
+import { RoleTranslationModel } from '../../../domain/models/role-translation.model';
+import { RoleTranslationEntity } from '../entities/role-translation.entity';
 
 export abstract class RoleTranslationMapper {
   static toModel(entity: RoleTranslationEntity): RoleTranslationModel {

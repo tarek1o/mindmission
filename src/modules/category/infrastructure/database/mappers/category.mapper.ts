@@ -1,5 +1,5 @@
-import { CategoryModel } from "src/modules/category/domain/models/category.model";
-import { CategoryEntity } from "../entities/category.entity";
+import { CategoryModel } from 'src/modules/category/domain/models/category.model';
+import { CategoryEntity } from '../entities/category.entity';
 
 export abstract class CategoryMapper {
   static toModel(entity: CategoryEntity): CategoryModel {

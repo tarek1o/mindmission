@@ -40,18 +40,15 @@ import { ChangeProfileImageUseCase } from './application/use-cases/change-profil
     NotificationModule,
     StorageModule,
   ],
-  controllers: [
-    UserController,
-    ProfileController,
-  ],
+  controllers: [UserController, ProfileController],
   providers: [
     {
       provide: USER_REPOSITORY,
-      useClass: UserRepository
+      useClass: UserRepository,
     },
     {
       provide: USER_PROFILE_CHANGE_REPOSITORY,
-      useClass: UserProfileChangeRepository
+      useClass: UserProfileChangeRepository,
     },
     GetAllUsersPaginatedWithCountUseCase,
     GetUserByIdUseCase,
@@ -72,11 +69,7 @@ import { ChangeProfileImageUseCase } from './application/use-cases/change-profil
     ChangeEmailNotificationProcessor,
     PasswordChangedNotificationProcessor,
   ],
-  exports: [
-    USER_REPOSITORY,
-    UserValidatorService,
-    UserFinderService,
-  ]
+  exports: [USER_REPOSITORY, UserValidatorService, UserFinderService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

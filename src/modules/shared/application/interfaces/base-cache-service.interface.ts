@@ -1,5 +1,5 @@
-import { CacheIdType } from "../types/cache-id.type";
-import { BaseCacheViewModel } from "../view-models/base-cache.view-model";
+import { CacheIdType } from '../types/cache-id.type';
+import { BaseCacheViewModel } from '../view-models/base-cache.view-model';
 
 export interface IBaseCacheService<T extends BaseCacheViewModel> {
   getOne(id: CacheIdType): Promise<T | null>;

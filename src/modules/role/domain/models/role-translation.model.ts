@@ -1,6 +1,6 @@
-import { InvalidInputError } from "src/modules/shared/domain/errors/invalid-input.error";
-import { BaseTranslationModel } from "src/modules/shared/domain/models/base-translation.model";
-import { RoleTranslationProps } from "../interfaces/role-translation-props.interface";
+import { InvalidInputError } from 'src/modules/shared/domain/errors/invalid-input.error';
+import { BaseTranslationModel } from 'src/modules/shared/domain/models/base-translation.model';
+import { RoleTranslationProps } from '../interfaces/role-translation-props.interface';
 
 export class RoleTranslationModel extends BaseTranslationModel {
   private _roleId: number;

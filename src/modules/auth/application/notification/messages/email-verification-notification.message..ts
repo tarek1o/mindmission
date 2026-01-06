@@ -1,4 +1,4 @@
-import { NotificationMessage } from "../../../../notification/application/messages/notification.message";
+import { NotificationMessage } from '../../../../notification/application/messages/notification.message';
 
 export class EmailVerificationNotificationMessage extends NotificationMessage {
   id: number;
@@ -7,7 +7,7 @@ export class EmailVerificationNotificationMessage extends NotificationMessage {
   email: string;
   token: string;
   expirationDate: Date;
-  
+
   constructor(data: EmailVerificationNotificationMessage) {
     super();
     Object.assign(this, data);

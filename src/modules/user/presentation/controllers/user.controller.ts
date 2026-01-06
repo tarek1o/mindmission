@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { GetAllUsersPaginatedWithCountUseCase } from '../../application/use-cases/get-all-users-paginated-with-count.use-case';
 import { GetUserByIdUseCase } from '../../application/use-cases/get-user-by-id.use-case';
 import { GetAllUsersQueryDto } from '../dto/request/get-all-users-query.dto';
@@ -29,59 +39,94 @@ export class UserController {
   ) {}
 
   @Get()
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USERS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.USERS,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getAllUsersPaginatedWithCount(
     @Query() query: GetAllUsersQueryDto,
     @Query() order: UserOrderDto,
-    @Query(PaginationPipe) pagination: Pagination
+    @Query(PaginationPipe) pagination: Pagination,
   ) {
-    const { models, count } = await this.getAllUsersPaginatedWithCountUseCase.execute(query, order, pagination);
+    const { models, count } =
+      await this.getAllUsersPaginatedWithCountUseCase.execute(
+        query,
+        order,
+        pagination,
+      );
     return {
       data: models.map((user) => new UserListItemResponseDto(user)),
       count,
     };
   }
 
-
   @Get(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USERS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
-  async getUserById(
-    @Param('id', ParseIntPipe) id: number
-  ) {
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.USERS,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
+  async getUserById(@Param('id', ParseIntPipe) id: number) {
     const user = await this.getUserByIdUseCase.execute(id);
     return new UserDetailsResponseDto(user);
   }
 
   @Post()
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USERS, actions: [ActionEnum.ADD]} ] })
+  @AcceptedCriteria({
+    privileges: [{ resource: ResourceEnum.USERS, actions: [ActionEnum.ADD] }],
+  })
   async createAdmin(@Body() createUserDto: CreateUserDto) {
     const user = await this.createAdminUseCase.execute(createUserDto);
     return new UserDetailsResponseDto(user);
   }
 
   @Patch(':id/roles')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USER_ROLES, actions: [ActionEnum.ADD, ActionEnum.EDIT]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.USER_ROLES,
+        actions: [ActionEnum.ADD, ActionEnum.EDIT],
+      },
+    ],
+  })
   async updateUserRoles(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserRoles: UpdateUserRolesDto,
   ): Promise<UserDetailsResponseDto> {
-    const user = await this.updateUserRolesUseCase.execute(id, updateUserRoles.rolesIds);
+    const user = await this.updateUserRolesUseCase.execute(
+      id,
+      updateUserRoles.rolesIds,
+    );
     return new UserDetailsResponseDto(user);
   }
 
   @Patch(':id/block')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.BLOCK_USERS, actions: [ActionEnum.ADD, ActionEnum.EDIT]} ] })
-  async toggleBlockUser(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<void> {
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.BLOCK_USERS,
+        actions: [ActionEnum.ADD, ActionEnum.EDIT],
+      },
+    ],
+  })
+  async toggleBlockUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.toggleBlockUserUseCase.execute(id);
   }
 
   @Delete(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.USERS, actions: [ActionEnum.DELETE]} ] })
-  async deleteUser(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<void> {
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.USERS, actions: [ActionEnum.DELETE] },
+    ],
+  })
+  async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.deleteUserUseCase.execute(id);
   }
 }

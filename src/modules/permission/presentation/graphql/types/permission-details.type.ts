@@ -38,7 +38,9 @@ export class PermissionDetailsType {
   constructor(permissionViewModel: PermissionWithTranslationsViewModel) {
     const { permission, translations } = permissionViewModel;
     this.id = permission.id;
-    this.translations = translations.map(translation => new PermissionTranslationType(translation));
+    this.translations = translations.map(
+      (translation) => new PermissionTranslationType(translation),
+    );
     this.resource = permission.resource;
     this.actions = permission.actions;
     this.level = permission.level;
@@ -48,4 +50,3 @@ export class PermissionDetailsType {
     this.updateAt = permission.updatedAt;
   }
 }
-

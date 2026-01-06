@@ -3,6 +3,6 @@ export interface StorageConfiguration {
     profileImages: {
       dir: string;
       maxSize: number;
-    }
+    };
   };
 }

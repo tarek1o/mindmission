@@ -1,4 +1,4 @@
-import { IsArray, IsInt, IsNotEmpty, Min, ArrayMinSize } from "class-validator";
+import { IsArray, IsInt, IsNotEmpty, Min, ArrayMinSize } from 'class-validator';
 
 export class UpdateUserRolesDto {
   @Min(1, { each: true })

@@ -1,5 +1,5 @@
-import { OAuthProfileModel } from "src/modules/auth/domain/models/oauth-profile.model";
-import { OAuthProviderEntity } from "../entities/oauth-provider.entity";
+import { OAuthProfileModel } from 'src/modules/auth/domain/models/oauth-profile.model';
+import { OAuthProviderEntity } from '../entities/oauth-provider.entity';
 
 export abstract class OAuthProviderMapper {
   static toModel(entity: OAuthProviderEntity): OAuthProfileModel {

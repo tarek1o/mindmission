@@ -1,13 +1,20 @@
-import { Column, DeepPartial, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { BaseEntity } from "src/modules/shared/infrastructure/database/entities/base.entity";
-import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
-import { UserEntity } from "src/modules/user/infrastructure/database/entities/user.entity";
+import {
+  Column,
+  DeepPartial,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { BaseEntity } from 'src/modules/shared/infrastructure/database/entities/base.entity';
+import { ActionTokenTypeEnum } from 'src/modules/action-token/domain/enums/action-token-type.enum';
+import { UserEntity } from 'src/modules/user/infrastructure/database/entities/user.entity';
 
 @Entity({ name: 'action_tokens' })
 export class ActionTokenEntity extends BaseEntity {
   @Column({ name: 'uuid', type: 'varchar' })
   uuid: string;
-  
+
   @Index('action_tokens_token_index', { fulltext: true })
   @Column({ name: 'token', type: 'varchar' })
   token: string;
@@ -28,7 +35,10 @@ export class ActionTokenEntity extends BaseEntity {
   expiresAt: Date | null;
 
   @JoinColumn({ name: 'user_id' })
-  @ManyToOne(() => UserEntity, user => user.actionTokens, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  @ManyToOne(() => UserEntity, (user) => user.actionTokens, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 
   constructor(partial?: DeepPartial<ActionTokenEntity>) {

@@ -10,10 +10,20 @@ import { GetAllPermissionsByLanguageViewModel } from '../view-models/get-all-per
 import { PermissionWithTranslationsViewModel } from '../view-models/permission-with-translations.view-model';
 
 export interface IPermissionRepository extends IBaseRepository<PermissionModel> {
-  getAllPaginatedAndTotalCount(query: GetAllPermissionQueryInput, order: IOrder<AllowedPermissionOrderColumnEnum>, pagination: Pagination): Promise<{ models: GetAllPermissionsByLanguageViewModel[], count: number }>;
+  getAllPaginatedAndTotalCount(
+    query: GetAllPermissionQueryInput,
+    order: IOrder<AllowedPermissionOrderColumnEnum>,
+    pagination: Pagination,
+  ): Promise<{ models: GetAllPermissionsByLanguageViewModel[]; count: number }>;
   getById(id: number): Promise<PermissionModel | null>;
-  getWithTranslationsById(id: number): Promise<PermissionWithTranslationsViewModel | null>;
+  getWithTranslationsById(
+    id: number,
+  ): Promise<PermissionWithTranslationsViewModel | null>;
   getByIds(ids: number[]): Promise<PermissionModel[]>;
-  getCountByResourceAndActions(resource: ResourceEnum, actions: ActionEnum[], permissionId?: number): Promise<number>;
-  countRolesWithOnlyPermission(permissionId: number): Promise<number>
+  getCountByResourceAndActions(
+    resource: ResourceEnum,
+    actions: ActionEnum[],
+    permissionId?: number,
+  ): Promise<number>;
+  countRolesWithOnlyPermission(permissionId: number): Promise<number>;
 }

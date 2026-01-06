@@ -1,5 +1,5 @@
-import { CurrencyEnum } from "src/modules/shared/domain/enums/currency.enum";
-import { PriceModel } from "src/modules/shared/domain/models/price.model";
+import { CurrencyEnum } from 'src/modules/shared/domain/enums/currency.enum';
+import { PriceModel } from 'src/modules/shared/domain/models/price.model';
 
 export class PriceResponseDto {
   value: number;

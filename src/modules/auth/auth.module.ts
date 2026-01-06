@@ -40,11 +40,7 @@ import { OAuthFlowStrategyResolverService } from './application/services/oauth-f
     SuspendedAccountModule,
     NotificationModule,
   ],
-  controllers: [
-    AuthController,
-    PasswordController,
-    OAuthController,
-  ],
+  controllers: [AuthController, PasswordController, OAuthController],
   providers: [
     {
       provide: OAUTH_PROVIDER_REPOSITORY,

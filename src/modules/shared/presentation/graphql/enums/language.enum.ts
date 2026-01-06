@@ -5,4 +5,3 @@ registerEnumType(LanguageEnum, {
   name: 'LanguageEnum',
   description: 'Supported languages',
 });
-

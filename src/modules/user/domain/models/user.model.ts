@@ -1,12 +1,12 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { UserTypeEnum } from "../enums/user-type.enum";
-import { RoleModel } from "src/modules/role/domain/models/role.model";
-import { InvalidInputError } from "src/modules/shared/domain/errors/invalid-input.error";
-import { CreateUserProps } from "../interfaces/create-user.props.interface";
-import { UpdateUserProps } from "../interfaces/update-user-props.interface";
-import { ProtectedResourceError } from "src/modules/shared/domain/errors/protected-resource.error";
-import { ConflictError } from "src/modules/shared/domain/errors/conflict.error";
-import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { UserTypeEnum } from '../enums/user-type.enum';
+import { RoleModel } from 'src/modules/role/domain/models/role.model';
+import { InvalidInputError } from 'src/modules/shared/domain/errors/invalid-input.error';
+import { CreateUserProps } from '../interfaces/create-user.props.interface';
+import { UpdateUserProps } from '../interfaces/update-user-props.interface';
+import { ProtectedResourceError } from 'src/modules/shared/domain/errors/protected-resource.error';
+import { ConflictError } from 'src/modules/shared/domain/errors/conflict.error';
+import { AppUiEnum } from 'src/modules/shared/domain/enums/app-ui.enum';
 
 export class UserModel extends BaseModel {
   private _firstName: string;
@@ -43,8 +43,11 @@ export class UserModel extends BaseModel {
   }
 
   set firstName(value: string) {
-    if(value?.length < 3 || value?.length > 60) {
-      throw new InvalidInputError('user.first_name.too_short_too_long', { min: 3, max: 60 });
+    if (value?.length < 3 || value?.length > 60) {
+      throw new InvalidInputError('user.first_name.too_short_too_long', {
+        min: 3,
+        max: 60,
+      });
     }
     this._firstName = value;
   }
@@ -54,8 +57,11 @@ export class UserModel extends BaseModel {
   }
 
   set lastName(value: string) {
-    if(value?.length < 3 || value?.length > 60) {
-      throw new InvalidInputError('user.last_name.too_short_too_long', { min: 3, max: 60 });
+    if (value?.length < 3 || value?.length > 60) {
+      throw new InvalidInputError('user.last_name.too_short_too_long', {
+        min: 3,
+        max: 60,
+      });
     }
     this._lastName = value;
   }
@@ -65,14 +71,17 @@ export class UserModel extends BaseModel {
   }
 
   private checkIfProtected(): void {
-    if(this.isProtected) {
+    if (this.isProtected) {
       throw new ProtectedResourceError('user.protected', { id: this.id });
     }
   }
 
   private set email(value: string) {
-    if(value.length < 5 || value.length > 100) {
-      throw new InvalidInputError('user.email.too_short_too_long', { min: 5, max: 100 });
+    if (value.length < 5 || value.length > 100) {
+      throw new InvalidInputError('user.email.too_short_too_long', {
+        min: 5,
+        max: 100,
+      });
     }
     this.checkIfProtected();
     this._email = value;
@@ -100,8 +109,11 @@ export class UserModel extends BaseModel {
   }
 
   private set password(value: string) {
-    if(value.length < 8 || value.length > 100) { 
-      throw new InvalidInputError('user.password.too_short_too_long', { min: 8, max: 100 });
+    if (value.length < 8 || value.length > 100) {
+      throw new InvalidInputError('user.password.too_short_too_long', {
+        min: 8,
+        max: 100,
+      });
     }
     this._password = value;
   }
@@ -111,8 +123,8 @@ export class UserModel extends BaseModel {
   }
 
   setFirstPassword(password: string): void {
-    if(this.isPasswordSet) {
-      throw new ConflictError('user.set_first_password')
+    if (this.isPasswordSet) {
+      throw new ConflictError('user.set_first_password');
     }
     this.changePassword(password);
     this.isPasswordSet = true;
@@ -133,22 +145,24 @@ export class UserModel extends BaseModel {
   }
 
   set types(values: UserTypeEnum[]) {
-    if(!values?.length) {
+    if (!values?.length) {
       throw new InvalidInputError('user.types.empty');
     }
-    if(values.includes(UserTypeEnum.ADMIN) && values.length > 1) {
+    if (values.includes(UserTypeEnum.ADMIN) && values.length > 1) {
       throw new InvalidInputError('user.types.admin_only');
     }
     this.checkIfProtected();
     this._types = values;
   }
-  
+
   get types(): UserTypeEnum[] {
     return this._types;
   }
 
   get appUi(): AppUiEnum {
-    return this.isUserIsSystemAdmin() ? AppUiEnum.DASHBOARD : AppUiEnum.MAIN_APP;
+    return this.isUserIsSystemAdmin()
+      ? AppUiEnum.DASHBOARD
+      : AppUiEnum.MAIN_APP;
   }
 
   isUserIsSystemAdmin(): boolean {
@@ -156,7 +170,7 @@ export class UserModel extends BaseModel {
   }
 
   set roles(values: RoleModel[]) {
-    if(!values.length && this.isUserIsSystemAdmin()) {
+    if (!values.length && this.isUserIsSystemAdmin()) {
       throw new InvalidInputError('user.roles.empty');
     }
     this.checkIfProtected();

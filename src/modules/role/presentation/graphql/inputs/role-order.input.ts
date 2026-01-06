@@ -7,10 +7,15 @@ import { IOrder } from 'src/modules/shared/application/interfaces/order.interfac
 
 @InputType()
 export class RoleOrderInput implements IOrder<AllowedRoleOrderColumnsEnum> {
-  @Field(() => AllowedRoleOrderColumnsEnum, { nullable: true, defaultValue: AllowedRoleOrderColumnsEnum.CREATED_AT })
+  @Field(() => AllowedRoleOrderColumnsEnum, {
+    nullable: true,
+    defaultValue: AllowedRoleOrderColumnsEnum.CREATED_AT,
+  })
   orderBy: AllowedRoleOrderColumnsEnum;
 
-  @Field(() => OrderDirectionEnum, { nullable: true, defaultValue: OrderDirectionEnum.DESC })
+  @Field(() => OrderDirectionEnum, {
+    nullable: true,
+    defaultValue: OrderDirectionEnum.DESC,
+  })
   orderDirection: OrderDirectionEnum;
 }
-

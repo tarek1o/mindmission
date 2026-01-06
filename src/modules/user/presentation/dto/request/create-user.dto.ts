@@ -1,8 +1,17 @@
-import { ArrayMinSize, IsArray, IsEmail, IsInt, IsNotEmpty, IsString, MaxLength, Min, MinLength } from "class-validator";
-import { CreateUserInput } from "src/modules/user/application/inputs/create-user.input";
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
+import { CreateUserInput } from 'src/modules/user/application/inputs/create-user.input';
 
 export class CreateUserDto implements CreateUserInput {
-
   @MaxLength(60)
   @MinLength(3)
   @IsString()
@@ -18,7 +27,7 @@ export class CreateUserDto implements CreateUserInput {
   @IsEmail()
   @IsNotEmpty()
   email: string;
- 
+
   @IsString()
   @IsNotEmpty()
   mobilePhone: string;

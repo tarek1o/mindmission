@@ -1,4 +1,10 @@
-import { FileTypeValidator, HttpStatus, Injectable, MaxFileSizeValidator, ParseFilePipe } from '@nestjs/common';
+import {
+  FileTypeValidator,
+  HttpStatus,
+  Injectable,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+} from '@nestjs/common';
 import { FileSignatureValidator } from '../validators/file-signature.validator';
 import { NotEmptyArray } from 'src/infrastructure/types/not-empty-array.type';
 import { DocumentFileEnum } from '../../../storage/application/enums/document-file.enum';

@@ -1,7 +1,7 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { NotificationChannelEnum } from "src/modules/notification/domain/enums/notification-channel.enum";
-import { SuspendedReasonEnum } from "../enums/suspended-reason.enum";
-import { SuspendedAccountProps } from "../interfaces/suspended-account-props.interface";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { NotificationChannelEnum } from 'src/modules/notification/domain/enums/notification-channel.enum';
+import { SuspendedReasonEnum } from '../enums/suspended-reason.enum';
+import { SuspendedAccountProps } from '../interfaces/suspended-account-props.interface';
 
 export class SuspendedAccountModel extends BaseModel {
   recipient: string;

@@ -26,9 +26,9 @@ import { AppConfigInterface } from 'src/infrastructure/configuration/interfaces/
               ),
             }),
           ],
-        }
-      }
+        };
+      },
     }),
-  ]
+  ],
 })
 export class WinstonLoggerModule {}

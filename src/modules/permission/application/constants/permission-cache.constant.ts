@@ -1,1 +1,1 @@
-export const PERMISSION_CACHE = 'IPermissionCache'
+export const PERMISSION_CACHE = 'IPermissionCache';

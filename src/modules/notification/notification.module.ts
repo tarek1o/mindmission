@@ -36,7 +36,9 @@ import { NotificationMessage } from './application/messages/notification.message
 import { NOTIFICATION_QUEUE_MAPPING } from './application/constants/notification-queue-mapping.constant';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([NotificationEntity, NotificationSettingsEntity])],
+  imports: [
+    TypeOrmModule.forFeature([NotificationEntity, NotificationSettingsEntity]),
+  ],
   controllers: [NotificationSettingsController],
   providers: [
     {
@@ -67,18 +69,26 @@ import { NOTIFICATION_QUEUE_MAPPING } from './application/constants/notification
     {
       provide: NOTIFICATION_QUEUE_MAPPING,
       inject: [ConfigService],
-      useFactory: (configService: ConfigService<IEnvironmentConfiguration, true>) => {
-        const { 
-          emailVerificationQueue, 
-          resetPasswordQueue, 
-          setFirstPasswordQueue, 
-          changeEmailQueue, 
-          passwordChangedQueue, 
+      useFactory: (
+        configService: ConfigService<IEnvironmentConfiguration, true>,
+      ) => {
+        const {
+          emailVerificationQueue,
+          resetPasswordQueue,
+          setFirstPasswordQueue,
+          changeEmailQueue,
+          passwordChangedQueue,
           welcomeQueue,
         } = configService.get<BullMQConfigurations>('bullMQ').queues;
         const mappings = new Map<NotificationMessage, string>();
-        mappings.set(EmailVerificationNotificationMessage, emailVerificationQueue);
-        mappings.set(SetFirstPasswordNotificationMessage, setFirstPasswordQueue);
+        mappings.set(
+          EmailVerificationNotificationMessage,
+          emailVerificationQueue,
+        );
+        mappings.set(
+          SetFirstPasswordNotificationMessage,
+          setFirstPasswordQueue,
+        );
         mappings.set(ChangeEmailNotificationMessage, changeEmailQueue);
         mappings.set(PasswordChangedNotificationMessage, passwordChangedQueue);
         mappings.set(ResetPasswordNotificationMessage, resetPasswordQueue);
@@ -98,7 +108,7 @@ import { NOTIFICATION_QUEUE_MAPPING } from './application/constants/notification
     NotificationChannelFinderService,
     NotificationSenderService,
     NOTIFICATION_SERVICE,
-  ]
+  ],
 })
 export class NotificationModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

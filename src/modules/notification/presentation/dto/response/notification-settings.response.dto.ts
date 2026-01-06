@@ -1,6 +1,6 @@
-import { NotificationChannelEnum } from "src/modules/notification/domain/enums/notification-channel.enum";
-import { NotificationEventEnum } from "src/modules/notification/domain/enums/notification-event.enum";
-import { NotificationSettingsModel } from "src/modules/notification/domain/models/notification-settings.model";
+import { NotificationChannelEnum } from 'src/modules/notification/domain/enums/notification-channel.enum';
+import { NotificationEventEnum } from 'src/modules/notification/domain/enums/notification-event.enum';
+import { NotificationSettingsModel } from 'src/modules/notification/domain/models/notification-settings.model';
 
 export class NotificationSettingsResponseDto {
   id: number;

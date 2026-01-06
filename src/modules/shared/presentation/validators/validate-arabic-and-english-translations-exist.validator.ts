@@ -8,8 +8,10 @@ import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 
 @ValidatorConstraint()
 export class ValidateArabicAndEnglishTranslationsExistValidator implements ValidatorConstraintInterface {
-
-  validate(translations: any[], validationArguments?: ValidationArguments): boolean {
+  validate(
+    translations: any[],
+    validationArguments?: ValidationArguments,
+  ): boolean {
     const languages = translations?.map((t) => t.language) ?? [];
     return (
       languages.includes(LanguageEnum.ENGLISH) &&
@@ -18,7 +20,8 @@ export class ValidateArabicAndEnglishTranslationsExistValidator implements Valid
   }
 
   defaultMessage?(validationArguments?: ValidationArguments): string {
-    return i18nValidationMessage('errors.permission.translations.missing')(validationArguments);
+    return i18nValidationMessage('errors.permission.translations.missing')(
+      validationArguments,
+    );
   }
-
 }

@@ -1,6 +1,6 @@
-import { InvalidInputError } from "src/modules/shared/domain/errors/invalid-input.error";
-import { BaseTranslationModel } from "src/modules/shared/domain/models/base-translation.model";
-import { CategoryTranslationProps } from "../interfaces/category-translation.props.interface";
+import { InvalidInputError } from 'src/modules/shared/domain/errors/invalid-input.error';
+import { BaseTranslationModel } from 'src/modules/shared/domain/models/base-translation.model';
+import { CategoryTranslationProps } from '../interfaces/category-translation.props.interface';
 
 export class CategoryTranslationModel extends BaseTranslationModel {
   private _categoryId: number;

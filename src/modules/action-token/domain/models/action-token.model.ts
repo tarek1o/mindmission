@@ -1,9 +1,9 @@
 import * as moment from 'moment';
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
-import { ActionTokenProps } from "../interfaces/action-token-props.interface";
-import { TokenStrategyType } from "../../application/enums/token-strategy-type.enum";
-import { ConflictError } from "src/modules/shared/domain/errors/conflict.error";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { ActionTokenTypeEnum } from 'src/modules/action-token/domain/enums/action-token-type.enum';
+import { ActionTokenProps } from '../interfaces/action-token-props.interface';
+import { TokenStrategyType } from '../../application/enums/token-strategy-type.enum';
+import { ConflictError } from 'src/modules/shared/domain/errors/conflict.error';
 
 export class ActionTokenModel<T = any> extends BaseModel {
   private _uuid: string;
@@ -28,7 +28,7 @@ export class ActionTokenModel<T = any> extends BaseModel {
   }
 
   set uuid(value: string) {
-    if(value && this.strategy === TokenStrategyType.STATELESS) {
+    if (value && this.strategy === TokenStrategyType.STATELESS) {
       throw new ConflictError('action_token.uuid.not_allowed');
     }
     this._uuid = value;
@@ -59,7 +59,7 @@ export class ActionTokenModel<T = any> extends BaseModel {
   }
 
   markAsRevoked(): void {
-    if(this.canBeRevoked()) {
+    if (this.canBeRevoked()) {
       this.isRevoked = true;
     }
   }
@@ -69,8 +69,8 @@ export class ActionTokenModel<T = any> extends BaseModel {
   }
 
   getRemainingTimeToExpired(): number | null {
-    if(!this.expiresAt) {
-      return null
+    if (!this.expiresAt) {
+      return null;
     }
     const diff = moment(this.expiresAt).diff(new Date(), 'second');
     return diff > 0 ? diff : 0;

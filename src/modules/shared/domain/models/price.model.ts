@@ -1,6 +1,6 @@
-import { CurrencyEnum } from "../enums/currency.enum";
-import { PriceProps } from "../interfaces/price-props.interface";
-import { InvalidInputError } from "../errors/invalid-input.error";
+import { CurrencyEnum } from '../enums/currency.enum';
+import { PriceProps } from '../interfaces/price-props.interface';
+import { InvalidInputError } from '../errors/invalid-input.error';
 
 export class PriceModel {
   private _value: number;

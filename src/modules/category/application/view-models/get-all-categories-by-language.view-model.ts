@@ -1,4 +1,4 @@
-import { CategoryTypeEnum } from "../../domain/enums/category-type.enum";
+import { CategoryTypeEnum } from '../../domain/enums/category-type.enum';
 
 export interface GetAllCategoriesByLanguageViewModel {
   id: number;

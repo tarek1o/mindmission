@@ -14,18 +14,20 @@ export class ValidActionsForResourceValidator implements ValidatorConstraintInte
   private resource: ResourceEnum;
   private allowedActions: ActionEnum[];
 
-  validate(actions: ActionEnum[], validationArguments?: ValidationArguments): boolean {
+  validate(
+    actions: ActionEnum[],
+    validationArguments?: ValidationArguments,
+  ): boolean {
     const { resource } = validationArguments.object as CreatePermissionDto;
     this.resource = resource;
     this.allowedActions = ResourceActionsMap[resource] ?? [];
-    return actions?.every(action => this.allowedActions?.includes(action));
+    return actions?.every((action) => this.allowedActions?.includes(action));
   }
 
   defaultMessage?(validationArguments?: ValidationArguments): string {
     return i18nValidationMessage('errors.permission.actions.invalid', {
       resource: this.resource,
-      actions: this.allowedActions.join(', ')
+      actions: this.allowedActions.join(', '),
     })(validationArguments);
   }
-  
 }

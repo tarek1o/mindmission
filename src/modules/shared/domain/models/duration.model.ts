@@ -1,6 +1,6 @@
-import { DurationUnitEnum } from "../enums/duration-unit.enum";
-import { InvalidInputError } from "../errors/invalid-input.error";
-import { DurationProps } from "../interfaces/duration-props.interface";
+import { DurationUnitEnum } from '../enums/duration-unit.enum';
+import { InvalidInputError } from '../errors/invalid-input.error';
+import { DurationProps } from '../interfaces/duration-props.interface';
 
 export class DurationModel {
   private _value: number;

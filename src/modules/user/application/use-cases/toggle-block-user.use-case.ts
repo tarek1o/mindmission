@@ -1,11 +1,11 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { USER_REPOSITORY } from "../constants/user-repository.constant";
-import { IUserRepository } from "../interfaces/user-repository.interface";
-import { UserFinderService } from "../services/user-finder.service";
-import { ForceLogoutService } from "../services/force-logout.service";
-import { IUnitOfWork } from "src/modules/shared/application/interfaces/unit-of-work.interface";
-import { UNIT_OF_WORK } from "src/modules/shared/application/constant/unit-of-work.constant";
-import { UserModel } from "../../domain/models/user.model";
+import { Inject, Injectable } from '@nestjs/common';
+import { USER_REPOSITORY } from '../constants/user-repository.constant';
+import { IUserRepository } from '../interfaces/user-repository.interface';
+import { UserFinderService } from '../services/user-finder.service';
+import { ForceLogoutService } from '../services/force-logout.service';
+import { IUnitOfWork } from 'src/modules/shared/application/interfaces/unit-of-work.interface';
+import { UNIT_OF_WORK } from 'src/modules/shared/application/constant/unit-of-work.constant';
+import { UserModel } from '../../domain/models/user.model';
 
 @Injectable()
 export class ToggleBlockUserUseCase {
@@ -19,7 +19,8 @@ export class ToggleBlockUserUseCase {
   private async applyBlockToggle(user: UserModel): Promise<void> {
     return this.unitOfWork.transaction(async (manager) => {
       await this.userRepository.save(user, manager);
-      user.isBlocked && await this.forceLogoutService.execute(user.id, manager);
+      user.isBlocked &&
+        (await this.forceLogoutService.execute(user.id, manager));
     });
   }
 

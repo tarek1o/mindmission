@@ -9,4 +9,3 @@ export class PaginationInput implements Pagination {
   @Field(() => Int, { nullable: true, defaultValue: 10 })
   take: number;
 }
-

@@ -1,8 +1,10 @@
-import { NotificationSettingsModel } from "src/modules/notification/domain/models/notification-settings.model";
-import { NotificationSettingsEntity } from "../entities/notification-settings.entity";
+import { NotificationSettingsModel } from 'src/modules/notification/domain/models/notification-settings.model';
+import { NotificationSettingsEntity } from '../entities/notification-settings.entity';
 
 export abstract class NotificationSettingsMapper {
-  static toEntity(model: NotificationSettingsModel): NotificationSettingsEntity {
+  static toEntity(
+    model: NotificationSettingsModel,
+  ): NotificationSettingsEntity {
     return new NotificationSettingsEntity({
       id: model.id,
       notificationEvent: model.notificationEvent,
@@ -13,7 +15,9 @@ export abstract class NotificationSettingsMapper {
     });
   }
 
-  static toModel(entity: NotificationSettingsEntity): NotificationSettingsModel {
+  static toModel(
+    entity: NotificationSettingsEntity,
+  ): NotificationSettingsModel {
     return new NotificationSettingsModel({
       id: entity.id,
       notificationEvent: entity.notificationEvent,

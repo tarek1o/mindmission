@@ -5,4 +5,3 @@ export class GetAllRolesQueryInput {
   @Field(() => String, { nullable: true })
   name?: string;
 }
-

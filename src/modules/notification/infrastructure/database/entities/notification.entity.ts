@@ -1,7 +1,7 @@
-import { Column, DeepPartial, Entity } from "typeorm";
-import { BaseEntity } from "src/modules/shared/infrastructure/database/entities/base.entity";
-import { NotificationChannelEnum } from "src/modules/notification/domain/enums/notification-channel.enum";
-import { NotificationStatusEnum } from "src/modules/notification/domain/enums/notification-status.enum";
+import { Column, DeepPartial, Entity } from 'typeorm';
+import { BaseEntity } from 'src/modules/shared/infrastructure/database/entities/base.entity';
+import { NotificationChannelEnum } from 'src/modules/notification/domain/enums/notification-channel.enum';
+import { NotificationStatusEnum } from 'src/modules/notification/domain/enums/notification-status.enum';
 
 @Entity({ name: 'notifications' })
 export class NotificationEntity extends BaseEntity {

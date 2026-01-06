@@ -1,5 +1,5 @@
-import { ResourceEnum } from "../../domain/enums/resource.enum";
-import { ActionEnum } from "../../domain/enums/action.enum";
+import { ResourceEnum } from '../../domain/enums/resource.enum';
+import { ActionEnum } from '../../domain/enums/action.enum';
 
 export interface GetAllPermissionsByLanguageViewModel {
   id: number;

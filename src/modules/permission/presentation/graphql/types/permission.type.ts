@@ -1,7 +1,7 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { GetAllPermissionsByLanguageViewModel } from "src/modules/permission/application/view-models/get-all-permissions-by-language.view.model";
-import { ActionEnum } from "src/modules/permission/domain/enums/action.enum";
-import { ResourceEnum } from "src/modules/permission/domain/enums/resource.enum";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GetAllPermissionsByLanguageViewModel } from 'src/modules/permission/application/view-models/get-all-permissions-by-language.view.model';
+import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
+import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
 import '../enums/resource.enum';
 import '../enums/action.enum';
 

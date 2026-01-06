@@ -18,8 +18,14 @@ import { ResourceNotFoundError } from 'src/modules/shared/domain/errors/resource
 import { UnexpectedBehaviorError } from 'src/modules/shared/domain/errors/unexpected-behavior.error';
 
 @Injectable()
-export class DomainRestfulExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
-  private readonly errorInfoMap: Record<string, { name: string, statusCode: HttpStatus }> = {
+export class DomainRestfulExceptionFilter
+  extends BaseExceptionFilter
+  implements ExceptionFilter
+{
+  private readonly errorInfoMap: Record<
+    string,
+    { name: string; statusCode: HttpStatus }
+  > = {
     [InvalidInputError.name]: {
       name: 'Bad Request',
       statusCode: HttpStatus.BAD_REQUEST,
@@ -34,7 +40,7 @@ export class DomainRestfulExceptionFilter extends BaseExceptionFilter implements
     },
     [ConflictError.name]: {
       name: 'Conflict',
-      statusCode: HttpStatus.CONFLICT
+      statusCode: HttpStatus.CONFLICT,
     },
     [ResourceNotFoundError.name]: {
       name: 'Not Found',
@@ -44,20 +50,33 @@ export class DomainRestfulExceptionFilter extends BaseExceptionFilter implements
       name: 'Internal Server Error',
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
     },
-  }
+  };
 
   constructor(
-    @Inject(TRANSLATION_SERVICE) private readonly translationService: ITranslationService,
+    @Inject(TRANSLATION_SERVICE)
+    private readonly translationService: ITranslationService,
   ) {
-    super()
+    super();
   }
 
   catch(exception: BaseDomainError, host: ArgumentsHost) {
     // TODO: Add a way to get the error from the context
     const response = host.switchToHttp().getResponse<Response>();
-    const { statusCode, name } = this.errorInfoMap[exception.constructor.name] ?? { name: 'Internal Service Error', statusCode: HttpStatus.INTERNAL_SERVER_ERROR };
-    const translatedErrorMessage = this.translationService.translate(`errors.${exception.message}`, exception.args);
-    const error = this.buildErrorResponse(statusCode, name, translatedErrorMessage);
+    const { statusCode, name } = this.errorInfoMap[
+      exception.constructor.name
+    ] ?? {
+      name: 'Internal Service Error',
+      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+    };
+    const translatedErrorMessage = this.translationService.translate(
+      `errors.${exception.message}`,
+      exception.args,
+    );
+    const error = this.buildErrorResponse(
+      statusCode,
+      name,
+      translatedErrorMessage,
+    );
     return response.status(error.status).json(error);
   }
 }

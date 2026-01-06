@@ -1,4 +1,11 @@
-import { CanActivate, ExecutionContext, Inject, Injectable, LoggerService, ForbiddenException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  Injectable,
+  LoggerService,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { IAccessPolicy, IPrivilege } from '../interfaces/privilege.interface';
@@ -19,25 +26,55 @@ export class AuthorizationGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const gqlCtx = GqlExecutionContext.create(context);
     const request: RequestWithUser = gqlCtx.getContext().req;
-    const { allowedUserTypes, privileges } = this.reflector.get<IAccessPolicy>(Privilege_Decorator_Key, context.getHandler());
-    const isAuthorized = this.isUserHasRequiredUserTypes(request.user, allowedUserTypes) && this.isUserHasRequiredPrivileges(request.user, privileges);
-    if(!isAuthorized) {
-      this.logger.error(`User ${request.user.id} is not authorized to access this resource`, AuthorizationGuard.name);
+    const { allowedUserTypes, privileges } = this.reflector.get<IAccessPolicy>(
+      Privilege_Decorator_Key,
+      context.getHandler(),
+    );
+    const isAuthorized =
+      this.isUserHasRequiredUserTypes(request.user, allowedUserTypes) &&
+      this.isUserHasRequiredPrivileges(request.user, privileges);
+    if (!isAuthorized) {
+      this.logger.error(
+        `User ${request.user.id} is not authorized to access this resource`,
+        AuthorizationGuard.name,
+      );
       throw new ForbiddenException();
     }
     return isAuthorized;
-  };
-
-  private isUserHasRequiredUserTypes(user: UserSession, allowedUserTypes: UserTypeEnum[]): boolean {
-    return allowedUserTypes?.some(userType => user.types.includes(userType)) ?? true;
   }
 
-  private isUserHasRequiredPrivileges(user: UserSession, privileges: IPrivilege[]): boolean {
-    const userPermissions = user.roles.flatMap(role => role.permissions);
-    return userPermissions.some(permission => this.isPermissionExistWithinRequiredPrivileges(privileges, permission));
+  private isUserHasRequiredUserTypes(
+    user: UserSession,
+    allowedUserTypes: UserTypeEnum[],
+  ): boolean {
+    return (
+      allowedUserTypes?.some((userType) => user.types.includes(userType)) ??
+      true
+    );
   }
 
-  private isPermissionExistWithinRequiredPrivileges(requiredPrivileges: IPrivilege[], permission: PermissionCacheViewModel): boolean {
-    return requiredPrivileges?.some(privilege => permission.resource === privilege.resource && privilege.actions.some(action => permission.actions.includes(action))) ?? true;
+  private isUserHasRequiredPrivileges(
+    user: UserSession,
+    privileges: IPrivilege[],
+  ): boolean {
+    const userPermissions = user.roles.flatMap((role) => role.permissions);
+    return userPermissions.some((permission) =>
+      this.isPermissionExistWithinRequiredPrivileges(privileges, permission),
+    );
+  }
+
+  private isPermissionExistWithinRequiredPrivileges(
+    requiredPrivileges: IPrivilege[],
+    permission: PermissionCacheViewModel,
+  ): boolean {
+    return (
+      requiredPrivileges?.some(
+        (privilege) =>
+          permission.resource === privilege.resource &&
+          privilege.actions.some((action) =>
+            permission.actions.includes(action),
+          ),
+      ) ?? true
+    );
   }
 }

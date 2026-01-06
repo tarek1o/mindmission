@@ -1,1 +1,2 @@
-export const NOTIFICATION_SETTINGS_CACHE_SERVICE = 'INotificationSettingsCacheService';
+export const NOTIFICATION_SETTINGS_CACHE_SERVICE =
+  'INotificationSettingsCacheService';

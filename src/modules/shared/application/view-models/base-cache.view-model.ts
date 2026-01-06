@@ -1,4 +1,4 @@
-import { CacheIdType } from "../types/cache-id.type";
+import { CacheIdType } from '../types/cache-id.type';
 
 export interface BaseCacheViewModel {
   id: CacheIdType;

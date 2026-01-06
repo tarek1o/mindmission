@@ -19,4 +19,3 @@ export class RoleTranslationType {
     this.description = translation.description;
   }
 }
-

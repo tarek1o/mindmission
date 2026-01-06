@@ -1,1 +1,1 @@
-export const ROLE_CACHE = 'IRoleCache'
+export const ROLE_CACHE = 'IRoleCache';

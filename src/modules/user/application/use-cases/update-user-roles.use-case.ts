@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { IUserRepository } from "../interfaces/user-repository.interface";
-import { USER_REPOSITORY } from "../constants/user-repository.constant";
-import { UserModel } from "../../domain/models/user.model";
-import { UserValidatorService } from "../services/user-validator.service";
-import { UserFinderService } from "../services/user-finder.service";
-import { IUnitOfWork } from "src/modules/shared/application/interfaces/unit-of-work.interface";
-import { UNIT_OF_WORK } from "src/modules/shared/application/constant/unit-of-work.constant";
-import { ForceLogoutService } from "../services/force-logout.service";
+import { Inject, Injectable } from '@nestjs/common';
+import { IUserRepository } from '../interfaces/user-repository.interface';
+import { USER_REPOSITORY } from '../constants/user-repository.constant';
+import { UserModel } from '../../domain/models/user.model';
+import { UserValidatorService } from '../services/user-validator.service';
+import { UserFinderService } from '../services/user-finder.service';
+import { IUnitOfWork } from 'src/modules/shared/application/interfaces/unit-of-work.interface';
+import { UNIT_OF_WORK } from 'src/modules/shared/application/constant/unit-of-work.constant';
+import { ForceLogoutService } from '../services/force-logout.service';
 
 @Injectable()
 export class UpdateUserRolesUseCase {

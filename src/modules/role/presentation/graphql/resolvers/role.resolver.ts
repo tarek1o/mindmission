@@ -39,12 +39,24 @@ export class RoleResolver {
   ) {}
 
   @Query(() => RolesResponseType, { name: 'getAllRoles' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH] }] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getAllRoles(
     @AcceptLanguage() language: LanguageEnum,
     @Args('query', { nullable: true }) queryInput: GetAllRolesQueryInput,
     @Args('order', { nullable: true }) orderInput: RoleOrderInput,
-    @Args('pagination', { nullable: true, type: () => PaginationInput }, PaginationPipe) pagination: Pagination,
+    @Args(
+      'pagination',
+      { nullable: true, type: () => PaginationInput },
+      PaginationPipe,
+    )
+    pagination: Pagination,
   ): Promise<RolesResponseType> {
     const { models, count } = await this.getAllRolesUseCase.execute(
       { ...queryInput, language },
@@ -52,29 +64,50 @@ export class RoleResolver {
       pagination,
     );
     return {
-      data: models.map(model => new RoleType(model)),
+      data: models.map((model) => new RoleType(model)),
       pagination: new PaginationType(pagination, count),
     };
   }
 
   @Query(() => [RoleListType], { name: 'getRolesByLanguage' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.USER_ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH] }] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.USER_ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getRolesByLanguage(
     @AcceptLanguage() language: LanguageEnum,
   ): Promise<RoleListType[]> {
-    const roleTranslationModels = await this.getRoleTranslationsByLanguageUseCase.execute(language);
-    return roleTranslationModels.map(roleTranslationViewModel => new RoleListType(roleTranslationViewModel));
+    const roleTranslationModels =
+      await this.getRoleTranslationsByLanguageUseCase.execute(language);
+    return roleTranslationModels.map(
+      (roleTranslationViewModel) => new RoleListType(roleTranslationViewModel),
+    );
   }
 
   @Query(() => RoleDetailsType, { name: 'getRoleById' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH] }] })
-  async getRoleById(@Args('id', { type: () => Int }) id: number): Promise<RoleDetailsType> {
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
+  async getRoleById(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<RoleDetailsType> {
     const roleViewModel = await this.getRoleByIdUseCase.execute(id);
     return new RoleDetailsType(roleViewModel);
   }
 
   @Mutation(() => RoleDetailsType, { name: 'createRole' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.ADD] }] })
+  @AcceptedCriteria({
+    privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.ADD] }],
+  })
   async createRole(
     @Args('input') createRoleInput: CreateRoleInput,
   ): Promise<RoleDetailsType> {
@@ -83,20 +116,30 @@ export class RoleResolver {
   }
 
   @Mutation(() => RoleDetailsType, { name: 'updateRole' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.EDIT] }] })
+  @AcceptedCriteria({
+    privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.EDIT] }],
+  })
   async updateRole(
     @Args('id', { type: () => Int }) id: number,
     @Args('input') updateRoleInput: UpdateRoleInput,
   ): Promise<RoleDetailsType> {
-    const roleViewModel = await this.updateRoleUseCase.execute(id, updateRoleInput);
+    const roleViewModel = await this.updateRoleUseCase.execute(
+      id,
+      updateRoleInput,
+    );
     return new RoleDetailsType(roleViewModel);
   }
 
   @Mutation(() => Boolean, { name: 'deleteRole' })
-  @AcceptedCriteria({ privileges: [{ resource: ResourceEnum.ROLES, actions: [ActionEnum.DELETE] }] })
-  async deleteRole(@Args('id', { type: () => Int }) id: number): Promise<boolean> {
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.ROLES, actions: [ActionEnum.DELETE] },
+    ],
+  })
+  async deleteRole(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<boolean> {
     await this.deleteRoleUseCase.execute(id);
     return true;
   }
 }
-

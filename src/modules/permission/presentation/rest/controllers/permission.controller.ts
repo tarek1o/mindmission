@@ -42,14 +42,25 @@ export class PermissionController {
   ) {}
 
   @Get()
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.PERMISSIONS,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getAllPermissions(
     @AcceptLanguage() language: LanguageEnum,
     @Query() searchQuery: GetAllPermissionQueryDto,
     @Query() order: PermissionOrderDto,
     @Query(PaginationPipe) pagination: Pagination,
   ): Promise<{ data: PermissionResponseDto[]; count: number }> {
-    const { models, count } = await this.getAllPermissionsUseCase.execute({ ...searchQuery, language }, order, pagination);
+    const { models, count } = await this.getAllPermissionsUseCase.execute(
+      { ...searchQuery, language },
+      order,
+      pagination,
+    );
     return {
       data: models.map((permission) => new PermissionResponseDto(permission)),
       count,
@@ -57,48 +68,78 @@ export class PermissionController {
   }
 
   @Get('list')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.ROLES, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.ROLES,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getByLanguage(
-    @AcceptLanguage() language: LanguageEnum
+    @AcceptLanguage() language: LanguageEnum,
   ): Promise<PermissionTranslationListResponseDto[]> {
-    const permissionTranslationModels = await this.getPermissionTranslationsByLanguageUseCase.execute(language);
-    return permissionTranslationModels.map((model) => new PermissionTranslationListResponseDto(model));
+    const permissionTranslationModels =
+      await this.getPermissionTranslationsByLanguageUseCase.execute(language);
+    return permissionTranslationModels.map(
+      (model) => new PermissionTranslationListResponseDto(model),
+    );
   }
 
   @Get(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.LIST, ActionEnum.SEARCH]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      {
+        resource: ResourceEnum.PERMISSIONS,
+        actions: [ActionEnum.LIST, ActionEnum.SEARCH],
+      },
+    ],
+  })
   async getPermissionById(
-    @Param('id', ParseIntPipe) id: number
+    @Param('id', ParseIntPipe) id: number,
   ): Promise<PermissionDetailsResponseDto> {
     const permission = await this.getPermissionByIdUseCase.execute(id);
     return new PermissionDetailsResponseDto(permission);
   }
 
   @Post()
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.ADD]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.ADD] },
+    ],
+  })
   async createPermission(
-    @Body() createPermissionDto: CreatePermissionDto
+    @Body() createPermissionDto: CreatePermissionDto,
   ): Promise<PermissionDetailsResponseDto> {
-    const createdPermission = await this.createPermissionUseCase.execute(createPermissionDto);
+    const createdPermission =
+      await this.createPermissionUseCase.execute(createPermissionDto);
     return new PermissionDetailsResponseDto(createdPermission);
   }
 
   @Patch(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.EDIT]} ] })
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.EDIT] },
+    ],
+  })
   async updatePermission(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePermissionDto: UpdatePermissionDto,
   ): Promise<PermissionDetailsResponseDto> {
-    const updatedPermission = await this.updatePermissionUseCase.execute(id, updatePermissionDto);
+    const updatedPermission = await this.updatePermissionUseCase.execute(
+      id,
+      updatePermissionDto,
+    );
     return new PermissionDetailsResponseDto(updatedPermission);
   }
 
   @Delete(':id')
-  @AcceptedCriteria({ privileges: [ {resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.DELETE]} ] })
-  async deletePermission(
-    @Param('id', ParseIntPipe) id: number
-  ): Promise<void> {
+  @AcceptedCriteria({
+    privileges: [
+      { resource: ResourceEnum.PERMISSIONS, actions: [ActionEnum.DELETE] },
+    ],
+  })
+  async deletePermission(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.deletePermissionUseCase.execute(id);
   }
 }
-

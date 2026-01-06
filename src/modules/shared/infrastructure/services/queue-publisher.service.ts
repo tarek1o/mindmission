@@ -17,14 +17,22 @@ export class QueuePublisherService implements IQueuePublisherService {
       const token = getQueueToken(queueName);
       return this.moduleRef.get<Queue>(token, { strict: false });
     } catch (error) {
-      this.logger.error(`Failed to get queue "${queueName}": ${error.message}`, QueuePublisherService.name);
-      throw new Error(`Failed to get queue "${queueName}". Make sure the queue is registered in the module.`);
+      this.logger.error(
+        `Failed to get queue "${queueName}": ${error.message}`,
+        QueuePublisherService.name,
+      );
+      throw new Error(
+        `Failed to get queue "${queueName}". Make sure the queue is registered in the module.`,
+      );
     }
   }
 
   async publish<T>(queueName: string, data: T): Promise<void> {
     const queue = this.getQueue(queueName);
     const job = await queue.add('default', data);
-    this.logger.log(`Job added to queue "${queueName}", jobId: ${job.id}, data: ${JSON.stringify(data)}`, QueuePublisherService.name);
+    this.logger.log(
+      `Job added to queue "${queueName}", jobId: ${job.id}, data: ${JSON.stringify(data)}`,
+      QueuePublisherService.name,
+    );
   }
 }

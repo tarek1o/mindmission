@@ -40,4 +40,3 @@ export class CreatePermissionInput implements PermissionInput {
   @Field(() => [ActionEnum])
   actions: ActionEnum[];
 }
-

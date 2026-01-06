@@ -8,11 +8,20 @@ import { RoleModel } from '../../domain/models/role.model';
 import { RoleWithTranslationsViewModel } from '../view-models/role-with-translations.view-model';
 
 export interface IRoleRepository extends IBaseRepository<RoleModel> {
-  getAllPaginatedAndTotalCount(query: GetAllRoleQueryInput, order: IOrder<AllowedRoleOrderColumnsEnum>, pagination: Pagination): Promise<{ models: GetAllRolesByLanguageViewModel[], count: number }>;
+  getAllPaginatedAndTotalCount(
+    query: GetAllRoleQueryInput,
+    order: IOrder<AllowedRoleOrderColumnsEnum>,
+    pagination: Pagination,
+  ): Promise<{ models: GetAllRolesByLanguageViewModel[]; count: number }>;
   getById(id: number): Promise<RoleModel | null>;
   getByIds(ids: number[]): Promise<RoleModel[]>;
-  getByIdWithTranslations(id: number): Promise<RoleWithTranslationsViewModel | null>;
+  getByIdWithTranslations(
+    id: number,
+  ): Promise<RoleWithTranslationsViewModel | null>;
   isSystemRoleExist(id: number): Promise<boolean>;
-  countRolesWithPermissionsExcludingRoleId(permissionIds: number[], roleId?: number): Promise<number>;
-  countUsersWithOnlyRole(roleId: number): Promise<number>
+  countRolesWithPermissionsExcludingRoleId(
+    permissionIds: number[],
+    roleId?: number,
+  ): Promise<number>;
+  countUsersWithOnlyRole(roleId: number): Promise<number>;
 }

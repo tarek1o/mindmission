@@ -30,4 +30,3 @@ export class RoleType {
     this.updateAt = roleViewModel.updatedAt;
   }
 }
-

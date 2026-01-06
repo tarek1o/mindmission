@@ -9,10 +9,8 @@ import { S3Provider } from './infrastructure/providers/s3.provider';
     {
       provide: IMAGE_STORAGE_SERVICE,
       useClass: ImageStorageService,
-    }
+    },
   ],
-  exports: [
-    IMAGE_STORAGE_SERVICE,
-  ]
+  exports: [IMAGE_STORAGE_SERVICE],
 })
 export class StorageModule {}

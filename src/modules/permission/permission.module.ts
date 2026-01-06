@@ -24,9 +24,7 @@ import { PermissionResolver } from './presentation/graphql/resolvers/permission.
   imports: [
     TypeOrmModule.forFeature([PermissionEntity, PermissionTranslationEntity]),
   ],
-  controllers: [
-    PermissionController,
-  ],
+  controllers: [PermissionController],
   providers: [
     {
       provide: PERMISSION_REPOSITORY,
@@ -50,9 +48,6 @@ import { PermissionResolver } from './presentation/graphql/resolvers/permission.
     DeletePermissionUseCase,
     PermissionResolver,
   ],
-  exports: [
-    PERMISSION_REPOSITORY,
-    PERMISSION_CACHE,
-  ]
+  exports: [PERMISSION_REPOSITORY, PERMISSION_CACHE],
 })
 export class PermissionModule {}

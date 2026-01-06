@@ -1,5 +1,10 @@
 import { join } from 'path';
-import { Module, ClassSerializerInterceptor, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import {
+  Module,
+  ClassSerializerInterceptor,
+  MiddlewareConsumer,
+  NestModule,
+} from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -34,7 +39,8 @@ import { I18nValidationExceptionFilter } from './infrastructure/exception-filter
       driver: ApolloDriver,
       inject: [ConfigService],
       useFactory: (configService: ConfigService<IEnvironmentConfiguration>) => {
-        const { path, sortSchema, introspection } = configService.get<AppConfigInterface>('appConfig').graphql;
+        const { path, sortSchema, introspection } =
+          configService.get<AppConfigInterface>('appConfig').graphql;
         return {
           autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
           context: ({ req }) => ({ req }),
@@ -55,11 +61,11 @@ import { I18nValidationExceptionFilter } from './infrastructure/exception-filter
             removeOnComplete: true,
             removeOnFail: false,
             attempts: 3,
-          }
+          },
         };
       },
     }),
-    InfrastructureModule, 
+    InfrastructureModule,
     SharedModule,
     NotificationModule,
     StorageModule,

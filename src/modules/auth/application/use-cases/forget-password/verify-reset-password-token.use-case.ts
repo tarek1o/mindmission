@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { ActionTokenVerifierService } from "../../services/action-token-verifier.service";
+import { Injectable } from '@nestjs/common';
+import { ActionTokenVerifierService } from '../../services/action-token-verifier.service';
 
 @Injectable()
 export class VerifyResetPasswordTokenUseCase {

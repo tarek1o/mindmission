@@ -3,9 +3,7 @@ import mediaFileValidator from 'magic-bytes.js';
 import { NotEmptyArray } from 'src/infrastructure/types/not-empty-array.type';
 
 export class FileSignatureValidator extends FileValidator {
-  constructor(
-    private readonly allowedTypes: NotEmptyArray<string>,
-  ) {
+  constructor(private readonly allowedTypes: NotEmptyArray<string>) {
     super({});
   }
 

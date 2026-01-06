@@ -1,7 +1,7 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { NotificationChannelEnum } from "../enums/notification-channel.enum";
-import { NotificationProps } from "../interfaces/notification-props.interface";
-import { NotificationStatusEnum } from "../enums/notification-status.enum";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { NotificationChannelEnum } from '../enums/notification-channel.enum';
+import { NotificationProps } from '../interfaces/notification-props.interface';
+import { NotificationStatusEnum } from '../enums/notification-status.enum';
 
 export class NotificationModel extends BaseModel {
   channel: NotificationChannelEnum;

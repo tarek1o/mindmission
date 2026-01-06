@@ -1,33 +1,34 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { RoleProps } from "../interfaces/role-props.interface";
-import { ProtectedResourceError } from "src/modules/shared/domain/errors/protected-resource.error";
-import { PermissionModel } from "src/modules/permission/domain/models/permission.model";
-import { InvalidInputError } from "src/modules/shared/domain/errors/invalid-input.error";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { RoleProps } from '../interfaces/role-props.interface';
+import { ProtectedResourceError } from 'src/modules/shared/domain/errors/protected-resource.error';
+import { PermissionModel } from 'src/modules/permission/domain/models/permission.model';
+import { InvalidInputError } from 'src/modules/shared/domain/errors/invalid-input.error';
 
 export class RoleModel extends BaseModel {
   private _permissions: PermissionModel[];
   arePermissionsEditable: boolean = true;
   isDeletable: boolean = true;
-  
+
   constructor(props: RoleProps) {
     super(props);
     this.permissions = props.permissions;
-    this.arePermissionsEditable = props.arePermissionsEditable ?? this.arePermissionsEditable;
+    this.arePermissionsEditable =
+      props.arePermissionsEditable ?? this.arePermissionsEditable;
     this.isDeletable = props.isDeletable ?? this.isDeletable;
   }
 
   set permissions(props: PermissionModel[]) {
-    if(!props?.length) {
+    if (!props?.length) {
       throw new InvalidInputError('role.permissions.empty');
     }
-    if(!this.arePermissionsEditable) {
-      throw new ProtectedResourceError('role.permissions.not_editable')
+    if (!this.arePermissionsEditable) {
+      throw new ProtectedResourceError('role.permissions.not_editable');
     }
     this._permissions = props;
   }
 
   get permissions(): PermissionModel[] {
-    return this._permissions; 
+    return this._permissions;
   }
 
   get level(): number {
@@ -36,7 +37,8 @@ export class RoleModel extends BaseModel {
 
   override update(props: Partial<RoleProps>): void {
     super.update(props);
-    this.arePermissionsEditable = props.arePermissionsEditable ?? this.arePermissionsEditable;
+    this.arePermissionsEditable =
+      props.arePermissionsEditable ?? this.arePermissionsEditable;
     this.permissions = props.permissions ?? this.permissions;
     this.isDeletable = props.isDeletable ?? this.isDeletable;
   }

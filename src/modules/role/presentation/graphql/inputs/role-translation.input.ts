@@ -1,5 +1,12 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 import { RoleTranslationInput } from 'src/modules/role/application/inputs/role-translation.input';
 
@@ -23,4 +30,3 @@ export class RoleTranslationInputType implements RoleTranslationInput {
   @Field(() => String, { nullable: true })
   description?: string;
 }
-

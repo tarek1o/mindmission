@@ -1,4 +1,4 @@
-import { CategoryTypeEnum } from "../enums/category-type.enum";
+import { CategoryTypeEnum } from '../enums/category-type.enum';
 
 export const CATEGORY_PARENT_MAP = Object.freeze({
   [CategoryTypeEnum.CATEGORY]: null,

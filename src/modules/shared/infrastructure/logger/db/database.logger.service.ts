@@ -1,4 +1,4 @@
-import { LoggerService } from "@nestjs/common";
+import { LoggerService } from '@nestjs/common';
 
 export class DatabaseLoggerService implements LoggerService {
   log(message: any, context?: string) {
@@ -6,7 +6,10 @@ export class DatabaseLoggerService implements LoggerService {
   }
 
   error(message: any, context?: string) {
-    console.error(`[Database] ${message}`, context ? `Context: ${context}` : '');
+    console.error(
+      `[Database] ${message}`,
+      context ? `Context: ${context}` : '',
+    );
   }
 
   warn(message: any, context?: string) {
@@ -14,7 +17,10 @@ export class DatabaseLoggerService implements LoggerService {
   }
 
   debug(message: any, context?: string) {
-    console.debug(`[Database] ${message}`, context ? `Context: ${context}` : '');
+    console.debug(
+      `[Database] ${message}`,
+      context ? `Context: ${context}` : '',
+    );
   }
 
   verbose(message: any, context?: string) {

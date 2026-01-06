@@ -1,4 +1,4 @@
-import { RoleTranslationInput } from "./role-translation.input";
+import { RoleTranslationInput } from './role-translation.input';
 
 export interface RoleInput {
   translations: RoleTranslationInput[];

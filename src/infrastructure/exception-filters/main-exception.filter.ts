@@ -17,14 +17,17 @@ export class MainExceptionFilter implements ExceptionFilter {
     ws: undefined,
     rpc: undefined,
   };
-  
+
   constructor(private readonly moduleRef: ModuleRef) {}
 
   catch(exception: HttpException, host: ArgumentsHost) {
     const type: GqlContextType = host.getType();
     const exceptionHandlerName = this.exceptionHandlerMap[type];
     if (exceptionHandlerName) {
-      const exceptionHandler = this.moduleRef.get<ExceptionFilter>(exceptionHandlerName, { strict: false });
+      const exceptionHandler = this.moduleRef.get<ExceptionFilter>(
+        exceptionHandlerName,
+        { strict: false },
+      );
       return exceptionHandler.catch(exception, host);
     }
   }

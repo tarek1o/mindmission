@@ -1,6 +1,6 @@
-import { ActionTokenModel } from "src/modules/action-token/domain/models/action-token.model";
-import { ActionTokenEntity } from "../entities/action-token.entity";
-import { TokenStrategyType } from "src/modules/action-token/application/enums/token-strategy-type.enum";
+import { ActionTokenModel } from 'src/modules/action-token/domain/models/action-token.model';
+import { ActionTokenEntity } from '../entities/action-token.entity';
+import { TokenStrategyType } from 'src/modules/action-token/application/enums/token-strategy-type.enum';
 
 export abstract class ActionTokenMapper {
   static toModel(entity: ActionTokenEntity): ActionTokenModel {

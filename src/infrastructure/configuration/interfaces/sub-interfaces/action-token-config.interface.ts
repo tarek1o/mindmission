@@ -1,5 +1,5 @@
-import { DurationInputArg2 } from "moment";
-import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/action-token-type.enum";
+import { DurationInputArg2 } from 'moment';
+import { ActionTokenTypeEnum } from 'src/modules/action-token/domain/enums/action-token-type.enum';
 
 export interface TokenDurationLifeTime {
   value: number;
@@ -16,8 +16,8 @@ export interface IActionTokenConfiguration {
     [ActionTokenTypeEnum.REFRESH_TOKEN]: TokenDurationLifeTime;
     [ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN]: TokenDurationLifeTime;
     [ActionTokenTypeEnum.RESET_PASSWORD_TOKEN]: TokenDurationLifeTime;
-  },
+  };
   stateless: {
     [ActionTokenTypeEnum.ACCESS_TOKEN]: StatelessTokenConfig;
-  }
+  };
 }

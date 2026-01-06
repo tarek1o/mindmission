@@ -1,5 +1,5 @@
-import { IsString, IsNotEmpty } from "class-validator";
-import { SetFirstPasswordInput } from "src/modules/auth/application/inputs/set-first-password.input";
+import { IsString, IsNotEmpty } from 'class-validator';
+import { SetFirstPasswordInput } from 'src/modules/auth/application/inputs/set-first-password.input';
 
 export class SetFirstPasswordDto implements SetFirstPasswordInput {
   @IsString()

@@ -1,5 +1,5 @@
-import { IsOptional, IsString } from "class-validator";
-import { UpdateMainUserInfoInput } from "src/modules/user/application/inputs/update-main-user-info.input";
+import { IsOptional, IsString } from 'class-validator';
+import { UpdateMainUserInfoInput } from 'src/modules/user/application/inputs/update-main-user-info.input';
 
 export class UpdateMainUserInfoDto implements UpdateMainUserInfoInput {
   @IsOptional()

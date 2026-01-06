@@ -17,13 +17,16 @@ export class PermissionModel extends BaseModel {
     super(props);
     this.resource = props.resource;
     this.actions = props.actions;
-    this.isResourceAndActionsEditable = props.isResourceAndActionsEditable ?? this.isResourceAndActionsEditable;
+    this.isResourceAndActionsEditable =
+      props.isResourceAndActionsEditable ?? this.isResourceAndActionsEditable;
     this.isDeletable = props.isDeletable ?? this.isDeletable;
   }
 
   set resource(value: ResourceEnum) {
-    if(!this.isResourceAndActionsEditable) {
-      throw new ProtectedResourceError('permission.resource_actions.not_editable');
+    if (!this.isResourceAndActionsEditable) {
+      throw new ProtectedResourceError(
+        'permission.resource_actions.not_editable',
+      );
     }
     this._resource = value;
   }
@@ -32,17 +35,23 @@ export class PermissionModel extends BaseModel {
     return this._resource;
   }
 
-  private checkResourceActionsMapping(resource: ResourceEnum, actions: ActionEnum[]): void {
+  private checkResourceActionsMapping(
+    resource: ResourceEnum,
+    actions: ActionEnum[],
+  ): void {
     const allowedActions = ResourceActionsMap[resource] ?? [];
-    if(actions.some((value) => !allowedActions.includes(value))) {
-      throw new InvalidInputError('permission.actions.invalid', { resource: this.resource, actions: actions.join(', ') });
+    if (actions.some((value) => !allowedActions.includes(value))) {
+      throw new InvalidInputError('permission.actions.invalid', {
+        resource: this.resource,
+        actions: actions.join(', '),
+      });
     }
   }
 
   private checkActionsDependencies(actions: ActionEnum[]): void {
     for (const action of actions) {
       const required = ActionDependencies[action] ?? [];
-      const missingDeps = required.filter(dep => !actions.includes(dep));
+      const missingDeps = required.filter((dep) => !actions.includes(dep));
       if (missingDeps.length > 0) {
         throw new InvalidInputError('permission.actions.missing_dependencies', {
           action,
@@ -53,13 +62,15 @@ export class PermissionModel extends BaseModel {
   }
 
   set actions(values: ActionEnum[]) {
-    if(!values?.length) {
+    if (!values?.length) {
       throw new InvalidInputError('permission.actions.empty');
     }
     this.checkResourceActionsMapping(this.resource, values);
     this.checkActionsDependencies(values);
-    if(!this.isResourceAndActionsEditable) {
-      throw new ProtectedResourceError('permission.resource_actions.not_editable');
+    if (!this.isResourceAndActionsEditable) {
+      throw new ProtectedResourceError(
+        'permission.resource_actions.not_editable',
+      );
     }
     this._actions = values;
   }
@@ -70,18 +81,22 @@ export class PermissionModel extends BaseModel {
 
   get level(): number {
     const ActionBitValue: Record<ActionEnum, number> = {
-      [ActionEnum.LIST]: 1 << 0,    // 1
-      [ActionEnum.SEARCH]: 1 << 1,  // 2
-      [ActionEnum.ADD]: 1 << 2,     // 4
-      [ActionEnum.EDIT]: 1 << 3,    // 8
-      [ActionEnum.DELETE]: 1 << 4,  // 16
+      [ActionEnum.LIST]: 1 << 0, // 1
+      [ActionEnum.SEARCH]: 1 << 1, // 2
+      [ActionEnum.ADD]: 1 << 2, // 4
+      [ActionEnum.EDIT]: 1 << 3, // 8
+      [ActionEnum.DELETE]: 1 << 4, // 16
     };
-    return this.actions.reduce((acc, action) => acc | ActionBitValue[action], 0);
+    return this.actions.reduce(
+      (acc, action) => acc | ActionBitValue[action],
+      0,
+    );
   }
 
   override update(props: Partial<PermissionProps>): void {
     super.update(props);
-    this.isResourceAndActionsEditable = props.isResourceAndActionsEditable ?? this.isResourceAndActionsEditable;
+    this.isResourceAndActionsEditable =
+      props.isResourceAndActionsEditable ?? this.isResourceAndActionsEditable;
     this.resource = props.resource ?? this.resource;
     this.actions = props.actions ?? this.actions;
     this.isDeletable = props.isDeletable ?? this.isDeletable;
@@ -89,7 +104,9 @@ export class PermissionModel extends BaseModel {
 
   override markAsDeleted(): void {
     if (!this.isDeletable) {
-      throw new ProtectedResourceError('permission.not_deletable', { id: this.id });
+      throw new ProtectedResourceError('permission.not_deletable', {
+        id: this.id,
+      });
     }
     super.markAsDeleted();
   }

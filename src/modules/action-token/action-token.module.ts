@@ -14,9 +14,7 @@ import { RandomStringGeneratorService } from './infrastructure/services/random-s
 import { TokenRawStrategyManager } from './application/services/token-raw-manger.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ActionTokenEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([ActionTokenEntity])],
   providers: [
     {
       provide: ACTION_TOKEN_REPOSITORY,
@@ -24,7 +22,7 @@ import { TokenRawStrategyManager } from './application/services/token-raw-manger
     },
     {
       provide: TokenStrategyType.STATEFUL,
-      useClass: StatefulTokenStrategy
+      useClass: StatefulTokenStrategy,
     },
     {
       provide: TokenStrategyType.STATELESS,
@@ -32,7 +30,7 @@ import { TokenRawStrategyManager } from './application/services/token-raw-manger
     },
     {
       provide: TokenRawTypeEnum.OTP,
-      useClass: OTPGeneratorService
+      useClass: OTPGeneratorService,
     },
     {
       provide: TokenRawTypeEnum.RANDOM_STRING,
@@ -42,8 +40,6 @@ import { TokenRawStrategyManager } from './application/services/token-raw-manger
     TokenRawStrategyManager,
     ActionTokenService,
   ],
-  exports: [
-    ActionTokenService,
-  ]
+  exports: [ActionTokenService],
 })
 export class ActionTokenModule {}

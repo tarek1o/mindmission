@@ -1,6 +1,6 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { OAuthProviderEnum } from "../enums/oauth-provider.enum";
-import { OAuthProfileProps } from "../interfaces/oauth-profile-props.interface";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { OAuthProviderEnum } from '../enums/oauth-provider.enum';
+import { OAuthProfileProps } from '../interfaces/oauth-profile-props.interface';
 
 export class OAuthProfileModel extends BaseModel {
   providerId: string;

@@ -1,1 +1,2 @@
-export const NOTIFICATION_SETTINGS_REPOSITORY = 'INotificationSettingsRepository';
+export const NOTIFICATION_SETTINGS_REPOSITORY =
+  'INotificationSettingsRepository';

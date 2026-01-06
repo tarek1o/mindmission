@@ -1,4 +1,10 @@
-import { BadRequestException, Inject, Injectable, LoggerService, NestMiddleware } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  LoggerService,
+  NestMiddleware,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response, NextFunction } from 'express';
 import { v4 as uuid4 } from 'uuid';
@@ -16,14 +22,20 @@ export class DomainHeadersMiddleware implements NestMiddleware {
   ) {}
 
   private readonly originApplicationUIMap: Record<string, AppUiEnum> = {
-    [this.configService.get<UILinks>('uiLinks').dashboard.origin]: AppUiEnum.DASHBOARD,
-    [this.configService.get<UILinks>('uiLinks').mainApp.origin]: AppUiEnum.MAIN_APP,
+    [this.configService.get<UILinks>('uiLinks').dashboard.origin]:
+      AppUiEnum.DASHBOARD,
+    [this.configService.get<UILinks>('uiLinks').mainApp.origin]:
+      AppUiEnum.MAIN_APP,
   };
 
   use(request: Request, _response: Response, next: NextFunction) {
     request.headers['x-request-id'] = uuid4();
-    request.headers['x-application-ui'] = this.originApplicationUIMap[request.hostname] ?? request.headers['x-application-ui'];
-    this.loggerService.log(`Request Info: ${JSON.stringify(new HeadersModel(request.headers))}`);
+    request.headers['x-application-ui'] =
+      this.originApplicationUIMap[request.hostname] ??
+      request.headers['x-application-ui'];
+    this.loggerService.log(
+      `Request Info: ${JSON.stringify(new HeadersModel(request.headers))}`,
+    );
     if (!request.headers['x-application-ui']) {
       throw new BadRequestException('X-Application-UI header is required');
     }

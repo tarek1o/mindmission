@@ -5,4 +5,3 @@ registerEnumType(OrderDirectionEnum, {
   name: 'OrderDirectionEnum',
   description: 'Order direction (ASC or DESC)',
 });
-

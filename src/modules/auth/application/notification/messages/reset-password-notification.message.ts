@@ -1,5 +1,5 @@
-import { NotificationMessage } from "../../../../notification/application/messages/notification.message";
-import { UserTypeEnum } from "src/modules/user/domain/enums/user-type.enum";
+import { NotificationMessage } from '../../../../notification/application/messages/notification.message';
+import { UserTypeEnum } from 'src/modules/user/domain/enums/user-type.enum';
 
 export class ResetPasswordNotificationMessage extends NotificationMessage {
   id: number;

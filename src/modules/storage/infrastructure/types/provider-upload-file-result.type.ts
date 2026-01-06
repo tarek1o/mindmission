@@ -6,5 +6,5 @@ export type ProviderUploadResultType = {
     ETag?: string;
     size?: number;
     isPublic?: boolean;
-  }
+  };
 };

@@ -1,4 +1,4 @@
-import { UserTypeEnum } from "src/modules/user/domain/enums/user-type.enum";
+import { UserTypeEnum } from 'src/modules/user/domain/enums/user-type.enum';
 
 export type AccessTokenPayload = {
   id: number;
@@ -6,4 +6,4 @@ export type AccessTokenPayload = {
   lastName: string;
   types: UserTypeEnum[];
   roles: number[];
-}
+};

@@ -2,7 +2,12 @@ import { Readable } from 'stream';
 import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
-import {S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import { AwsS3ConfigInterface } from 'src/infrastructure/configuration/interfaces/sub-interfaces/aws-s3-config.interface';
 import { LOGGER_SERVICE } from 'src/modules/shared/application/constant/logger-service.constant';
 import { IEnvironmentConfiguration } from 'src/infrastructure/configuration/interfaces/config.interface';
@@ -23,7 +28,8 @@ export class S3Provider extends BaseProvider {
     @Inject(LOGGER_SERVICE) private readonly logger: LoggerService,
   ) {
     super();
-    const { bucket, ...reset } = this.configService.get<AwsS3ConfigInterface>('awsS3Config');
+    const { bucket, ...reset } =
+      this.configService.get<AwsS3ConfigInterface>('awsS3Config');
     this.bucket = bucket;
     this.region = reset.region;
     this.s3 = new S3Client(reset);
@@ -57,14 +63,20 @@ export class S3Provider extends BaseProvider {
         contentType: result.ContentType,
         size: result.ContentLength,
         data: await this.streamToBuffer(result.Body as Readable),
-      }
+      };
     } catch (error) {
-      this.logger.error(`Their are an error happened during get file by path (${path}): ${error.message}`, S3Provider.name);
+      this.logger.error(
+        `Their are an error happened during get file by path (${path}): ${error.message}`,
+        S3Provider.name,
+      );
       throw new UnexpectedBehaviorError('providers.s3.error.downloading-file');
     }
   }
 
-  async uploadFile(file: Express.Multer.File, dir: string): Promise<ProviderUploadResultType> {
+  async uploadFile(
+    file: Express.Multer.File,
+    dir: string,
+  ): Promise<ProviderUploadResultType> {
     try {
       const path = this.getKey(file.originalname, dir);
       const command = new PutObjectCommand({
@@ -83,9 +95,12 @@ export class S3Provider extends BaseProvider {
           size: file.size,
           isPublic: true,
         },
-      }
+      };
     } catch (error) {
-      this.logger.error(`There was an error happened during uploading file: ${error}`, S3Provider.name);
+      this.logger.error(
+        `There was an error happened during uploading file: ${error}`,
+        S3Provider.name,
+      );
       throw new UnexpectedBehaviorError('providers.s3.error.uploading-file');
     }
   }
@@ -100,9 +115,12 @@ export class S3Provider extends BaseProvider {
       return {
         isDeleted: result.DeleteMarker,
         provider: S3Provider.name,
-      }
+      };
     } catch (error) {
-      this.logger.error(`There was an error happened during deleting file: ${error}`, S3Provider.name);
+      this.logger.error(
+        `There was an error happened during deleting file: ${error}`,
+        S3Provider.name,
+      );
       throw new UnexpectedBehaviorError('providers.s3.error.deleting-file');
     }
   }

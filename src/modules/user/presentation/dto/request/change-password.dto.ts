@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsString } from "class-validator";
-import { ChangePasswordInput } from "src/modules/user/application/inputs/change-password.input";
+import { IsNotEmpty, IsString } from 'class-validator';
+import { ChangePasswordInput } from 'src/modules/user/application/inputs/change-password.input';
 
 export class ChangePasswordDto implements ChangePasswordInput {
   @IsNotEmpty()

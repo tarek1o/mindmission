@@ -1,9 +1,11 @@
-import Redis from "ioredis";
-import { IBaseCacheService } from "src/modules/shared/application/interfaces/base-cache-service.interface";
-import { CacheIdType } from "src/modules/shared/application/types/cache-id.type";
-import { BaseCacheViewModel } from "src/modules/shared/application/view-models/base-cache.view-model";
+import Redis from 'ioredis';
+import { IBaseCacheService } from 'src/modules/shared/application/interfaces/base-cache-service.interface';
+import { CacheIdType } from 'src/modules/shared/application/types/cache-id.type';
+import { BaseCacheViewModel } from 'src/modules/shared/application/view-models/base-cache.view-model';
 
-export abstract class BaseCacheService<T extends BaseCacheViewModel> implements IBaseCacheService<T> {
+export abstract class BaseCacheService<
+  T extends BaseCacheViewModel,
+> implements IBaseCacheService<T> {
   constructor(
     protected prefix: string,
     protected client: Redis,
@@ -23,7 +25,7 @@ export abstract class BaseCacheService<T extends BaseCacheViewModel> implements 
 
   protected parseValuesToViewModels(values: (string | null)[]): T[] {
     const viewModels: T[] = [];
-    values.forEach(value => {
+    values.forEach((value) => {
       if (value) {
         viewModels.push(this.parseValueToViewModel(value));
       }
@@ -38,7 +40,7 @@ export abstract class BaseCacheService<T extends BaseCacheViewModel> implements 
   }
 
   async getMany(ids: CacheIdType[]): Promise<T[]> {
-    const keys = ids.map(id => this.buildKey(id));
+    const keys = ids.map((id) => this.buildKey(id));
     const values = await this.client.mget(keys);
     return this.parseValuesToViewModels(values);
   }
@@ -46,15 +48,19 @@ export abstract class BaseCacheService<T extends BaseCacheViewModel> implements 
   async saveOne(model: T, ttl?: number): Promise<void> {
     const prefixedKey = this.buildKey(model.id);
     const stringifiedValue = JSON.stringify(model);
-    this.hasTTL(ttl) ? await this.client.set(prefixedKey, stringifiedValue, 'PX', ttl) : await this.client.set(prefixedKey, stringifiedValue);
+    this.hasTTL(ttl)
+      ? await this.client.set(prefixedKey, stringifiedValue, 'PX', ttl)
+      : await this.client.set(prefixedKey, stringifiedValue);
   }
 
   async saveMany(models: T[], ttl?: number): Promise<void> {
     const pipeline = this.client.pipeline();
-    models.forEach(model => {
+    models.forEach((model) => {
       const key = this.buildKey(model.id);
       const value = JSON.stringify(model);
-      this.hasTTL(ttl) ? pipeline.set(key, value, 'PX', ttl) : pipeline.set(key, value);
+      this.hasTTL(ttl)
+        ? pipeline.set(key, value, 'PX', ttl)
+        : pipeline.set(key, value);
     });
     await pipeline.exec();
   }
@@ -65,7 +71,7 @@ export abstract class BaseCacheService<T extends BaseCacheViewModel> implements 
   }
 
   async deleteMany(ids: CacheIdType[]): Promise<void> {
-    const keys = ids.map(id => this.buildKey(id));
+    const keys = ids.map((id) => this.buildKey(id));
     await this.client.del(keys);
   }
 

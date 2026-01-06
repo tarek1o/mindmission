@@ -1,6 +1,6 @@
-import { CategoryTranslationModel } from "src/modules/category/domain/models/category-translation.model";
-import { CategoryTranslationEntity } from "../entities/category-translation.entity";
-import { SlugifyHelper } from "src/modules/shared/infrastructure/helpers/slugify.helper";
+import { CategoryTranslationModel } from 'src/modules/category/domain/models/category-translation.model';
+import { CategoryTranslationEntity } from '../entities/category-translation.entity';
+import { SlugifyHelper } from 'src/modules/shared/infrastructure/helpers/slugify.helper';
 
 export abstract class CategoryTranslationMapper {
   static toModel(entity: CategoryTranslationEntity): CategoryTranslationModel {
@@ -14,7 +14,7 @@ export abstract class CategoryTranslationMapper {
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
     });
-  } 
+  }
 
   static toEntity(model: CategoryTranslationModel): CategoryTranslationEntity {
     return new CategoryTranslationEntity({
@@ -28,5 +28,5 @@ export abstract class CategoryTranslationMapper {
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
     });
-  } 
+  }
 }

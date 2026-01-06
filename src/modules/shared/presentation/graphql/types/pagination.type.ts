@@ -26,4 +26,3 @@ export class PaginationType {
     this.pages = Math.ceil(totalCount / paginationInput.take);
   }
 }
-

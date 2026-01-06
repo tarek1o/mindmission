@@ -15,7 +15,7 @@ export abstract class BaseModel {
   }
 
   set id(value: number) {
-    if ((value && (!Number.isInteger(value) || value <= 0))) {
+    if (value && (!Number.isInteger(value) || value <= 0)) {
       throw new InvalidInputError('global.base.id.invalid');
     }
     this._id = value ?? this.id;

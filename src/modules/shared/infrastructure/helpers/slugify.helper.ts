@@ -1,5 +1,4 @@
 export abstract class SlugifyHelper {
-  
   static slugify(name: string): string {
     return name
       .trim()

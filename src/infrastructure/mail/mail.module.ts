@@ -12,8 +12,10 @@ import { AppConfigInterface } from '../configuration/interfaces/sub-interfaces/a
     MailerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService<IEnvironmentConfiguration>) => {
-        const { host, port, auth } = configService.get<EmailProvider>('emailProvider');
-        const { name: appName } = configService.get<AppConfigInterface>('appConfig');
+        const { host, port, auth } =
+          configService.get<EmailProvider>('emailProvider');
+        const { name: appName } =
+          configService.get<AppConfigInterface>('appConfig');
         return {
           transport: {
             host,
@@ -25,7 +27,10 @@ import { AppConfigInterface } from '../configuration/interfaces/sub-interfaces/a
             from: `${appName} <${host}>`,
           },
           template: {
-            dir: path.join(__dirname, '../../modules/notification/infrastructure/providers/mail/templates'),
+            dir: path.join(
+              __dirname,
+              '../../modules/notification/infrastructure/providers/mail/templates',
+            ),
             adapter: new PugAdapter(),
             options: {
               strict: true,

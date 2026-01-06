@@ -5,4 +5,3 @@ registerEnumType(AllowedRoleOrderColumnsEnum, {
   name: 'AllowedRoleOrderColumnsEnum',
   description: 'Allowed columns for ordering roles',
 });
-

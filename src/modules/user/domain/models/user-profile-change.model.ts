@@ -1,8 +1,8 @@
-import { BaseModel } from "src/modules/shared/domain/models/base.model";
-import { UserProfileFieldEnum } from "../enums/user-profile-field.enum";
-import { RequestStatusEnum } from "../enums/request-status.enum";
-import { UserProfileChangeProps } from "../interfaces/user-profile-change-props.interface";
-import { ConflictError } from "src/modules/shared/domain/errors/conflict.error";
+import { BaseModel } from 'src/modules/shared/domain/models/base.model';
+import { UserProfileFieldEnum } from '../enums/user-profile-field.enum';
+import { RequestStatusEnum } from '../enums/request-status.enum';
+import { UserProfileChangeProps } from '../interfaces/user-profile-change-props.interface';
+import { ConflictError } from 'src/modules/shared/domain/errors/conflict.error';
 
 export class UserProfileChangeModel extends BaseModel {
   userId: number;

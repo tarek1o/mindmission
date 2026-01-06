@@ -14,4 +14,3 @@ export class RoleListType {
     this.name = roleTranslationViewModel.name;
   }
 }
-

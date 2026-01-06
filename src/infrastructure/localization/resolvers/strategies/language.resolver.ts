@@ -15,15 +15,16 @@ export class LanguageResolver implements I18nResolver {
     rpc: undefined,
   };
 
-  constructor(
-    private readonly moduleRef: ModuleRef,
-  ) {}
+  constructor(private readonly moduleRef: ModuleRef) {}
 
   resolve(context: ExecutionContext): LanguageEnum {
     const type: GqlContextType = context.getType();
     const languageResolverName = this.languageResolverMap[type];
     if (languageResolverName) {
-      const languageResolver = this.moduleRef.get<I18nResolver>(languageResolverName, { strict: false });
+      const languageResolver = this.moduleRef.get<I18nResolver>(
+        languageResolverName,
+        { strict: false },
+      );
       return languageResolver.resolve(context) as LanguageEnum;
     }
     return LanguageEnum.ENGLISH;

@@ -26,7 +26,7 @@ import { GraphqlLanguageResolver } from './resolvers/strategies/graphql-language
     {
       provide: GraphqlLanguageResolver.name,
       useClass: GraphqlLanguageResolver,
-    }
-  ]
+    },
+  ],
 })
 export class LocalizationModule {}

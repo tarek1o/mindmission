@@ -1,4 +1,4 @@
-import { NotificationMessage } from "src/modules/notification/application/messages/notification.message";
+import { NotificationMessage } from 'src/modules/notification/application/messages/notification.message';
 
 export class SetFirstPasswordNotificationMessage extends NotificationMessage {
   id: number;

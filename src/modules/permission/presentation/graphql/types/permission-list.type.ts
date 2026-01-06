@@ -9,9 +9,10 @@ export class PermissionListType {
   @Field(() => String)
   name: string;
 
-  constructor(permissionTranslationViewModel: GetPermissionTranslationByLanguageViewModel) {
+  constructor(
+    permissionTranslationViewModel: GetPermissionTranslationByLanguageViewModel,
+  ) {
     this.id = permissionTranslationViewModel.permissionId;
     this.name = permissionTranslationViewModel.name;
   }
 }
-

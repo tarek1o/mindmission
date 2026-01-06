@@ -1,5 +1,5 @@
-import { PermissionModel } from "src/modules/permission/domain/models/permission.model"
-import { PermissionCacheViewModel } from "../view-models/permission-cache.view-model"
+import { PermissionModel } from 'src/modules/permission/domain/models/permission.model';
+import { PermissionCacheViewModel } from '../view-models/permission-cache.view-model';
 
 export abstract class PermissionCacheMapper {
   static toCacheViewModel(model: PermissionModel): PermissionCacheViewModel {
@@ -8,7 +8,7 @@ export abstract class PermissionCacheMapper {
       resource: model.resource,
       actions: model.actions,
       level: model.level,
-      isDeletable: model.isDeletable
-    }
+      isDeletable: model.isDeletable,
+    };
   }
 }

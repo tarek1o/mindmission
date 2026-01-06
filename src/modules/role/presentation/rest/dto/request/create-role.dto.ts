@@ -1,8 +1,15 @@
-import { ArrayMinSize, IsArray, IsInt, IsNotEmpty, Validate, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
-import { RoleInput } from "src/modules/role/application/inputs/role.input";
-import { RoleTranslationDto } from "./role-translation.dto";
-import { ValidateArabicAndEnglishTranslationsExistValidator } from "src/modules/shared/presentation/validators/validate-arabic-and-english-translations-exist.validator";
+import {
+  ArrayMinSize,
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  Validate,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { RoleInput } from 'src/modules/role/application/inputs/role.input';
+import { RoleTranslationDto } from './role-translation.dto';
+import { ValidateArabicAndEnglishTranslationsExistValidator } from 'src/modules/shared/presentation/validators/validate-arabic-and-english-translations-exist.validator';
 
 export class CreateRoleDto implements RoleInput {
   @Validate(ValidateArabicAndEnglishTranslationsExistValidator)

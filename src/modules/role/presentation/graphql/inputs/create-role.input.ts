@@ -1,5 +1,13 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { ArrayMinSize, IsArray, IsInt, IsNotEmpty, Min, Validate, ValidateNested } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  Min,
+  Validate,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { RoleTranslationInputType } from './role-translation.input';
 import { RoleInput } from 'src/modules/role/application/inputs/role.input';
@@ -23,4 +31,3 @@ export class CreateRoleInput implements RoleInput {
   @IsNotEmpty()
   permissionIds: number[];
 }
-

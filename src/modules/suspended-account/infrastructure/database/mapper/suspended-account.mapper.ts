@@ -1,5 +1,5 @@
-import { SuspendedAccountModel } from "src/modules/suspended-account/domain/models/suspended-account.model";
-import { SuspendedAccountEntity } from "../entities/suspended-account.entity";
+import { SuspendedAccountModel } from 'src/modules/suspended-account/domain/models/suspended-account.model';
+import { SuspendedAccountEntity } from '../entities/suspended-account.entity';
 
 export abstract class SuspendedAccountMapper {
   static toModel(entity: SuspendedAccountEntity): SuspendedAccountModel {

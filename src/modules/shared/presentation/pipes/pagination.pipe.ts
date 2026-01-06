@@ -15,21 +15,21 @@ export class PaginationPipe implements PipeTransform<any, Pagination> {
       take,
       currentPage,
     };
-  };
+  }
 
   private calculateSkip(query: any) {
     const take = this.getTake(query);
     const pageNo = this.getPage(query);
     const skip = take * (pageNo - 1);
     return skip || this.skip;
-  };
+  }
 
   private getTake(query: any) {
     return parseInt(query?.take, 10) || this.take;
-  };
+  }
 
   private getPage(query: any) {
     const pageNo = parseInt(query?.page, 10);
     return pageNo && pageNo > 0 ? pageNo : 1;
-  };
+  }
 }

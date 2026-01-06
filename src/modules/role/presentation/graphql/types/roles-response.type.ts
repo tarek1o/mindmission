@@ -10,4 +10,3 @@ export class RolesResponseType {
   @Field(() => PaginationType)
   pagination?: PaginationType;
 }
-

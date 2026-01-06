@@ -12,7 +12,9 @@ export class PermissionTranslationModel extends BaseTranslationModel {
 
   private set permissionId(value: number) {
     if (!Number.isInteger(value) || value <= 0) {
-      throw new InvalidInputError('permission.translations.permission_id.invalid');
+      throw new InvalidInputError(
+        'permission.translations.permission_id.invalid',
+      );
     }
     this._permissionId = value;
   }

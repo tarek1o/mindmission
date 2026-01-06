@@ -13,9 +13,9 @@ function splitDuration(key: string): TokenDurationLifeTime {
   const match = duration.match(expirationDatePattern);
   const [, value, unit] = match ?? [];
   return {
-    value: +value, 
+    value: +value,
     unit: unit as DurationInputArg2,
-  }
+  };
 }
 
 export const configuration = registerAs('', (): IEnvironmentConfiguration => {
@@ -26,46 +26,111 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
       mode: process.env[EnvironmentVariableNames.NODE_ENV] as EnvironmentEnum,
       graphql: {
         path: process.env[EnvironmentVariableNames.GRAPHQL_PATH].trim(),
-        sortSchema: process.env[EnvironmentVariableNames.GRAPHQL_SORT_SCHEMA].trim().toLowerCase() === 'true',
-        introspection: process.env[EnvironmentVariableNames.GRAPHQL_INTROSPECTION].trim().toLowerCase() === 'true',
+        sortSchema:
+          process.env[EnvironmentVariableNames.GRAPHQL_SORT_SCHEMA]
+            .trim()
+            .toLowerCase() === 'true',
+        introspection:
+          process.env[EnvironmentVariableNames.GRAPHQL_INTROSPECTION]
+            .trim()
+            .toLowerCase() === 'true',
       },
     },
     bullMQ: {
       queues: {
-        resetPasswordQueue: process.env[EnvironmentVariableNames.BULLMQ_RESET_PASSWORD_QUEUE],
-        emailVerificationQueue: process.env[EnvironmentVariableNames.BULLMQ_EMAIL_VERIFICATION_QUEUE],
-        setFirstPasswordQueue: process.env[EnvironmentVariableNames.BULLMQ_SET_FIRST_PASSWORD_QUEUE],
-        changeEmailQueue: process.env[EnvironmentVariableNames.BULLMQ_CHANGE_EMAIL_QUEUE],
-        passwordChangedQueue: process.env[EnvironmentVariableNames.BULLMQ_PASSWORD_CHANGED_QUEUE],
-        welcomeQueue: process.env[EnvironmentVariableNames.BULLMQ_WELCOME_QUEUE],
+        resetPasswordQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_RESET_PASSWORD_QUEUE],
+        emailVerificationQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_EMAIL_VERIFICATION_QUEUE],
+        setFirstPasswordQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_SET_FIRST_PASSWORD_QUEUE],
+        changeEmailQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_CHANGE_EMAIL_QUEUE],
+        passwordChangedQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_PASSWORD_CHANGED_QUEUE],
+        welcomeQueue:
+          process.env[EnvironmentVariableNames.BULLMQ_WELCOME_QUEUE],
       },
     },
     settings: {
       notifications: {
-        defaultChannel: process.env[EnvironmentVariableNames.NOTIFICATIONS_DEFAULT_CHANNEL] as NotificationChannelEnum,
+        defaultChannel: process.env[
+          EnvironmentVariableNames.NOTIFICATIONS_DEFAULT_CHANNEL
+        ] as NotificationChannelEnum,
       },
     },
     rateLimiter: {
       default: {
-        limit: parseInt(process.env[EnvironmentVariableNames.RATE_LIMITER_DEFAULT_LIMIT], 10),
-        ttl: parseInt(process.env[EnvironmentVariableNames.RATE_LIMITER_DEFAULT_TTL], 10),
+        limit: parseInt(
+          process.env[EnvironmentVariableNames.RATE_LIMITER_DEFAULT_LIMIT],
+          10,
+        ),
+        ttl: parseInt(
+          process.env[EnvironmentVariableNames.RATE_LIMITER_DEFAULT_TTL],
+          10,
+        ),
       },
       auth: {
         login: {
-          limit: parseInt(process.env[EnvironmentVariableNames.LOGIN_RATE_LIMITER_DEFAULT_LIMIT], 10),
-          ttl: parseInt(process.env[EnvironmentVariableNames.LOGIN_RATE_LIMITER_DEFAULT_TTL], 10),
+          limit: parseInt(
+            process.env[
+              EnvironmentVariableNames.LOGIN_RATE_LIMITER_DEFAULT_LIMIT
+            ],
+            10,
+          ),
+          ttl: parseInt(
+            process.env[
+              EnvironmentVariableNames.LOGIN_RATE_LIMITER_DEFAULT_TTL
+            ],
+            10,
+          ),
         },
         verifySetFirstPasswordToken: {
-          limit: parseInt(process.env[EnvironmentVariableNames.VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT], 10),
-          ttl: parseInt(process.env[EnvironmentVariableNames.VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_TTL], 10),
+          limit: parseInt(
+            process.env[
+              EnvironmentVariableNames
+                .VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT
+            ],
+            10,
+          ),
+          ttl: parseInt(
+            process.env[
+              EnvironmentVariableNames
+                .VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_TTL
+            ],
+            10,
+          ),
         },
         forgetPassword: {
-          limit: parseInt(process.env[EnvironmentVariableNames.FORGET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT], 10),
-          ttl: parseInt(process.env[EnvironmentVariableNames.FORGET_PASSWORD_RATE_LIMITER_DEFAULT_TTL], 10),
+          limit: parseInt(
+            process.env[
+              EnvironmentVariableNames
+                .FORGET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT
+            ],
+            10,
+          ),
+          ttl: parseInt(
+            process.env[
+              EnvironmentVariableNames.FORGET_PASSWORD_RATE_LIMITER_DEFAULT_TTL
+            ],
+            10,
+          ),
         },
         verifyResetPasswordToken: {
-          limit: parseInt(process.env[EnvironmentVariableNames.VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT], 10),
-          ttl: parseInt(process.env[EnvironmentVariableNames.VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_TTL], 10),
+          limit: parseInt(
+            process.env[
+              EnvironmentVariableNames
+                .VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT
+            ],
+            10,
+          ),
+          ttl: parseInt(
+            process.env[
+              EnvironmentVariableNames
+                .VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_TTL
+            ],
+            10,
+          ),
         },
       },
     },
@@ -86,38 +151,58 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
     },
     actionTokens: {
       stateful: {
-        [ActionTokenTypeEnum.REFRESH_TOKEN]: splitDuration(EnvironmentVariableNames.REFRESH_TOKEN_EXPIRATION_DURATION),
-        [ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN]: splitDuration(EnvironmentVariableNames.EMAIL_VERIFICATION_TOKEN_EXPIRATION_DURATION),
-        [ActionTokenTypeEnum.RESET_PASSWORD_TOKEN]: splitDuration(EnvironmentVariableNames.RESET_PASSWORD_TOKEN_EXPIRATION_DURATION),
+        [ActionTokenTypeEnum.REFRESH_TOKEN]: splitDuration(
+          EnvironmentVariableNames.REFRESH_TOKEN_EXPIRATION_DURATION,
+        ),
+        [ActionTokenTypeEnum.EMAIL_VERIFICATION_TOKEN]: splitDuration(
+          EnvironmentVariableNames.EMAIL_VERIFICATION_TOKEN_EXPIRATION_DURATION,
+        ),
+        [ActionTokenTypeEnum.RESET_PASSWORD_TOKEN]: splitDuration(
+          EnvironmentVariableNames.RESET_PASSWORD_TOKEN_EXPIRATION_DURATION,
+        ),
       },
       stateless: {
         [ActionTokenTypeEnum.ACCESS_TOKEN]: {
           secret: process.env[EnvironmentVariableNames.ACCESS_TOKEN_SECRET_KEY],
-          expiresIn: splitDuration(EnvironmentVariableNames.ACCESS_TOKEN_EXPIRATION_DURATION),
+          expiresIn: splitDuration(
+            EnvironmentVariableNames.ACCESS_TOKEN_EXPIRATION_DURATION,
+          ),
         },
-      }
+      },
     },
     emailProvider: {
       host: process.env[EnvironmentVariableNames.EMAIL_PROVIDER_HOST],
-      port: parseInt(process.env[EnvironmentVariableNames.EMAIL_PROVIDER_PORT], 10),
+      port: parseInt(
+        process.env[EnvironmentVariableNames.EMAIL_PROVIDER_PORT],
+        10,
+      ),
       auth: {
         user: process.env[EnvironmentVariableNames.EMAIL_PROVIDER_USERNAME],
         pass: process.env[EnvironmentVariableNames.EMAIL_PROVIDER_PASSWORD],
-      }
+      },
     },
     uiLinks: {
       dashboard: {
         origin: process.env[EnvironmentVariableNames.DASHBOARD_ORIGIN],
-        resetPasswordURL: process.env[EnvironmentVariableNames.DASHBOARD_RESET_PASSWORD_ROUTE],
-        setPasswordURL: process.env[EnvironmentVariableNames.DASHBOARD_SET_PASSWORD_ROUTE],
-        changeEmailURL: process.env[EnvironmentVariableNames.DASHBOARD_CHANGE_EMAIL_ROUTE]
+        resetPasswordURL:
+          process.env[EnvironmentVariableNames.DASHBOARD_RESET_PASSWORD_ROUTE],
+        setPasswordURL:
+          process.env[EnvironmentVariableNames.DASHBOARD_SET_PASSWORD_ROUTE],
+        changeEmailURL:
+          process.env[EnvironmentVariableNames.DASHBOARD_CHANGE_EMAIL_ROUTE],
       },
       mainApp: {
         origin: process.env[EnvironmentVariableNames.MAIN_APP_ORIGIN],
-        resetPasswordURL: process.env[EnvironmentVariableNames.MAIN_APP_RESET_PASSWORD_ROUTE],
-        emailVerificationURL: process.env[EnvironmentVariableNames.MAIN_APP_EMAIL_VERIFICATION_ROUTE],
-        changeEmailURL: process.env[EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE],
-        oauthCallbackURL: process.env[EnvironmentVariableNames.MAIN_APP_OAUTH_CALLBACK_URL],
+        resetPasswordURL:
+          process.env[EnvironmentVariableNames.MAIN_APP_RESET_PASSWORD_ROUTE],
+        emailVerificationURL:
+          process.env[
+            EnvironmentVariableNames.MAIN_APP_EMAIL_VERIFICATION_ROUTE
+          ],
+        changeEmailURL:
+          process.env[EnvironmentVariableNames.MAIN_APP_CHANGE_EMAIL_ROUTE],
+        oauthCallbackURL:
+          process.env[EnvironmentVariableNames.MAIN_APP_OAUTH_CALLBACK_URL],
       },
     },
     awsS3Config: {
@@ -125,23 +210,34 @@ export const configuration = registerAs('', (): IEnvironmentConfiguration => {
       region: process.env[EnvironmentVariableNames.AWS_S3_REGION],
       credentials: {
         accessKeyId: process.env[EnvironmentVariableNames.AWS_S3_ACCESS_KEY_ID],
-        secretAccessKey: process.env[EnvironmentVariableNames.AWS_S3_SECRET_ACCESS_KEY],
+        secretAccessKey:
+          process.env[EnvironmentVariableNames.AWS_S3_SECRET_ACCESS_KEY],
       },
     },
     storage: {
       image: {
         profileImages: {
-          dir: process.env[EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_DIR],
-          maxSize: parseInt(process.env[EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_MAX_SIZE], 10),
+          dir: process.env[
+            EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_DIR
+          ],
+          maxSize: parseInt(
+            process.env[
+              EnvironmentVariableNames.STORAGE_IMAGE_PROFILE_IMAGES_MAX_SIZE
+            ],
+            10,
+          ),
         },
       },
     },
     oauth: {
       google: {
         clientID: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_ID],
-        clientSecret: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_SECRET],
-        callbackURL: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CALLBACK_URL],
-        scope: process.env[EnvironmentVariableNames.GOOGLE_OAUTH_SCOPE].split(','),
+        clientSecret:
+          process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CLIENT_SECRET],
+        callbackURL:
+          process.env[EnvironmentVariableNames.GOOGLE_OAUTH_CALLBACK_URL],
+        scope:
+          process.env[EnvironmentVariableNames.GOOGLE_OAUTH_SCOPE].split(','),
       },
     },
   };

@@ -4,5 +4,5 @@ export interface EmailProvider {
   auth: {
     user: string;
     pass: string;
-  }
+  };
 }

@@ -1,9 +1,8 @@
-import { UserModel } from "src/modules/user/domain/models/user.model";
-import { UserEntity } from "../entities/user.entity";
-import { RoleMapper } from "src/modules/role/infrastructure/database/mappers/role.mapper";
+import { UserModel } from 'src/modules/user/domain/models/user.model';
+import { UserEntity } from '../entities/user.entity';
+import { RoleMapper } from 'src/modules/role/infrastructure/database/mappers/role.mapper';
 
 export abstract class UserMapper {
-
   static toModel(entity: UserEntity): UserModel {
     return new UserModel({
       id: entity.id,
@@ -18,13 +17,13 @@ export abstract class UserMapper {
       mobilePhone: entity.mobilePhone,
       whatsAppNumber: entity.whatsAppNumber,
       picture: entity.picture,
-      roles: entity.roles.map(role => RoleMapper.toModel(role)),
+      roles: entity.roles.map((role) => RoleMapper.toModel(role)),
       isBlocked: entity.isBlocked,
       isProtected: entity.isProtected,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
-      deletedAt: entity.deletedAt,      
-    })
+      deletedAt: entity.deletedAt,
+    });
   }
 
   static toEntity(model: UserModel): UserEntity {
@@ -42,12 +41,12 @@ export abstract class UserMapper {
       mobilePhone: model.mobilePhone,
       whatsAppNumber: model.whatsAppNumber,
       picture: model.picture,
-      roles: model.roles.map(role => RoleMapper.toEntity(role)),
+      roles: model.roles.map((role) => RoleMapper.toEntity(role)),
       isProtected: model.isProtected,
       isBlocked: model.isBlocked,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,
-    })
+    });
   }
 }

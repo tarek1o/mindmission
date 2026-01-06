@@ -1,6 +1,6 @@
-import { UserTypeEnum } from "../../domain/enums/user-type.enum";
-import { ResourceEnum } from "src/modules/permission/domain/enums/resource.enum";
-import { ActionEnum } from "src/modules/permission/domain/enums/action.enum";
+import { UserTypeEnum } from '../../domain/enums/user-type.enum';
+import { ResourceEnum } from 'src/modules/permission/domain/enums/resource.enum';
+import { ActionEnum } from 'src/modules/permission/domain/enums/action.enum';
 
 export interface UserProfileInfoViewModel {
   id: number;

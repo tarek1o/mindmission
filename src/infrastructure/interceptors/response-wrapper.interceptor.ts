@@ -13,7 +13,6 @@ import { Request, Response } from 'express';
 
 @Injectable()
 export class ResponseWrapperInterceptor implements NestInterceptor {
-
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const gqlCtx = GqlExecutionContext.create(context);
     if (gqlCtx.getType() === 'graphql') {
@@ -22,23 +21,31 @@ export class ResponseWrapperInterceptor implements NestInterceptor {
     const httpCtx = context.switchToHttp();
     const { query } = httpCtx.getRequest<Request>();
     const { statusCode } = httpCtx.getResponse<Response>();
-    return next.handle().pipe(
-      map((response: IResponseWrapper<any>) => this.wrapResponse<any>(statusCode, query, response))
-    );
+    return next
+      .handle()
+      .pipe(
+        map((response: IResponseWrapper<any>) =>
+          this.wrapResponse<any>(statusCode, query, response),
+        ),
+      );
   }
 
-  private wrapResponse<T>(status: HttpStatus, query, response: IResponseWrapper<T>) {
+  private wrapResponse<T>(
+    status: HttpStatus,
+    query,
+    response: IResponseWrapper<T>,
+  ) {
     const pagination = this.buildPagination(query, response?.count);
     return {
       status,
       message: response?.message,
       data: response?.data ?? response ?? null,
-      pagination
-    }
+      pagination,
+    };
   }
-  
+
   private buildPagination(query, count?: number) {
-    if(count !== undefined) {
+    if (count !== undefined) {
       const { skip, take, currentPage } = new PaginationPipe().transform(query);
       const pages = Math.ceil(count / take) || 1;
       return {
@@ -46,8 +53,8 @@ export class ResponseWrapperInterceptor implements NestInterceptor {
         take,
         totalCount: count,
         page: currentPage,
-        pages
-      }
+        pages,
+      };
     }
   }
 }

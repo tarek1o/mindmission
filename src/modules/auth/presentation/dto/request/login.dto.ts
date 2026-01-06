@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsString } from "class-validator";
-import { LoginInput } from "src/modules/auth/application/inputs/login.input";
+import { IsNotEmpty, IsString } from 'class-validator';
+import { LoginInput } from 'src/modules/auth/application/inputs/login.input';
 
 export class LoginDto implements LoginInput {
   @IsNotEmpty()

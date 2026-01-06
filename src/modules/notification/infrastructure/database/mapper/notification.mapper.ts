@@ -1,5 +1,5 @@
-import { NotificationEntity } from "../entities/notification.entity";
-import { NotificationModel } from "src/modules/notification/domain/models/notification.model";
+import { NotificationEntity } from '../entities/notification.entity';
+import { NotificationModel } from 'src/modules/notification/domain/models/notification.model';
 
 export abstract class NotificationMapper {
   static toModel(entity: NotificationEntity): NotificationModel {

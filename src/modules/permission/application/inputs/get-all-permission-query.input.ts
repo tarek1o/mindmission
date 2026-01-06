@@ -1,5 +1,5 @@
-import { LanguageEnum } from "../../../shared/domain/enums/language.enum";
-import { ResourceEnum } from "../../domain/enums/resource.enum";
+import { LanguageEnum } from '../../../shared/domain/enums/language.enum';
+import { ResourceEnum } from '../../domain/enums/resource.enum';
 
 export interface GetAllPermissionQueryInput {
   language: LanguageEnum;

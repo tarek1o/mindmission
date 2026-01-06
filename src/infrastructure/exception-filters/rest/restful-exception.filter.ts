@@ -14,22 +14,35 @@ interface ExceptionResponse {
 }
 
 @Injectable()
-export class RestfulExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
-
+export class RestfulExceptionFilter
+  extends BaseExceptionFilter
+  implements ExceptionFilter
+{
   catch(exception: HttpException, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse<Response>();
-    const { error: errorName, message } = this.extractMessageFromExceptionResponse(exception);
-    const error = this.buildErrorResponse(exception.getStatus(), errorName, message)
+    const { error: errorName, message } =
+      this.extractMessageFromExceptionResponse(exception);
+    const error = this.buildErrorResponse(
+      exception.getStatus(),
+      errorName,
+      message,
+    );
     response.status(error.status).json(error);
   }
 
-  private extractMessageFromExceptionResponse(exception: HttpException): ExceptionResponse {
+  private extractMessageFromExceptionResponse(
+    exception: HttpException,
+  ): ExceptionResponse {
     const exceptionResponse = exception.getResponse();
-    const error = isObject(exceptionResponse) ? (Reflect.get(exceptionResponse, 'error') ?? exception.name) : exception.name;
-    const message = isObject(exceptionResponse) ? (Reflect.get(exceptionResponse, 'message') ?? exceptionResponse) : exceptionResponse;
+    const error = isObject(exceptionResponse)
+      ? (Reflect.get(exceptionResponse, 'error') ?? exception.name)
+      : exception.name;
+    const message = isObject(exceptionResponse)
+      ? (Reflect.get(exceptionResponse, 'message') ?? exceptionResponse)
+      : exceptionResponse;
     return {
       error,
-      message
-    }
+      message,
+    };
   }
 }

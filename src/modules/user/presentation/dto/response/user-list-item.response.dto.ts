@@ -1,5 +1,5 @@
-import { UserTypeEnum } from "src/modules/user/domain/enums/user-type.enum";
-import { GetAllUsersPaginatedViewModel } from "src/modules/user/application/view-models/get-all-users-paginated.view-model";
+import { UserTypeEnum } from 'src/modules/user/domain/enums/user-type.enum';
+import { GetAllUsersPaginatedViewModel } from 'src/modules/user/application/view-models/get-all-users-paginated.view-model';
 
 export class UserListItemResponseDto {
   id: number;

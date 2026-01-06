@@ -39,8 +39,8 @@ import { I18nValidationGraphqlExceptionFilter } from './exception-filters/graphq
             ...options,
             maxRetriesPerRequest: null,
           },
-        }
-      }
+        };
+      },
     }),
     // ThrottlerModule.forRootAsync({
     //   inject: [ConfigService, RedisConnectorService, TRANSLATION_SERVICE],
@@ -101,6 +101,6 @@ import { I18nValidationGraphqlExceptionFilter } from './exception-filters/graphq
       provide: I18nValidationGraphqlExceptionFilter.name,
       useClass: I18nValidationGraphqlExceptionFilter,
     },
-  ]
+  ],
 })
 export class InfrastructureModule {}

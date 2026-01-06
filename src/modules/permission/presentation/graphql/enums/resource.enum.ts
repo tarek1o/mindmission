@@ -5,4 +5,3 @@ registerEnumType(ResourceEnum, {
   name: 'ResourceEnum',
   description: 'Supported resources',
 });
-

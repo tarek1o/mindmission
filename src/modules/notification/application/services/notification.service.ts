@@ -1,20 +1,24 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { ModuleRef } from "@nestjs/core";
-import { IChannelStrategy } from "src/modules/notification/application/interfaces/channel-strategy.interface";
-import { NotificationOptionsType } from "src/modules/notification/application/types/notification-options.type";
-import { NOTIFICATION_REPOSITORY } from "../constants/notification-repository.constant";
-import { INotificationRepository } from "../interfaces/notification-repository.interface";
-import { NotificationResultType } from "../types/notification-result.type";
-import { NotificationModel } from "../../domain/models/notification.model";
+import { Inject, Injectable } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
+import { IChannelStrategy } from 'src/modules/notification/application/interfaces/channel-strategy.interface';
+import { NotificationOptionsType } from 'src/modules/notification/application/types/notification-options.type';
+import { NOTIFICATION_REPOSITORY } from '../constants/notification-repository.constant';
+import { INotificationRepository } from '../interfaces/notification-repository.interface';
+import { NotificationResultType } from '../types/notification-result.type';
+import { NotificationModel } from '../../domain/models/notification.model';
 
 @Injectable()
 export class NotificationSenderService {
   constructor(
     private readonly moduleRef: ModuleRef,
-    @Inject(NOTIFICATION_REPOSITORY) private readonly notificationRepository: INotificationRepository,
+    @Inject(NOTIFICATION_REPOSITORY)
+    private readonly notificationRepository: INotificationRepository,
   ) {}
 
-  private async saveNotificationMessage(options: NotificationOptionsType, results: NotificationResultType): Promise<void> {
+  private async saveNotificationMessage(
+    options: NotificationOptionsType,
+    results: NotificationResultType,
+  ): Promise<void> {
     const notification = new NotificationModel({
       channel: options.channel,
       to: options.to,
@@ -32,4 +36,4 @@ export class NotificationSenderService {
     const results = await service.send(options);
     await this.saveNotificationMessage(options, results);
   }
-} 
+}

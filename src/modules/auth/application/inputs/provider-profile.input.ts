@@ -1,4 +1,4 @@
-import { OAuthProviderEnum } from "../../domain/enums/oauth-provider.enum";
+import { OAuthProviderEnum } from '../../domain/enums/oauth-provider.enum';
 
 export interface ProviderProfileInput {
   providerId: string;

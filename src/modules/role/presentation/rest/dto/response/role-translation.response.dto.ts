@@ -1,5 +1,5 @@
-import { RoleTranslationModel } from "src/modules/role/domain/models/role-translation.model";
-import { LanguageEnum } from "src/modules/shared/domain/enums/language.enum";
+import { RoleTranslationModel } from 'src/modules/role/domain/models/role-translation.model';
+import { LanguageEnum } from 'src/modules/shared/domain/enums/language.enum';
 
 export class RoleTranslationResponseDto {
   language: LanguageEnum;

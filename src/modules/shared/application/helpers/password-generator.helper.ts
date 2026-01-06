@@ -1,4 +1,4 @@
-import { randomBytes } from "crypto";
+import { randomBytes } from 'crypto';
 
 export abstract class PasswordGeneratorHelper {
   static generate(length: number = 8): string {
