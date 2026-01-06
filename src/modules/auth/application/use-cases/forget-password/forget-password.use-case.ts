@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { SUSPENDED_ACCOUNT_REPOSITORY } from "src/modules/suspended-account/application/constants/suspended-account-repository.constant";
 import { ISuspendedAccountRepository } from "src/modules/suspended-account/application/interfaces/suspended-account-repository.interface";
 import { USER_REPOSITORY } from "src/modules/user/application/constants/user-repository.constant";
@@ -17,6 +18,9 @@ import { ActionTokenTypeEnum } from "src/modules/action-token/domain/enums/actio
 import { SuspendedAccountModel } from "src/modules/suspended-account/domain/models/suspended-account.model";
 import { NotificationEventEnum } from "src/modules/notification/domain/enums/notification-event.enum";
 import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
+import { ForgetPasswordViewModel } from "../../view-models/forget-password.view-model";
+import { IEnvironmentConfiguration } from "src/infrastructure/configuration/interfaces/config.interface";
+import { IActionTokenConfiguration } from "src/infrastructure/configuration/interfaces/sub-interfaces/action-token-config.interface";
 
 @Injectable()
 export class ForgetPasswordUseCase {
@@ -24,6 +28,7 @@ export class ForgetPasswordUseCase {
     @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
     @Inject(SUSPENDED_ACCOUNT_REPOSITORY) private readonly suspendedAccountRepository: ISuspendedAccountRepository,
     private readonly actionTokenService: ActionTokenService,
+    private readonly configService: ConfigService<IEnvironmentConfiguration, true>,
     private readonly notificationChannelFinderService: NotificationChannelFinderService,
     @Inject(UNIT_OF_WORK) private readonly unitOfWork: IUnitOfWork,
     @Inject(NOTIFICATION_SERVICE) private readonly notificationService: INotificationService,
@@ -52,6 +57,10 @@ export class ForgetPasswordUseCase {
     await this.suspendedAccountRepository.save(suspendedAccount, manager);
   }
 
+  private getRemainingTimeToExpired(): number {
+    return this.configService.get<IActionTokenConfiguration>('actionTokens').stateful[ActionTokenTypeEnum.RESET_PASSWORD_TOKEN].value * 60;
+  }
+
   private async suspendUserAccountAndGenerateResetPasswordToken(user: UserModel): Promise<ActionTokenModel> {
     return this.unitOfWork.transaction(async (manager) => {
       const actionToken = await this.generateResetPasswordToken(user.id, manager);
@@ -73,12 +82,17 @@ export class ForgetPasswordUseCase {
     await this.notificationService.send(message);
   }
 
-  async execute(appUi: AppUiEnum, email: string): Promise<void> {
+  async execute(appUi: AppUiEnum, email: string): Promise<ForgetPasswordViewModel> {
     const isEmailSuspended = await this.isEmailSuspended(email);
     const user = !isEmailSuspended ? await this.userRepository.getByEmail(email, appUi) : null;
+    let remainingTime: number = this.getRemainingTimeToExpired();
     if (user?.isEmailVerified) {
       const actionToken = await this.suspendUserAccountAndGenerateResetPasswordToken(user);
       await this.sendResetPasswordNotification(user, actionToken);
+      remainingTime = actionToken.getRemainingTimeToExpired();
     }
+    return {
+      remainingTime,
+    };
   }
 }

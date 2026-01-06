@@ -13,6 +13,7 @@ import { ResetPasswordDto } from "../dto/request/reset-password.dto";
 import { configService } from "src/infrastructure/configuration/services/config-instance.service";
 import { AppUi } from "src/modules/shared/presentation/decorators/app-ui.decorator";
 import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
+import { ForgetPasswordViewModel } from "../../application/view-models/forget-password.view-model";
 
 @Controller({ path: "auth/password", version: "1" })
 export class PasswordController {
@@ -40,7 +41,7 @@ export class PasswordController {
   forgetPassword(
     @AppUi() appUi: AppUiEnum,
     @Body() forgetPasswordDto: ForgetPasswordDto,
-  ): Promise<void> {
+  ): Promise<ForgetPasswordViewModel> {
     return this.forgetPasswordUseCase.execute(appUi, forgetPasswordDto.email);
   }
   
