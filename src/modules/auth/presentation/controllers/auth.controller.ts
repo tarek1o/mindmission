@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
 import { SignupUseCase } from "../../application/use-cases/signup/signup.use-case";
 import { SignupDto } from "../dto/request/signup.dto";
@@ -36,6 +36,7 @@ export class AuthController {
   }
 
   @Post("login")
+  @HttpCode(HttpStatus.OK)
   @Throttle({ default: { limit: configService.getNumber('LOGIN_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('LOGIN_RATE_LIMITER_DEFAULT_TTL') } })
   async login(
     @AppUi() appUi: AppUiEnum,
@@ -46,6 +47,7 @@ export class AuthController {
   }
   
   @Post("logout")
+  @HttpCode(HttpStatus.OK)
   logout(@Body() logoutDto: LogoutDto): Promise<void> {
     return this.logoutUseCase.execute(logoutDto.refreshToken);
   }

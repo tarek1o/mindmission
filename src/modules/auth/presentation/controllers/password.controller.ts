@@ -1,4 +1,4 @@
-import { Body, Controller, Patch, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, Patch, Post } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
 import { SetFirstPasswordUseCase } from "../../application/use-cases/set-password/set-first-password.use-case";
 import { SetFirstPasswordDto } from "../dto/request/set-first-password.dto";
@@ -26,6 +26,7 @@ export class PasswordController {
   ) {}
 
   @Post("first/verify")
+  @HttpCode(HttpStatus.OK)
   @Throttle({ default: { limit: configService.getNumber('VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('VERIFY_SET_FIRST_PASSWORD_RATE_LIMITER_DEFAULT_TTL') } })
   async verifySetPasswordToken(@Body() verifySetPasswordTokenDto: VerifySetFirstPasswordTokenDto): Promise<void> {
     await this.verifySetFirstPasswordTokenUseCase.execute(verifySetPasswordTokenDto.token);
@@ -37,6 +38,7 @@ export class PasswordController {
   }
 
   @Post("forget")
+  @HttpCode(HttpStatus.OK)
   @Throttle({ default: { limit: configService.getNumber('FORGET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('FORGET_PASSWORD_RATE_LIMITER_DEFAULT_TTL') } })
   forgetPassword(
     @AppUi() appUi: AppUiEnum,
@@ -46,6 +48,7 @@ export class PasswordController {
   }
   
   @Post("verify")
+  @HttpCode(HttpStatus.OK)
   @Throttle({ default: { limit: configService.getNumber('VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_LIMIT'), ttl: configService.getNumber('VERIFY_RESET_PASSWORD_RATE_LIMITER_DEFAULT_TTL') } })
   verifyResetPasswordToken(@Body() verifyResetPasswordTokenDto: VerifyResetPasswordTokenDto): Promise<void> {
     return this.verifyResetPasswordTokenUseCase.execute(verifyResetPasswordTokenDto.token);
