@@ -7,6 +7,7 @@ import { UserModel } from "src/modules/user/domain/models/user.model";
 import { AuthTokenService } from "../../services/auth-token.service";
 import { BusinessRuleViolationError } from "src/modules/shared/domain/errors/business-rule-violation.error";
 import { AppUiEnum } from "src/modules/shared/domain/enums/app-ui.enum";
+import { LoginViewModel } from "../../view-models/login.view-model";
 
 @Injectable()
 export class LoginUseCase {
@@ -28,15 +29,18 @@ export class LoginUseCase {
     }
   }
 
-  async execute(appUi: AppUiEnum, loginInput: LoginInput): Promise<{ accessToken: string, refreshToken: string }> {
+  async execute(appUi: AppUiEnum, loginInput: LoginInput): Promise<LoginViewModel> {
     const user = await this.userRepository.getByEmail(loginInput.email, appUi);
     await this.validatePassword(user, loginInput.password);
     this.checkIfEmailIsVerified(user);
     const accessTokenModel = await this.authTokenService.generateAccessToken(user);
     const refreshTokenModel = await this.authTokenService.generateRefreshToken(user);
     return {
-      accessToken: accessTokenModel.token,
-      refreshToken: refreshTokenModel.token,
+      user,
+      tokens: {
+        accessToken: accessTokenModel.token,
+        refreshToken: refreshTokenModel.token,
+      },
     }
   }
 }
